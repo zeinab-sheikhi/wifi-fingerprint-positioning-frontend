@@ -1,13 +1,13 @@
 class AccessPoint {
 
   final String SSID;
-  final int RSSI;
+  final List<int> rssiValues;
 
-  AccessPoint(this.SSID, this.RSSI);
+  AccessPoint(this.SSID, this.rssiValues);
 
   Map toJson() => {
-    'ssid': SSID,
-    'rssi': RSSI,
+  'ssid': SSID,
+  'rssi': rssiValues
   };
 
 }

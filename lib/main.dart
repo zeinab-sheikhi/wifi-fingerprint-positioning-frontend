@@ -1,11 +1,6 @@
-import 'dart:async';
 
 import 'package:access_point/home.dart';
-import 'package:access_point/model/point.dart';
 import 'package:flutter/material.dart';
-import 'package:wifi/wifi.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 void main() => runApp(new MyApp());
 
@@ -60,68 +55,3 @@ class MyApp extends StatelessWidget {
     return 9;
   }
 }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//
-//   int rssi = 0;
-//   List<WifiResult> ssidList = [];
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     loadData();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Wifi'),
-//         centerTitle: true,
-//       ),
-//       body: SafeArea(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             TextField(
-//               decoration: InputDecoration(
-//                   border: InputBorder.none, hintText: 'Enter X Coordinate'),
-//             ),
-//             TextField(
-//               decoration: InputDecoration(
-//                   border: InputBorder.none, hintText: 'Enter Y Coordinate'),
-//             ),
-//             FlatButton(onPressed: () => {}, child: Container(child: Text('Scan', style: TextStyle(color: Colors.amber),),)),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-//
-//
-//   Future<Point> createAccessPoint(String SSID, int RSSI) async {
-//     final response = await http.post(
-//       url,
-//       headers: <String, String>{
-//         'Content-Type': 'application/json; charset=UTF-8',
-//       },
-//       body: jsonEncode(<String, String>{'ssid': SSID, 'rssi': RSSI.toString()}),
-//     );
-//     if (response.statusCode == 201) {
-//       // If the server did return a 201 CREATED response,
-//       // then parse the JSON.
-//       //return AccessPoint(SSID, RSSI).fromJson(jsonDecode(response.body));
-//       print('Successfully Send the Request');
-//     } else {
-//       // If the server did not return a 201 CREATED response,
-//       // then throw an exception.
-//       throw Exception('Failed to load album');
-//     }
-//   }
-//
-// }
-//
-// class MyHomePage extends StatefulWidget {
-//   @override
-//   _MyHomePageState createState() => new _MyHomePageState();
-// }

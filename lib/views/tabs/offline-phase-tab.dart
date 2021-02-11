@@ -18,7 +18,7 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
 
   final xCoordinateController = TextEditingController();
   final yCoordinateController = TextEditingController();
-  final String url = 'http://192.168.43.81:3005/v1/accesspoint/add';
+  final String url = 'http://192.168.1.4:3005/v1/accesspoint/add';
   final Map<String, String> headers = {"Content-type": "application/json"};
   List<WifiResult> scanResultList = [];
 
@@ -80,12 +80,18 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
   }
 
   void collectAccessPoints() async {
+    List<int> rssiList = [];
     List<AccessPoint> accessPoints = [];
     int x = int.parse(xCoordinateController.text);
     int y = int.parse(yCoordinateController.text);
+
     for(WifiResult wifiResult in scanResultList) {
-      AccessPoint _accessPoint =  new AccessPoint(wifiResult.ssid, wifiResult.level);
+      for(int i = 0; i < 100 ; i++) {
+        rssiList.add(wifiResult.level);
+      }
+      AccessPoint _accessPoint =  new AccessPoint(wifiResult.ssid, rssiList);
       accessPoints.add(_accessPoint);
+      rssiList = [];
     }
     Point _point = new Point(x, y, accessPoints);
     String json = jsonEncode(_point);
