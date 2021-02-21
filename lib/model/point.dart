@@ -1,4 +1,4 @@
-import 'accesspoint.dart';
+import 'access_point.dart';
 
 class Point {
 
@@ -9,8 +9,6 @@ class Point {
   Point(this.xCoordinate, this.yCoordinate, this.accessPoints);
 
   Map toJson() {
-    // List<Map> accessPoints =
-    //   this.accessPoints != null ? this.accessPoints.map((i) => i.toJson()).toList() : null;
 
     return {
       'x': xCoordinate,

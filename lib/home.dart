@@ -1,6 +1,5 @@
-import 'package:access_point/main.dart';
-import 'package:access_point/views/tabs/offline-phase-tab.dart';
-import 'package:access_point/views/tabs/wifi-scanner-tab.dart';
+import 'package:access_point/views/tabs/offline_phase_tab.dart';
+import 'package:access_point/views/tabs/wifi_scanner_tab.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

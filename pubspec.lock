@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0-nullsafety.1"
+  circular_countdown_timer:
+    dependency: "direct main"
+    description:
+      name: circular_countdown_timer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   clock:
     dependency: transitive
     description:
@@ -175,7 +182,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "1b935581ff8d6a3cc976de315d0ac89267dfeeba"
+      resolved-ref: e55d9d94667f8c95966ed8680a156b98af0008ee
       url: "https://github.com/zeinab-sheikhi/wifi.git"
     source: git
     version: "0.1.5"

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -25,9 +26,10 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
 
-      home: Home(),
+      home: Home()
     );
   }
+
   static double HEIGHT(BuildContext context) {
     return MediaQuery.of(context).size.height;
   }

@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'dart:async';
+
 
 import 'package:access_point/main.dart';
-import 'package:access_point/model/accesspoint.dart';
+import 'package:access_point/model/access_point.dart';
 import 'package:access_point/model/point.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:wifi/wifi.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+
 
 
 class OfflinePhaseTab extends StatefulWidget {
@@ -18,14 +22,21 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
 
   final xCoordinateController = TextEditingController();
   final yCoordinateController = TextEditingController();
-  final String url = 'http://192.168.1.4:3005/v1/accesspoint/add';
+  final String url = 'http://192.168.1.2:3005/v1/accesspoint/add';
   final Map<String, String> headers = {"Content-type": "application/json"};
+  List<int> rssiValues = [];
+  CountDownController _controller = CountDownController();
+  final sampleTime = Duration(milliseconds: 100);
+  int _duration = 20;
+  Timer _timer;
+  bool isStopped; //global
+  int sum = 0;
   List<WifiResult> scanResultList = [];
 
   @override
   void initState() {
     super.initState();
-    loadAccessPoints();
+    //loadAccessPoints();
   }
 
   @override
@@ -54,7 +65,7 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
             ),
           ),
           FlatButton(
-            onPressed: () {collectAccessPoints();},
+            onPressed: () {resetTimer();},
             child: Text(
               'Collect',
               style: TextStyle(
@@ -67,32 +78,65 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
                 borderRadius: BorderRadius.circular(18.0),
                 side: BorderSide(color: Colors.deepOrange)),
           ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: CircularCountDownTimer(
+              onStart: () {
+                print('Start Called');
+                startTimer();
+              },
+              onComplete: () {
+                setState(() {
+                  isStopped = true;
+                  _timer.cancel();
+                  collectAccessPoints();
+                });
+                print('Finish Called');
+              },
+              duration: _duration,
+              initialDuration: 0,
+              controller: _controller,
+              width: MediaQuery.of(context).size.width / 4,
+              height: MediaQuery.of(context).size.height / 4,
+              ringColor: Colors.grey[300],
+              ringGradient: null,
+              fillColor: Colors.purpleAccent[100],
+              fillGradient: null,
+              backgroundColor: Colors.purple[500],
+              backgroundGradient: null,
+              strokeWidth: 20.0,
+              strokeCap: StrokeCap.round,
+              textStyle: TextStyle(
+                  fontSize: 33.0, color: Colors.white, fontWeight: FontWeight.bold),
+              textFormat: CountdownTextFormat.S,
+              isReverse: false,
+              isReverseAnimation: false,
+              isTimerTextShown: true,
+              autoStart: false,
+            ),
+          )
         ],
       ),
     );
   }
-  void loadAccessPoints() async {
-    Wifi.list('').then((list) {
-      setState(() {
-        scanResultList = list;
-      });
-    });
-  }
 
   void collectAccessPoints() async {
-    List<int> rssiList = [];
+
     List<AccessPoint> accessPoints = [];
+
     int x = int.parse(xCoordinateController.text);
     int y = int.parse(yCoordinateController.text);
+    String ssid = await Wifi.bssid;
 
-    for(WifiResult wifiResult in scanResultList) {
-      for(int i = 0; i < 100 ; i++) {
-        rssiList.add(wifiResult.level);
-      }
-      AccessPoint _accessPoint =  new AccessPoint(wifiResult.ssid, rssiList);
-      accessPoints.add(_accessPoint);
-      rssiList = [];
+    for(int i in rssiValues) {
+      sum = sum + i;
     }
+    int average = sum ~/ rssiValues.length;
+
+    AccessPoint _accessPoint =  new AccessPoint(ssid, average);
+    accessPoints.add(_accessPoint);
+
+
     Point _point = new Point(x, y, accessPoints);
     String json = jsonEncode(_point);
     print(json);
@@ -102,5 +146,31 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
 
     print(statusCode);
     print(body);
+    print(rssiValues.length);
+  }
+  void startTimer() {
+    _timer = new Timer.periodic(
+      sampleTime, (Timer timer)
+    {
+      if(isStopped == false)
+        collectBSSID();
+      else
+        timer.cancel();
+    },
+    );
+  }
+  void resetTimer() {
+    setState(() {
+      isStopped = false;
+      rssiValues.clear();
+      sum = 0;
+      _controller.restart();
+    });
+  }
+
+  void collectBSSID() async {
+
+    int level = await Wifi.level;
+    rssiValues.add(level);
   }
 }
