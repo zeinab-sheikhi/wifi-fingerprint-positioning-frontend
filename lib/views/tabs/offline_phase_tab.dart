@@ -31,12 +31,14 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
   Timer _timer;
   bool isStopped; //global
   int sum = 0;
+  String wifiSSID = "";
+  int level = 0;
+  int average = 0;
   List<WifiResult> scanResultList = [];
 
   @override
   void initState() {
     super.initState();
-    //loadAccessPoints();
   }
 
   @override
@@ -114,7 +116,13 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
               isTimerTextShown: true,
               autoStart: false,
             ),
-          )
+          ),
+          Table(
+            children: [
+              TableRow(children: [Text('SSID'), Text('Current RSSI'), Text('Avergae RSSI')]),
+              TableRow(children: [Text('$wifiSSID'), Text('$level'), Text('$average')]),
+            ],
+          ),
         ],
       ),
     );
@@ -131,7 +139,7 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
     for(int i in rssiValues) {
       sum = sum + i;
     }
-    int average = sum ~/ rssiValues.length;
+    average = sum ~/ rssiValues.length;
 
     AccessPoint _accessPoint =  new AccessPoint(ssid, average);
     accessPoints.add(_accessPoint);
@@ -170,7 +178,8 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
 
   void collectBSSID() async {
 
-    int level = await Wifi.level;
+     level = await Wifi.level;
+     wifiSSID = await Wifi.ssid;
     rssiValues.add(level);
   }
 }
