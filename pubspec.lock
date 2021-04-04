@@ -177,15 +177,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.3"
-  wifi:
+  wifi_scan_plugin:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e55d9d94667f8c95966ed8680a156b98af0008ee
-      url: "https://github.com/zeinab-sheikhi/wifi.git"
+      resolved-ref: abfff1682df579b97b25c2ecf5feadc70e46e2ff
+      url: "https://github.com/zeinab-sheikhi/wifi_scan_flutter_plugin.git"
     source: git
-    version: "0.1.5"
+    version: "0.0.1"
 sdks:
   dart: ">=2.10.0-110 <2.11.0"
-  flutter: ">=0.1.4 <2.0.0"
+  flutter: ">=1.20.0"

@@ -12,7 +12,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _options = <Widget>[
     WiFiScannerTab(),
     Text('OnLine Phase', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    OfflinePhaseTab(),
+    // OfflinePhaseTab(),
     Text('Settings', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
   void _onItemTap(int index) {

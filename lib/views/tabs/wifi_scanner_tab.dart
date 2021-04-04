@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:access_point/main.dart';
-import 'package:wifi/wifi.dart';
 import 'package:flutter/material.dart';
+import 'package:wifi_scan_plugin/wifi_scan_plugin.dart';
 
 class WiFiScannerTab extends StatefulWidget {
   @override
@@ -8,45 +10,57 @@ class WiFiScannerTab extends StatefulWidget {
 }
 
 class _WiFiScannerTabState extends State<WiFiScannerTab> {
-   List<WifiResult> accessPointList = [];
 
-  @override
-  void initState() {
-    super.initState();
-    loadAccessPoints();
-  }
+   var accessPointList;
 
-  @override
+   @override
+   void initState() {
+     super.initState();
+     loadAccessPoints();
+   }
+
+   @override
   Widget build(BuildContext context) {
     return Container(
       child: SafeArea(
-        child: ListView.builder(
-          padding: EdgeInsets.all(8.0),
-          itemCount: accessPointList.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            return accessPointItem(index);
-          },
+        child: ElevatedButton(
+          onPressed: loadAccessPoints,
+          child: Text('SHOW'),
         ),
+        // child: ListView.builder(
+        //   padding: EdgeInsets.all(8.0),
+        //   itemCount: accessPointList.length,
+        //   shrinkWrap: true,
+        //   itemBuilder: (BuildContext context, int index) {
+        //     return _accessPointItem(index);
+        //   },
+        // ),
       ),
     );
   }
 
-  void loadAccessPoints() async {
-    Wifi.list('').then((list) {
-      setState(() {
-        accessPointList = list;
-      });
-    });
-  }
 
-  Widget accessPointItem(index) {
+
+  void loadAccessPoints() async {
+      accessPointList = await Wifi.wifiScanner;
+      accessPointList.forEach((key, value) {print('$key : $value');});
+   }
+
+   @override
+   void dispose() {
+     super.dispose();
+   }
+
+  Widget _accessPointItem(index) {
+
+     var ssid =  accessPointList.keys.elementAt(index);
+     var rssi = accessPointList[ssid];
+
     return Column(children: <Widget>[
       ListTile(
         leading:
-            Icon(Icons.wifi, color: getColor(accessPointList[index].level)),
-        title: Text(
-          accessPointList[index].ssid,
+            Icon(Icons.wifi, color: getColor(rssi)),
+        title: Text(ssid,
           style: TextStyle(
             color: Colors.black87,
             fontSize: 18.0,
@@ -55,9 +69,9 @@ class _WiFiScannerTabState extends State<WiFiScannerTab> {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 10),
           child: Text(
-            accessPointList[index].level.toString(),
+            rssi.toString(),
             style: TextStyle(
-                color: getColor(accessPointList[index].level),
+                color: getColor(rssi),
                 fontSize: MyApp.MAIN_FONT()),
           ),
         ),
