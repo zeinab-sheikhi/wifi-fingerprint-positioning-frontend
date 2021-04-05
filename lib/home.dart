@@ -2,6 +2,7 @@ import 'package:access_point/views/tabs/offline_phase_tab.dart';
 import 'package:access_point/views/tabs/wifi_scanner_tab.dart';
 import 'package:flutter/material.dart';
 
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -12,7 +13,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _options = <Widget>[
     WiFiScannerTab(),
     Text('OnLine Phase', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    // OfflinePhaseTab(),
+    OfflinePhaseTab(),
     Text('Settings', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
   void _onItemTap(int index) {
@@ -63,4 +64,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  // Future<bool> requestPermission() async {
+  // }
 }

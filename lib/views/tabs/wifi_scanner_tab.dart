@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:access_point/main.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:wifi_scan_plugin/wifi_scan_plugin.dart';
 
 class WiFiScannerTab extends StatefulWidget {
@@ -16,35 +17,56 @@ class _WiFiScannerTabState extends State<WiFiScannerTab> {
    @override
    void initState() {
      super.initState();
-     loadAccessPoints();
+     Wifi.wifiScanner.then((value)  {
+       setState(() {
+         accessPointList = value;
+       });
+     });
    }
 
    @override
   Widget build(BuildContext context) {
     return Container(
       child: SafeArea(
-        child: ElevatedButton(
-          onPressed: loadAccessPoints,
-          child: Text('SHOW'),
+        child: FutureBuilder(
+          future: loadAccessPoints(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return new Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return new Text('Error: ${snapshot.error}');
+              } else {
+                return RefreshIndicator(
+                  onRefresh: refreshList,
+                  child: ListView.builder(
+                    padding: EdgeInsets.all(8.0),
+                    itemCount: accessPointList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _accessPointItem(index);
+                    },
+                  ),
+                );
+              }
+            }
         ),
-        // child: ListView.builder(
-        //   padding: EdgeInsets.all(8.0),
-        //   itemCount: accessPointList.length,
-        //   shrinkWrap: true,
-        //   itemBuilder: (BuildContext context, int index) {
-        //     return _accessPointItem(index);
-        //   },
-        // ),
       ),
     );
   }
 
 
 
-  void loadAccessPoints() async {
-      accessPointList = await Wifi.wifiScanner;
-      accessPointList.forEach((key, value) {print('$key : $value');});
-   }
+   loadAccessPoints() async {
+       accessPointList = await Wifi.wifiScanner;
+       return accessPointList;
+    }
+  Future<void> refreshList() async {
+    Wifi.wifiScanner.then((value)  {
+      setState(() {
+        accessPointList = value;
+      });
+    });
+  }
 
    @override
    void dispose() {

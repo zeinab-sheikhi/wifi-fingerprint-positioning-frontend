@@ -25,15 +25,14 @@ dependencies:
     sdk: flutter
   http: ^0.12.2
   circular_countdown_timer: ^0.1.0
-  permission_handler: ^6.1.1
-
   wifi_scan_plugin:
     git:
       url: https://github.com/zeinab-sheikhi/wifi_scan_flutter_plugin.git
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+#  permission_handler_platform_interface:
+#    path:  /Users/macbookpro/Projects/Flutter/permission/flutter-permission-handler/permission_handler_platform_interface
+
+
 
 dev_dependencies:
   flutter_test:

@@ -1,13 +1,13 @@
 class AccessPoint {
 
-  final String BSSID;
-  final int averageRSSI;
+  final String SSID;
+  final List<dynamic> RSSIs;
 
-  AccessPoint(this.BSSID, this.averageRSSI);
+  AccessPoint(this.SSID, this.RSSIs);
 
   Map toJson() => {
-  'BSSID': BSSID,
-  'averageRSSI': averageRSSI
+  'SSID': SSID,
+  'RSSIs': RSSIs
   };
 
 }
