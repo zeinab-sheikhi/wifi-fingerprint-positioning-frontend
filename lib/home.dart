@@ -1,6 +1,12 @@
-import 'package:access_point/views/tabs/offline_phase_tab.dart';
-import 'package:access_point/views/tabs/wifi_scanner_tab.dart';
+import 'package:access_point/utils/widgets/custom_home_item_card.dart';
+import 'package:access_point/utils/widgets/hexagon_shape.dart';
+import 'package:access_point/views/tabs/setting/setting_screen.dart';
+import 'package:access_point/views/tabs/offline_phase_screen.dart';
+import 'package:access_point/views/tabs/online_phase_screen.dart';
+import 'package:access_point/views/tabs/wifi_scanner_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 
 class Home extends StatefulWidget {
@@ -9,61 +15,106 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-  final List<Widget> _options = <Widget>[
-    WiFiScannerTab(),
-    Text('OnLine Phase', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-    OfflinePhaseTab(),
-    Text('Settings', style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
-  ];
-  void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
+
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
+
+
     return Scaffold(
+      backgroundColor: Color(0xff030712),
       appBar: AppBar(
-          title: const Text('WiFi FingerPrint'),
-          backgroundColor: Colors.teal
+        backgroundColor: Color(0xff3e3f44),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingScreen()),
+              );
+              },
+          )
+        ],
       ),
       body: Center(
-        child: _options.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.wifi),
-                label: 'WiFi Scanner',
-                backgroundColor: Colors.teal
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.location_on),
-                label: 'OnLine Phase',
-                backgroundColor: Colors.cyan
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'OffLine Phase',
-                backgroundColor: Colors.yellow
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Settings',
-              backgroundColor: Colors.lightBlue,
-            ),
-          ],
-          type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey,
-          iconSize: 40,
-          onTap: _onItemTap,
-          elevation: 5
+        child: Container(
+          width: width,
+          height: height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                width: width * 3 / 4 + width / 10,
+                height: height / 5 ,
+                child: CustomPaint(
+                  painter: HexagonShape(shapeColor: Colors.white),
+                     child: Center(
+                      child: AutoSizeText(
+                        'WiFi Fing',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold
+                        ),
+                        maxLines: 1,
+                      ),
+                    ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  HomeCard(
+                      goToRoute: OfflinePhaseTab(),
+                      titleText: 'Offline Phase',
+                      borderColor: Color(0xff27e8b9),
+                      icon: Icons.place_outlined,
+                  ),
+                  HomeCard(
+                      goToRoute: OnLinePhaseTab(),
+                      titleText: 'Online Phase',
+                      borderColor: Color(0xffe17ecb),
+                      icon: Icons.person_search,
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  HomeCard(
+                    goToRoute: WiFiScanner(),
+                    titleText: 'WiFi Scanner',
+                    borderColor: Color(0xff946dae),
+                    icon: Icons.wifi,
+                  ),
+                  HomeCard(
+                      goToRoute: OnLinePhaseTab(),
+                      titleText: 'Read More',
+                      borderColor: Color(0xff3fd5dc),
+                      icon: Icons.read_more,
+                  )
+                ],
+              ),
+
+            ],
+          ),
+        ),
+        // child: _options.elementAt(_selectedIndex),
       ),
     );
   }
-  // Future<bool> requestPermission() async {
-  // }
+
 }
