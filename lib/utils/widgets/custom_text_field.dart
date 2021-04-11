@@ -13,9 +13,10 @@ class MyTextField extends StatelessWidget {
   Color fillColor;
 
   MyTextField({
-    this.fontSize = 20,
+    this.fontSize = 18,
     this.textColor = Colors.white,
-    this.fillColor = const Color(0xff29292e),
+    // this.fillColor = const Color(0xff29292e),
+    this.fillColor = const Color(0xff0242c42),
     required this.hintText,
     required this.labelText,
     required this.prefixIcon,
@@ -34,27 +35,44 @@ class MyTextField extends StatelessWidget {
             fontWeight: FontWeight.bold
         ),
         decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: Colors.white
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: Colors.orange),
+            ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
                 width: 1,
                 style: BorderStyle.solid,
-                color: Color(0xff3ed9dc)
+                color: Color(0xff43adb7)
             ),
           ),
             prefixIcon: prefixIcon,
             contentPadding: EdgeInsets.only(),
             fillColor: fillColor,
             filled: true,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              borderSide: BorderSide(
-                width: 1,
-                style: BorderStyle.solid,
-                color: Color(0xff3ed9dc)
-              ),
-            ),
-            hintText: hintText
+            // border: OutlineInputBorder(
+            //   borderRadius: BorderRadius.all(Radius.circular(20)),
+            //   borderSide: BorderSide(
+            //     width: 1,
+            //     style: BorderStyle.solid,
+            //     color: Color(0xff3ed9dc)
+            //   ),
+            // ),
+            hintText: hintText,
+            // hintStyle: TextStyle(fontSize: 18.0, color: Colors.white),
+            labelText: labelText
         ),
         keyboardType: keyboardType,
         controller: controller,

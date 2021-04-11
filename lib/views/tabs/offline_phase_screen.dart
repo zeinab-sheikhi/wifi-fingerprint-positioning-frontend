@@ -13,11 +13,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:wifi_scan_plugin/wifi_scan_plugin.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:fl_chart/fl_chart.dart';
+
+import '../../constants.dart';
 
 
 
@@ -29,11 +32,14 @@ class OfflinePhaseTab extends StatefulWidget {
 class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
 
   final pointCoordinateController = TextEditingController();
-  final String url = 'http://192.168.1.4:3005/v1/accesspoint/add';
-  final Map<String, String> headers = {"Content-type": "application/json"};
-  CountDownController _controller = CountDownController();
-  final sampleTime = Duration(milliseconds: 1000);
-  int _duration = 5;
+  final CountDownController _controller = CountDownController();
+
+  late SharedPreferences prefs;
+  late String ipAddress;
+  late String port;
+  late String url;
+  var _duration = 1;
+  var sampleTime;
   late Timer _timer;
   late bool isStopped; //global
   var accessPoints;
@@ -46,6 +52,7 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
   @override
   void initState() {
     super.initState();
+    _setVariables();
   }
 
   @override
@@ -186,7 +193,7 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
     Point _point = new Point(pointCoordinate, accessPointList);
     String json = jsonEncode(_point);
     print(json);
-    Response response = await post(url, headers: headers, body: json);
+    Response response = await post(url, headers: Constants.headers, body: json);
     int statusCode = response.statusCode;
     String body = response.body;
   }
@@ -213,11 +220,11 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
 
    resetTimer() {
      setState(() {
+       _setVariables();
       Wifi.requestNewScan(true);
       isStopped = false;
        _controller.restart();
      });
-
    }
 
   void resetVariables() {
@@ -228,4 +235,14 @@ class _OfflinePhaseTabState extends State<OfflinePhaseTab> {
     accessPointMap = {};
   }
 
+  _setVariables() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      ipAddress = (prefs.getString('ipAddress') ?? '192.168.1.3');
+      port = (prefs.getString('port') ?? '3005');
+      url = 'http://' + ipAddress + ':' + port + '/v1/accesspoint/add';
+      sampleTime = Duration(milliseconds: (prefs.getInt('intervalTime') ?? 100));
+      _duration = (prefs.getInt('scanTime') ?? 20);
+    });
+  }
 }

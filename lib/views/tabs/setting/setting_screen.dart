@@ -1,4 +1,5 @@
 
+import 'package:access_point/constants.dart';
 import 'package:access_point/utils/widgets/custom_server_setting_card.dart';
 import 'package:access_point/utils/widgets/custom_time_setting_card.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,17 @@ class _SettingScreenState extends State<SettingScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SettingTimeCard(),
-              SettingTimeCard(),
+              SettingTimeCard(
+                text: 'Total Scan Time(Second)',
+                baseTime: 5,
+                chooseTerm: Constants.chooseScanTime,
+              ),
+              SettingTimeCard(
+                text: 'Time Interval(milliSecond)',
+                baseTime: 100,
+                chooseTerm: Constants.chooseIntervalTime,
+              ),
               ServerSetting(title: 'IP Address', subTitle: '192.168.1.5',),
-              // ServerSetting(title: 'Server Port', subTitle: '3005',),
             ],
           ),
         ),

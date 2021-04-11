@@ -7,6 +7,8 @@ import 'package:access_point/views/tabs/wifi_scanner_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
+import 'constants.dart';
+
 
 
 class Home extends StatefulWidget {
@@ -18,7 +20,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery
         .of(context)
         .size

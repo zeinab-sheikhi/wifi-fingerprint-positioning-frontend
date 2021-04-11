@@ -2,8 +2,7 @@
 import 'package:access_point/utils/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:flutter_keyboard_aware_dialog/flutter_keyboard_aware_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 // ignore: must_be_immutable
@@ -23,6 +22,14 @@ class _ServerSettingState extends State<ServerSetting> {
 
   final TextEditingController ipAddressTextFieldController = TextEditingController();
   final TextEditingController portTextFieldController = TextEditingController();
+  String _ipAddress = "";
+  String _port = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadServerSettings();
+  }
 
 
   @override
@@ -70,6 +77,7 @@ class _ServerSettingState extends State<ServerSetting> {
       builder:(context) {
         return AlertDialog(
           // backgroundColor: Color(0xff15317c),
+          backgroundColor: Color(0xff111628),
           contentPadding: const EdgeInsets.all(16.0),
           content:  Column(
             mainAxisSize: MainAxisSize.min,
@@ -79,9 +87,9 @@ class _ServerSettingState extends State<ServerSetting> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: MyTextField(
-                    hintText: '192.168.1.3',
+                    hintText: _ipAddress,
                     labelText: 'IP Address',
-                    prefixIcon: Icon(Icons.edit_outlined, color: Colors.white,),
+                    prefixIcon: Icon(Icons.edit_outlined, color: Color(0xff43adb7),),
                     controller: ipAddressTextFieldController,
                     keyboardType: TextInputType.numberWithOptions(
                       decimal: true,
@@ -90,9 +98,9 @@ class _ServerSettingState extends State<ServerSetting> {
                 ),
               ),
               MyTextField(
-                  hintText: '3005',
+                  hintText: _port,
                   labelText: 'Port',
-                  prefixIcon: Icon(Icons.edit_outlined, color: Colors.white,),
+                  prefixIcon: Icon(Icons.edit_outlined, color: Color(0xff43adb7),),
                   controller: portTextFieldController,
                   keyboardType: TextInputType.numberWithOptions(
                       decimal: true,
@@ -102,14 +110,15 @@ class _ServerSettingState extends State<ServerSetting> {
             ],
           ),
           actions: <Widget>[
-            new FlatButton(
-                child: const Text('CANCEL'),
+             ElevatedButton(
+                child: const Text('CANCEL', style: TextStyle(color: Color(0xff43adb7),),),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
-            new FlatButton(
-                child: const Text('OK'),
+            ElevatedButton(
+                child: const Text('OK', style: TextStyle(color: Color(0xff43adb7),)),
                 onPressed: () {
+                  setServerSetting();
                   Navigator.pop(context);
                 })
           ],
@@ -117,6 +126,25 @@ class _ServerSettingState extends State<ServerSetting> {
       }
     );
   }
+  _loadServerSettings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _ipAddress = (prefs.getString('ipAddress') ?? '192.168.1.3');
+      _port = (prefs.getString('port') ?? '3005');
+    });
+  }
+  setServerSetting() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _ipAddress = ipAddressTextFieldController.text;
+      prefs.setString('ipAddress', _ipAddress);
+      _port = portTextFieldController.text;
+      prefs.setString('port', _port);
+    });
+    print(_ipAddress + ":" + _port);
+
+  }
+
 }
 
 
