@@ -1,13 +1,17 @@
+import 'dart:async';
+
+import 'package:access_point/utils/preferences_util.dart';
 import 'package:access_point/utils/widgets/custom_home_item_card.dart';
 import 'package:access_point/utils/widgets/hexagon_shape.dart';
-import 'package:access_point/views/tabs/setting/setting_screen.dart';
-import 'package:access_point/views/tabs/offline_phase_screen.dart';
-import 'package:access_point/views/tabs/online_phase_screen.dart';
-import 'package:access_point/views/tabs/wifi_scanner_screen.dart';
+import 'package:access_point/utils/widgets/introduction_alert_dialog.dart';
+import 'package:access_point/views/tabs/setting.dart';
+import 'package:access_point/views/tabs/offline_phase.dart';
+import 'package:access_point/views/tabs/online_phase.dart';
+import 'package:access_point/views/tabs/wifi_scanner.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 
-import 'constants.dart';
 
 
 
@@ -19,6 +23,29 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   @override
+  void initState() {
+    super.initState();
+    Timer.run(() => showAlert(context));
+    PreferenceUtils.init();
+
+  }
+
+  showAlert(BuildContext context)  {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return IntroductionDialog(
+            title: 'WiFi Fingerprint App',
+            descriptions: 'For building Radio Map in Offline Phase and calculate location in Online phase\n'
+                'Access to device Location must be granted',
+            text: 'OK',
+            img: 'assets/images/wifi.gif',
+          );
+        }
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     double width = MediaQuery
         .of(context)
@@ -28,7 +55,6 @@ class _HomeState extends State<Home> {
         .of(context)
         .size
         .height;
-
 
     return Scaffold(
       backgroundColor: Color(0xff030712),
@@ -79,13 +105,13 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   HomeCard(
-                      goToRoute: OfflinePhaseTab(),
+                      goToRoute: OfflinePhase(),
                       titleText: 'Offline Phase',
                       borderColor: Color(0xff27e8b9),
                       icon: Icons.place_outlined,
                   ),
                   HomeCard(
-                      goToRoute: OnLinePhaseTab(),
+                      goToRoute: OnLinePhase(),
                       titleText: 'Online Phase',
                       borderColor: Color(0xffe17ecb),
                       icon: Icons.person_search,
@@ -102,14 +128,13 @@ class _HomeState extends State<Home> {
                     icon: Icons.wifi,
                   ),
                   HomeCard(
-                      goToRoute: OnLinePhaseTab(),
+                      goToRoute: OnLinePhase(),
                       titleText: 'Read More',
                       borderColor: Color(0xff3fd5dc),
                       icon: Icons.read_more,
                   )
                 ],
               ),
-
             ],
           ),
         ),

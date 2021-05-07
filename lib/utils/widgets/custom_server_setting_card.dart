@@ -111,12 +111,26 @@ class _ServerSettingState extends State<ServerSetting> {
           ),
           actions: <Widget>[
              ElevatedButton(
+               style: ButtonStyle(
+                 backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                     (Set<MaterialState> states) {
+                   return Color(0xff111628);
+                 },
+               ),
+               ),
                 child: const Text('CANCEL', style: TextStyle(color: Color(0xff43adb7),),),
                 onPressed: () {
                   Navigator.pop(context);
                 }),
             ElevatedButton(
                 child: const Text('OK', style: TextStyle(color: Color(0xff43adb7),)),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      return Color(0xff111628);
+                    },
+                  ),
+                ),
                 onPressed: () {
                   setServerSetting();
                   Navigator.pop(context);

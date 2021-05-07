@@ -2,16 +2,18 @@ import 'access_point.dart';
 
 class Point {
 
-  final String pointCoordinate;
+  final int xCoordinate;
+  final int yCoordinate;
   final List<AccessPoint> accessPoints;
 
-  Point(this.pointCoordinate, this.accessPoints);
+  Point(this.xCoordinate, this.yCoordinate,this.accessPoints);
 
   Map toJson() {
 
     return {
-      'location': pointCoordinate,
-      'signals_value': accessPoints
+      'x': xCoordinate,
+      'y': yCoordinate,
+      'accessPoints': accessPoints
     };
   }
 }

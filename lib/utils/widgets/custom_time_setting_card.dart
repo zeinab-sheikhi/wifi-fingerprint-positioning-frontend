@@ -1,36 +1,37 @@
 
-import 'package:access_point/constants.dart';
+import 'package:access_point/utils/constants.dart';
+import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/util.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
 
 import 'custom_round_button.dart';
 
 // ignore: must_be_immutable
-class SettingTimeCard extends StatefulWidget {
+class SettingParameterCard extends StatefulWidget {
 
-  String text;
-  int baseTime;
-  int chooseTerm;
+  String title;
+  int supplement;
+  int parameter;
 
-  SettingTimeCard({
-    required this.text,
-    required this.baseTime,
-    required this.chooseTerm
+  SettingParameterCard({
+    required this.title,
+    required this.supplement,
+    required this.parameter
 });
   @override
-  _SettingTimeCardState createState() => _SettingTimeCardState();
+  _SettingParameterCardState createState() => _SettingParameterCardState();
 }
 
-class _SettingTimeCardState extends State<SettingTimeCard> {
-  int timeText = 0;
+class _SettingParameterCardState extends State<SettingParameterCard> {
+  int supplement = 0;
 
   @override
   void initState() {
     super.initState();
-    _loadSampleTime();
+    _loadParameters();
   }
   
   @override
@@ -41,17 +42,17 @@ class _SettingTimeCardState extends State<SettingTimeCard> {
       height: height / 8,
       child: Card(
         elevation: 2,
-        margin: new EdgeInsets.symmetric(vertical: 6.0),
+        margin: new EdgeInsets.symmetric(vertical: 5.0),
         color: Color(0xff242c42),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(5.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
             AutoSizeText(
-            widget.text,
+            widget.title,
             maxLines: 1,
             style: TextStyle(
               color: Colors.white,
@@ -64,21 +65,21 @@ class _SettingTimeCardState extends State<SettingTimeCard> {
                 children: [
                 RoundButton(
                     icon: Icon(Icons.remove_rounded, color: Color(0xfffdfeff),), 
-                    onPressed: () {decreaseTime();},
+                    onPressed: () { _decrease(); },
                     width: width, 
                     height: height),
                 AutoSizeText(
-                  timeText.toString(),
+                  supplement.toString(),
                   maxLines: 1,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold
                   ),
                 ),
                 RoundButton(
                     icon: Icon(Icons.add, color: Color(0xfffdfeff),), 
-                    onPressed: () { increaseTime();},
+                    onPressed: () { _increase(); },
                     width: width, 
                     height: height),
               ],
@@ -90,93 +91,109 @@ class _SettingTimeCardState extends State<SettingTimeCard> {
     );
   }
 
-  _loadSampleTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    switch (widget.chooseTerm) {
-      case Constants.chooseScanTime: {
-        setState(() {
-          timeText = (prefs.getInt('scanTime') ?? 20);
-        });
-      }
-      break;
-      case Constants.chooseIntervalTime :{
-        setState(() {
-          timeText = (prefs.getInt('intervalTime') ?? 100);
-        });
-      }
-    }
-  }
+  ///load algorithm parameters(T, D, X) from shared preferences
+  _loadParameters() async {
 
-  decreaseTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int _time = 0;
-    switch (widget.chooseTerm) {
-      case Constants.chooseScanTime: {
-        _time = (prefs.getInt('scanTime') ?? 20);
-        _time -= widget.baseTime;
-        if(_time <= 0) {
-          _showToast("Scan Time must be a Positive Integer", context);
-          _time = 5;
-        }
-        prefs.setInt('scanTime', _time);
+    int _supplement = 0;
+    switch (widget.parameter) {
+      case Constants.parameterT: {
+          _supplement = PreferenceUtils.getInt('scanTime', 20);
       }
       break;
-      case Constants.chooseIntervalTime: {
-        _time = (prefs.getInt('intervalTime') ?? 100);
-        _time -= widget.baseTime;
-        if(_time <= 0) {
-          _showToast("Interval Time must be a Positive Integer", context);
-          _time = 100;
-        }
-        prefs.setInt('intervalTime', _time);
-      }
+      case Constants.parameterD :{
+          _supplement = PreferenceUtils.getInt('intervalTime', 100);
       break;
+      }
+      case Constants.parameterX: {
+          _supplement = PreferenceUtils.getInt('X', 1);
+      }
     }
     setState(() {
-      timeText = _time;
-    });
-
-  }
-
-  increaseTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int _time = 0;
-    switch (widget.chooseTerm) {
-      case Constants.chooseScanTime: {
-        _time = (prefs.getInt('scanTime') ?? 20);
-        _time += widget.baseTime;
-        if(_time > 30) {
-          _showToast("Maximum Scan Time is 30s", context);
-          _time = 30;
-        }
-        prefs.setInt('scanTime', _time);
-      }
-      break;
-      case Constants.chooseIntervalTime: {
-        _time = (prefs.getInt('intervalTime') ?? 100);
-        _time += widget.baseTime;
-        if(_time > 900) {
-          _showToast("Maximum Interval Time is 1000ms", context);
-          _time = 900;
-        }
-        prefs.setInt('intervalTime', _time);
-      }
-
-    }
-    setState(() {
-      timeText = _time;
+      supplement = _supplement;
     });
   }
 
-  _showToast(String toastMessage, BuildContext context) {
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content:  Text(toastMessage),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffoldMessenger.hideCurrentSnackBar),
-      ),
-    );
+  ///Decrease parameter value when user presses minus button.
+  _decrease()  {
+
+    int _supplement = 0;
+    
+    switch (widget.parameter) {
+      case Constants.parameterT: {
+        _supplement = PreferenceUtils.getInt('scanTime', 20);
+        _supplement -= widget.supplement;
+        if(_supplement <= 0) {
+          Util.showToast("Scan Time must be a Positive Integer", context);
+          _supplement = 5;
+        }
+        PreferenceUtils.setInt('scanTime', _supplement);
+      }
+      break;
+      case Constants.parameterD: {
+        _supplement = PreferenceUtils.getInt('intervalTime', 100);
+        _supplement -= widget.supplement;
+        if(_supplement <= 0) {
+          Util.showToast("Interval Time must be a Positive Integer", context);
+          _supplement = 100;
+        }
+        PreferenceUtils.setInt('intervalTime', _supplement);
+      }
+      break;
+      case Constants.parameterX: {
+        _supplement = PreferenceUtils.getInt('X', 1);
+        _supplement -= widget.supplement;
+        if(_supplement <= 0) {
+          Util.showToast('X must be a Positive Integer', context);
+          _supplement = 1;
+        }
+        PreferenceUtils.setInt('X', _supplement);
+      }
+    }
+    setState(() {
+      supplement = _supplement;
+    });
+  }
+
+  ///Increase parameter value when user presses plus button.
+  _increase() {
+
+    int _supplement = 0;
+    int _parameterD = 0;
+    int _parameterT = 0;
+
+    switch (widget.parameter) {
+      case Constants.parameterT: {
+        _supplement = PreferenceUtils.getInt('scanTime', 20);
+        _supplement += widget.supplement;
+        if(_supplement > 30) {
+          Util.showToast("Maximum Scan Time is 30s", context);
+          _supplement = 30;
+        }
+        PreferenceUtils.setInt('scanTime', _supplement);
+      }
+      break;
+      case Constants.parameterD: {
+        _supplement = PreferenceUtils.getInt('intervalTime', 100);
+        _supplement += widget.supplement;
+        PreferenceUtils.setInt('intervalTime', _supplement);
+      }
+      break;
+      case Constants.parameterX: {
+        _supplement = PreferenceUtils.getInt('X', 1);
+        _supplement += widget.supplement;
+        _parameterD = PreferenceUtils.getInt('intervalTime', 100);
+        _parameterT = PreferenceUtils.getInt('scanTime', 20);
+        int max = (_parameterD ~/ 1000) * _parameterT;
+        if(_supplement >= max) {
+          Util.showToast('Check your X parameter', context);
+          _supplement = 1;
+        }
+        PreferenceUtils.setInt('X', _supplement);
+      }
+    }
+    setState(() {
+      supplement = _supplement;
+    });
   }
 
 }
