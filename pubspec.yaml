@@ -25,11 +25,11 @@ dependencies:
     sdk: flutter
   http: ^0.12.2
   circular_countdown_timer: ^0.1.0
-  flutter_keyboard_aware_dialog: ^1.0.1
   auto_size_text: ^2.1.0
   material_design_icons_flutter: 4.0.5955
   shared_preferences: ^2.0.5
-#  permission_handler: ^7.1.0
+  flutter_animation_progress_bar: ^2.0.0
+  #  permission_handler: ^7.1.0
   location: ^3.0.0
   wifi_plugin:
     git:
@@ -52,6 +52,7 @@ flutter:
   uses-material-design: true
   assets:
      - assets/images/wifi.gif
+     - assets/images/wifi-signal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

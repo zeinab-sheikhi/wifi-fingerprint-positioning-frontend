@@ -1,8 +1,9 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class CustomTimer extends StatelessWidget {
+class CircularTimer extends StatelessWidget {
 
   double width;
   double height;
@@ -12,14 +13,14 @@ class CustomTimer extends StatelessWidget {
   Function completeTimer;
 
 
-  CustomTimer({
+  CircularTimer({
     required this.width,
     required this.height,
     required this.duration,
     required this.controller,
     required this.startTimer,
     required this.completeTimer
-});
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +38,7 @@ class CustomTimer extends StatelessWidget {
       height: height / 4,
       ringColor: Color(0xff33406b),
       ringGradient: LinearGradient(
-        colors: [ Color(0xff95859b), Color(0xff60cbda),],
-
+        colors: [ Color(0xff95859b), Color(0xff60cbda)]
       ),
       fillColor: Color(0xffad6075),
       fillGradient: null,

@@ -16,8 +16,8 @@ class CurveShape extends CustomPainter {
     paint.strokeJoin = StrokeJoin.round;
     canvas.drawPath(p,paint);
   }
-  Path getPath(Size size) {
 
+  Path getPath(Size size) {
     var width = size.width ;
     var height = size.height;
     final path = Path();
@@ -31,7 +31,6 @@ class CurveShape extends CustomPainter {
     path.close();
     return path;
   }
-
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {

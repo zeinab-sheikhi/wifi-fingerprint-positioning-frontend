@@ -1,6 +1,4 @@
-
-import 'package:access_point/home.dart';
-import 'package:access_point/utils/util.dart';
+import 'package:access_point/views/dashboard/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,6 +15,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Wifi',
       theme: new ThemeData(
+        scaffoldBackgroundColor: Color(0xff030712),
+        appBarTheme: AppBarTheme(backgroundColor: Color(0xff111628)),
         primaryColor: Colors.white,
         primaryColorLight: Color.fromRGBO(246, 246, 246, 1),
         primaryColorDark: Colors.black,

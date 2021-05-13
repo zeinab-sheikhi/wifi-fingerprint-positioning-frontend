@@ -76,7 +76,6 @@ class MyTextField extends StatelessWidget {
         ),
         keyboardType: keyboardType,
         controller: controller,
-
       ),
     );
   }

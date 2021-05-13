@@ -25,6 +25,7 @@ class HexagonShape extends CustomPainter {
 
     canvas.drawPath(p,paint);
   }
+
   Path getPath(Size size) {
 
     var width = size.width ;
@@ -37,7 +38,6 @@ class HexagonShape extends CustomPainter {
     path.lineTo(width, height * 0.9 );
     path.lineTo(width, height * 0.1);
     path.close();
-
     return path;
   }
 

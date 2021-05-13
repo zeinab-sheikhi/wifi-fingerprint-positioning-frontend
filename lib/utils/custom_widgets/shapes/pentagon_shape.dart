@@ -16,11 +16,9 @@ class PentagonShape extends CustomPainter {
       ..style = PaintingStyle.fill
       ..strokeJoin = StrokeJoin.round
     );
-
-
   }
-  Path getPath(Size size) {
 
+  Path getPath(Size size) {
     var width = size.width ;
     var height = size.height;
     final path = Path();
@@ -34,7 +32,6 @@ class PentagonShape extends CustomPainter {
     path.close();
     return path;
   }
-
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {

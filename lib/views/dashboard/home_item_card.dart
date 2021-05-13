@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HomeCard extends StatelessWidget {
 
   Widget goToRoute;
@@ -12,14 +13,12 @@ class HomeCard extends StatelessWidget {
     required this.titleText,
     required this.borderColor,
     required this.icon
-});
-
-
+  });
 
   @override
   Widget build(BuildContext context) {
+
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -31,7 +30,7 @@ class HomeCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: borderColor
+              color: borderColor
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -42,12 +41,10 @@ class HomeCard extends StatelessWidget {
           children: [
             Icon(
               icon,
-              // Icons.place_outlined,
               color: Colors.white,
               size: width / 4,
             ),
             Text(
-              // 'Offline Phase',
               titleText,
               style: TextStyle(
                   color: Colors.white,
