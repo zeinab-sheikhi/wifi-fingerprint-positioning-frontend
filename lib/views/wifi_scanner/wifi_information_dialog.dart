@@ -28,10 +28,10 @@ class WifiInfoDialog extends StatelessWidget {
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return _infoDialog(width, height, iconColor, context);
+    return _infoDialog(width, height, context);
   }
 
-  Widget _infoDialog(double width, double height, Color color, BuildContext context) {
+  Widget _infoDialog(double width, double height, BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: Colors.transparent,
@@ -45,55 +45,36 @@ class WifiInfoDialog extends StatelessWidget {
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: _infoContainer(
-            width,
-            height,
-            color,
-            ssid,
-            bssid,
-            band,
-            signal,
-            channel,
-            context
-        ),
+        child: _infoContainer(width, height, context),
       ),
     );
   }
 
-  Widget _infoContainer(
-      double width,
-      double height,
-      Color color,
-      String SSID,
-      String BSSID,
-      String band,
-      String signal,
-      String channel,
-      BuildContext context) {
+  Widget _infoContainer(double width, double height, BuildContext context) {
 
     const List<String> _titles = ['SSID', 'BSSID', 'Band', 'Signal', 'Channel'];
-    List<String> _values = [SSID, BSSID, '${Util.getChannel(band)} GHz', '${signal} dBm', 'Ch #${channel}(${band} MHz)'];
+    List<String> _values = [ssid, bssid, '${Util.getChannel(band)} GHz', '${signal} dBm', 'Ch #${channel}(${band} MHz)'];
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width / 50),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _wifiIconContainer(color, width, height),
+          _wifiIconContainer(width, height),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _customColumn(_titles, color, true, height),
+              _customColumn(_titles, iconColor, true, height),
               _customColumn(_values, Colors.grey, false, height),
             ],
           ),
-          _closeButtonContainer(context, color)
+          _closeButtonContainer(context)
         ],
       ),
     );
   }
 
-  Widget _wifiIconContainer(Color color, double width, double height) {
+  Widget _wifiIconContainer(double width, double height) {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(vertical: height / 100),
@@ -104,7 +85,7 @@ class WifiInfoDialog extends StatelessWidget {
           height: width / 5,
           fit: BoxFit.cover,
         ),
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
       ),
     );
   }
@@ -138,7 +119,7 @@ class WifiInfoDialog extends StatelessWidget {
     );
   }
   
-  Widget _closeButtonContainer(BuildContext context, Color color) {
+  Widget _closeButtonContainer(BuildContext context) {
     return Align(
       alignment: Alignment.bottomRight,
       child: ElevatedButton(
@@ -149,7 +130,7 @@ class WifiInfoDialog extends StatelessWidget {
           onPressed: (){
             Navigator.of(context).pop();
           },
-          child: Text('close',style: TextStyle(fontSize: 18, color: color),)),
+          child: Text('close',style: TextStyle(fontSize: 18, color: iconColor),)),
     );
   }
 

@@ -69,7 +69,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     );
   }
 
-  Widget _customScrollView(width, height) {
+  Widget _customScrollView(double width, double height) {
     return CustomScrollView(
       slivers: [
         SliverFillRemaining(
@@ -86,7 +86,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     );
   }
 
-  Widget _topContainer(width, height) {
+  Widget _topContainer(double width, double height) {
     return Container(
       height: (height * 3) / 5,
       child: Column(
@@ -132,7 +132,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     );
   }
 
-  Widget _bottomContainer(width, height) {
+  Widget _bottomContainer(double width, double height) {
     return Expanded(
       child: Container(
         alignment: Alignment.topCenter,
@@ -163,7 +163,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     );
   }
 
-  Widget _buttonContainer(width, height) {
+  Widget _buttonContainer(double width, double height) {
     return Positioned(
       top: height * 3 / 5 - height / 16,
       child: CollectButton(

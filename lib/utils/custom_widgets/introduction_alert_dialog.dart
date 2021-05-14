@@ -72,7 +72,7 @@ class _IntroductionDialogState extends State<IntroductionDialog> {
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                     onPressed: (){
-                      Wifi.enableWiFi();
+                      Wifi.enableWiFi(true);
                       Navigator.of(context).pop();
                       PermissionsService().requestLocationPermission();
                     },

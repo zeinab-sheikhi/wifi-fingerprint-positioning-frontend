@@ -219,6 +219,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+  regexed_validator:
+    dependency: "direct main"
+    description:
+      name: regexed_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -327,7 +334,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "102ae83f2ff8d75a72e49c1b1409d21b5e357ba0"
+      resolved-ref: "81b1caf755d765718c793bfa32bc482afe986874"
       url: "https://github.com/zeinab-sheikhi/wifi-plugin.git"
     source: git
     version: "0.0.1"

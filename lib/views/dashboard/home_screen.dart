@@ -6,6 +6,7 @@ import 'package:access_point/views/dashboard/home_item_card.dart';
 import 'package:access_point/utils/custom_widgets/shapes/hexagon_shape.dart';
 import 'package:access_point/views/screens/setting.dart';
 import 'package:access_point/views/screens/online_phase.dart';
+import 'package:access_point/views/settings/settings_screen.dart';
 import 'package:access_point/views/wifi_scanner/wifi_screen.dart';
 import 'package:access_point/views/offline_phase/offline_phase_screen.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _HomeState extends State<Home> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SettingScreen()),
+              MaterialPageRoute(builder: (context) => Settings()),
             );
           },
         )
@@ -127,7 +128,7 @@ class _HomeState extends State<Home> {
           icon: Icons.wifi,
         ),
         HomeCard(
-          goToRoute: OnLinePhase(),
+          goToRoute: SettingScreen(),
           titleText: 'Read More',
           borderColor: Color(0xff3fd5dc),
           icon: Icons.read_more,

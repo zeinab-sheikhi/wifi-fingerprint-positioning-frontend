@@ -71,7 +71,7 @@ class _ServerSettingState extends State<ServerSetting> {
       ),
     );
   }
-  _showDialog(context, mediaQuery) async {
+   _showDialog(context, mediaQuery) async {
     await showDialog(
       context: context,
       builder:(context) {
@@ -147,6 +147,7 @@ class _ServerSettingState extends State<ServerSetting> {
       _port = (prefs.getString('port') ?? '3005');
     });
   }
+
   setServerSetting() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {

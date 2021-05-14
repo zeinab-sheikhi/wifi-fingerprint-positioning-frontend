@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class MyTextField extends StatelessWidget {
@@ -76,7 +77,11 @@ class MyTextField extends StatelessWidget {
         ),
         keyboardType: keyboardType,
         controller: controller,
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.digitsOnly
+        ],
       ),
     );
   }
+
 }

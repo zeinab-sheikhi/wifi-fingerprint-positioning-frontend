@@ -29,6 +29,7 @@ dependencies:
   material_design_icons_flutter: 4.0.5955
   shared_preferences: ^2.0.5
   flutter_animation_progress_bar: ^2.0.0
+  regexed_validator: ^1.0.4
   #  permission_handler: ^7.1.0
   location: ^3.0.0
   wifi_plugin:
