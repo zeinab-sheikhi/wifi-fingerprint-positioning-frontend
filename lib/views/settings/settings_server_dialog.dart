@@ -1,4 +1,4 @@
-import 'package:access_point/utils/custom_widgets/custom_text_field.dart';
+import 'package:access_point/utils/views/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,4 +1,4 @@
-import 'package:access_point/views/dashboard/home_screen.dart';
+import 'package:access_point/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

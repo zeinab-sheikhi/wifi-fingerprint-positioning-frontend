@@ -1,22 +1,40 @@
 import 'package:access_point/utils/data/string_utils.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'dart:math' as math;
+
 
 class Helper {
 
-  List<int> makeList(List<int> rssiList, int numOfItems) {
+  /// Sort List in Ascending Order
+  List<int> sortList(List<int> list) {
 
-    List<int> modifiedList = [];
-    //sort list in ascending order
-    rssiList.sort((b, a) => a.compareTo(b));
-    //make sublist which has numOfItems items
-    modifiedList = rssiList.sublist(0, numOfItems + 1);
-    return modifiedList;
+    list.sort((b, a) => a.compareTo(b));
+    return list;
   }
 
-  int calculateMean(List<int> list) {
-    var mean = list.reduce((a,b) => a + b) ~/ list.length;
-    return mean;
+  double calculateAverage(List<int> list) {
+    var average = list.reduce((a,b) => a + b) / list.length;
+    return average;
+  }
+
+  double calculateStandardDeviation(List<int> list, double average, int length) {
+
+    num sumOfSquaredDiffFromMean = 0;
+    for (var value in list) {
+      var squareDiffFromMean = math.pow(value - average, 2);
+      sumOfSquaredDiffFromMean += squareDiffFromMean;
+    }
+    var variance = sumOfSquaredDiffFromMean / length;
+    var standardDeviation = math.sqrt(variance);
+    return standardDeviation;
+  }
+
+  String getDateTime() {
+    var dt = DateTime.now();
+    String newDt = DateFormat.yMMMMd().add_jms().format(dt);
+    return newDt;
   }
 
   static String getChannel(String frequency) {

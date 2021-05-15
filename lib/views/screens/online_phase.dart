@@ -1,9 +1,6 @@
-import 'package:access_point/utils/data/location_service.dart';
+import 'package:access_point/utils/data/helper.dart';
 import 'package:flutter/material.dart';
-
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:location/location.dart';
-
+import 'package:intl/intl.dart';
 
 class OnLinePhase extends StatefulWidget {
   @override
@@ -20,14 +17,8 @@ class _OnLinePhaseState extends State<OnLinePhase> {
   @override
   Widget build(BuildContext context) {
 
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: Color(0xff030712),
@@ -43,16 +34,14 @@ class _OnLinePhaseState extends State<OnLinePhase> {
           ),
           child: SingleChildScrollView(
             child: Container(
-
               padding: EdgeInsets.symmetric(vertical: width / 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:  <Widget>[
-                  // PermissionStatusWidget(),
-                  // Divider(color: Colors.white,),
-                  // ServiceEnabledWidget(),
-                  // Divider(height: 32),
+                children: [
+                  ElevatedButton(
+                      onPressed: _calculate,
+                      child: Text('Calculate'))
                 ],
               ),
             ),
@@ -62,4 +51,8 @@ class _OnLinePhaseState extends State<OnLinePhase> {
     );
   }
 
+  _calculate() {
+
+    print(Helper().getDateTime());
+  }
 }

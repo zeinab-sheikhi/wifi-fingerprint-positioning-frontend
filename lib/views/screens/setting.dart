@@ -1,6 +1,6 @@
 import 'package:access_point/utils/data/string_utils.dart';
-import 'package:access_point/utils/custom_widgets/custom_server_setting_card.dart';
-import 'package:access_point/utils/custom_widgets/custom_time_setting_card.dart';
+import 'package:access_point/utils/views/custom_server_setting_card.dart';
+import 'package:access_point/utils/views/custom_time_setting_card.dart';
 import 'package:flutter/material.dart';
 
 class SettingScreen extends StatefulWidget {

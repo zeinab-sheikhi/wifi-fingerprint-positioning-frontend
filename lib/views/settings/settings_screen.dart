@@ -21,13 +21,14 @@ class _SettingsState extends State<Settings> {
   Color _color = Color(0xFFE4276B);
   int _Tvalue = 0;
   int _Dvalue = 0;
-  int _Xvalue = 0;
+  // int _Xvalue = 0;
 
   @override
   void initState() {
-    super.initState();
+
     _loadSharedPreferences();
     _isWifiEnable();
+    super.initState();
   }
 
   @override
@@ -143,16 +144,16 @@ class _SettingsState extends State<Settings> {
               _Dvalue
           ),
           Divider(color: Colors.grey, indent: width / 20, endIndent: width / 20),
-          _sliderContainer(
-              width,
-              height,
-              'X',
-              1,
-              15,
-              14,
-              'X',
-              _Xvalue
-          ),
+          // _sliderContainer(
+          //     width,
+          //     height,
+          //     'X',
+          //     1,
+          //     15,
+          //     14,
+          //     'X',
+          //     _Xvalue
+          // ),
         ],
     );
   }
@@ -259,15 +260,15 @@ class _SettingsState extends State<Settings> {
 
     int Tvalue = 0;
     int Dvalue = 0;
-    int Xvalue = 0;
+    // int Xvalue = 0;
 
     Tvalue = PreferenceUtils.getInt('scanTime', 20);
     Dvalue = PreferenceUtils.getInt('intervalTime', 1000);
-    Xvalue = PreferenceUtils.getInt('X', 1);
+    // Xvalue = PreferenceUtils.getInt('X', 1);
     setState(() {
       _Tvalue = Tvalue;
       _Dvalue = Dvalue;
-      _Xvalue = Xvalue;
+      // _Xvalue = Xvalue;
     });
   }
 }

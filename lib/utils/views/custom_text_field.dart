@@ -16,7 +16,6 @@ class MyTextField extends StatelessWidget {
   MyTextField({
     this.fontSize = 18,
     this.textColor = Colors.white,
-    // this.fillColor = const Color(0xff29292e),
     this.fillColor = const Color(0xff0242c42),
     required this.hintText,
     required this.labelText,
@@ -63,14 +62,6 @@ class MyTextField extends StatelessWidget {
             contentPadding: EdgeInsets.only(),
             fillColor: fillColor,
             filled: true,
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.all(Radius.circular(20)),
-            //   borderSide: BorderSide(
-            //     width: 1,
-            //     style: BorderStyle.solid,
-            //     color: Color(0xff3ed9dc)
-            //   ),
-            // ),
             hintText: hintText,
             // hintStyle: TextStyle(fontSize: 18.0, color: Colors.white),
             labelText: labelText

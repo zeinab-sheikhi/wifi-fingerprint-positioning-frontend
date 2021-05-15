@@ -1,8 +1,8 @@
 
 import 'package:access_point/utils/data/location_service.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
-import 'package:access_point/views/dashboard/home_item_card.dart';
-import 'package:access_point/utils/custom_widgets/shapes/hexagon_shape.dart';
+import 'package:access_point/views/home/home_item_card.dart';
+import 'package:access_point/utils/views/shapes/hexagon_shape.dart';
 import 'package:access_point/views/screens/setting.dart';
 import 'package:access_point/views/screens/online_phase.dart';
 import 'package:access_point/views/settings/settings_screen.dart';

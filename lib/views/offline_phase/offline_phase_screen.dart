@@ -9,9 +9,8 @@ import 'package:access_point/model/point.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:access_point/utils/data/helper.dart';
 import 'package:access_point/views/offline_phase/offline_phase_collect_button.dart';
-import 'package:access_point/utils/custom_widgets/custom_text_field.dart';
+import 'package:access_point/utils/views/custom_text_field.dart';
 import 'package:access_point/views/offline_phase/offline_phase_circular_timer.dart';
-import 'package:access_point/views/screens/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -37,8 +36,12 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   String _url = '';
   int _duration = 0;
-  int _selectXItems = 0;
-  int _average = 0;
+  int _intervalTime = 0;
+  int _size = 0;
+  int _max = 0;
+  int _min = 0;
+  double _average = 0.0;
+  double _standardDeviation = 0.0;
   var _sampleTime;
   late Timer _timer;
   bool _isStopped = false;
@@ -142,23 +145,23 @@ class _OfflinePhaseState extends State<OfflinePhase> {
               topLeft: Radius.elliptical(100, 30),
               topRight: Radius.elliptical(100, 30)),
         ),
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: width / 20, vertical: height / 60),
-            child: SizedBox(
-              width: width,
-              height: height * 2 / 5 - (height / 16 + height / 30),
-              child: Card(
-                margin: EdgeInsets.only(top: height / 20),
-                child: Center(),
-                elevation: 9,
-                color: Color(0xff162648),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5))),
-              ),
-            ),
-          ),
-        ),
+        // child: Center(
+        //   child: Padding(
+        //     padding: EdgeInsets.symmetric(horizontal: width / 20, vertical: height / 60),
+        //     child: SizedBox(
+        //       width: width,
+        //       height: height * 2 / 5 - (height / 16 + height / 30),
+        //       child: Card(
+        //         margin: EdgeInsets.only(top: height / 20),
+        //         child: Center(),
+        //         elevation: 9,
+        //         color: Color(0xff162648),
+        //         shape: RoundedRectangleBorder(
+        //             borderRadius: BorderRadius.all(Radius.circular(5))),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
@@ -177,9 +180,9 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   _initializeVariables()  {
     setState(() {
       _url = Helper.getUrl('/fingerprint/api/v1/points');
-      _sampleTime = Duration(milliseconds: PreferenceUtils.getInt('intervalTime', 100));
       _duration = PreferenceUtils.getInt('scanTime', 20);
-      _selectXItems = PreferenceUtils.getInt('X', 1);
+      _intervalTime = PreferenceUtils.getInt('intervalTime', 1000);
+      _sampleTime = Duration(milliseconds: _intervalTime);
     });
   }
 
@@ -194,12 +197,23 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
     for(MapEntry mapEntry in _accessPointsMap.entries) {
       String wifiBSSID = mapEntry.key;
-      List<int> wifiRSSIs = List.of(mapEntry.value).cast<int>();
-      if(wifiRSSIs.length > _selectXItems) {
-        wifiRSSIs = Helper().makeList(wifiRSSIs, _selectXItems);
-        _average = Helper().calculateMean(wifiRSSIs);
-        _accessPointsList.add(new AccessPoint(wifiBSSID, _average));
-      }
+      List<int> wifiRSSIList = List.of(mapEntry.value).cast<int>();
+      List<int> sortedRSSIList = Helper().sortList(wifiRSSIList);
+      _size = sortedRSSIList.length;
+      _max = sortedRSSIList.first;
+      _min = sortedRSSIList.last;
+      _average = Helper().calculateAverage(sortedRSSIList);
+      _standardDeviation = Helper().calculateStandardDeviation(sortedRSSIList, _average, _size);
+       _accessPointsList.add(
+           new AccessPoint(
+               wifiBSSID,
+               _average.toInt(),
+               _size,
+               _min,
+               _max,
+               double.parse(_standardDeviation.toStringAsFixed(4))
+           )
+       );
     }
   }
 
@@ -207,7 +221,16 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
     int xCoordinate = int.parse(_xCoordinateController.text);
     int yCoordinate = int.parse(_yCoordinateController.text);
-    Point _point = new Point(xCoordinate, yCoordinate, accessPointList);
+    int totalScanTime = _duration;
+    int intervalTime = _intervalTime ~/ 1000;
+    String dateTime = Helper().getDateTime();
+    Point _point = new Point(
+        xCoordinate,
+        yCoordinate,
+        totalScanTime,
+        intervalTime,
+        dateTime,
+        accessPointList);
     String json = jsonEncode(_point);
     Response response = await post(_url, headers:StringUtils.headers, body: json);
     int statusCode = response.statusCode;
