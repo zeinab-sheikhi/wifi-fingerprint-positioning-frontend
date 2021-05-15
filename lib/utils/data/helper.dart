@@ -1,8 +1,8 @@
-import 'package:access_point/utils/constants.dart';
-import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/data/string_utils.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:flutter/material.dart';
 
-class Util {
+class Helper {
 
   List<int> makeList(List<int> rssiList, int numOfItems) {
 
@@ -60,13 +60,13 @@ class Util {
 
   static Color progressColorBasedOnLevel(int level) {
     if (level > -50)
-      return Constants.excellentSignal;
+      return StringUtils.excellentSignal;
     else if(level <= -50 && level > -60)
-      return Constants.goodSignal;
+      return StringUtils.goodSignal;
     else if(level <= -60 && level > -70)
-      return Constants.fairSignal;
+      return StringUtils.fairSignal;
     else
-      return Constants.weakSignal;
+      return StringUtils.weakSignal;
   }
 
   ///convert rssi value in dBm to an integer between 0 and 100

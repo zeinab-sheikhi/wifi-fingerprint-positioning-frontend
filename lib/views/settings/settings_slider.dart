@@ -1,5 +1,5 @@
-import 'package:access_point/utils/constants.dart';
-import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/data/string_utils.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

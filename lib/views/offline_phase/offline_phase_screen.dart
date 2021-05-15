@@ -6,8 +6,8 @@ import 'dart:async';
 
 import 'package:access_point/model/access_point.dart';
 import 'package:access_point/model/point.dart';
-import 'package:access_point/utils/preferences_util.dart';
-import 'package:access_point/utils/util.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/data/helper.dart';
 import 'package:access_point/views/offline_phase/offline_phase_collect_button.dart';
 import 'package:access_point/utils/custom_widgets/custom_text_field.dart';
 import 'package:access_point/views/offline_phase/offline_phase_circular_timer.dart';
@@ -21,7 +21,7 @@ import 'package:wifi_plugin/wifi_plugin.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
-import '../../utils/constants.dart';
+import '../../utils/data/string_utils.dart';
 
 
 class OfflinePhase extends StatefulWidget {
@@ -176,7 +176,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   _initializeVariables()  {
     setState(() {
-      _url = Util.getUrl('/fingerprint/api/v1/points');
+      _url = Helper.getUrl('/fingerprint/api/v1/points');
       _sampleTime = Duration(milliseconds: PreferenceUtils.getInt('intervalTime', 100));
       _duration = PreferenceUtils.getInt('scanTime', 20);
       _selectXItems = PreferenceUtils.getInt('X', 1);
@@ -196,8 +196,8 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       String wifiBSSID = mapEntry.key;
       List<int> wifiRSSIs = List.of(mapEntry.value).cast<int>();
       if(wifiRSSIs.length > _selectXItems) {
-        wifiRSSIs = Util().makeList(wifiRSSIs, _selectXItems);
-        _average = Util().calculateMean(wifiRSSIs);
+        wifiRSSIs = Helper().makeList(wifiRSSIs, _selectXItems);
+        _average = Helper().calculateMean(wifiRSSIs);
         _accessPointsList.add(new AccessPoint(wifiBSSID, _average));
       }
     }
@@ -209,10 +209,10 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     int yCoordinate = int.parse(_yCoordinateController.text);
     Point _point = new Point(xCoordinate, yCoordinate, accessPointList);
     String json = jsonEncode(_point);
-    Response response = await post(_url, headers:Constants.headers, body: json);
+    Response response = await post(_url, headers:StringUtils.headers, body: json);
     int statusCode = response.statusCode;
     if(statusCode == 200)
-      Util.showToast("AccessPoint added Successfully", context);
+      Helper.showToast("AccessPoint added Successfully", context);
   }
 
   _startTimer() {

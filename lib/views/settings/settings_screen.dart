@@ -1,4 +1,4 @@
-import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:access_point/views/settings/settings_expanded_tile.dart';
 import 'package:access_point/views/settings/settings_list_tile.dart';
 import 'package:access_point/views/settings/settings_slider.dart';

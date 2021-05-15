@@ -1,7 +1,6 @@
-import 'dart:async';
 
-import 'package:access_point/utils/custom_widgets/introduction_alert_dialog.dart';
-import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/data/location_service.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:access_point/views/dashboard/home_item_card.dart';
 import 'package:access_point/utils/custom_widgets/shapes/hexagon_shape.dart';
 import 'package:access_point/views/screens/setting.dart';
@@ -12,7 +11,8 @@ import 'package:access_point/views/offline_phase/offline_phase_screen.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
-
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:location/location.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -21,11 +21,20 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+
   @override
   void initState() {
-    super.initState();
-    Timer.run(() => _showAlert(context));
     PreferenceUtils.init();
+    LocationService().checkPermissions().then((status) {
+      if(status != PermissionStatus.granted)
+        LocationService().requestPermission();
+    });
+
+    LocationService().checkService().then((status) {
+      if(!status)
+        LocationService().requestService();
+    });
+    super.initState();
   }
 
   @override
@@ -134,21 +143,6 @@ class _HomeState extends State<Home> {
           icon: Icons.read_more,
         )
       ],
-    );
-  }
-
-  _showAlert(BuildContext context)  {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return IntroductionDialog(
-            title: 'WiFi Fingerprint App',
-            descriptions: 'For building Radio Map in Offline Phase and calculate location in Online phase\n'
-                'Access to device Location must be granted',
-            text: 'OK',
-            img: 'assets/images/wifi.gif',
-          );
-        }
     );
   }
 

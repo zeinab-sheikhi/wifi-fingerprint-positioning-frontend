@@ -1,4 +1,4 @@
-import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // ignore: import_of_legacy_library_into_null_safe

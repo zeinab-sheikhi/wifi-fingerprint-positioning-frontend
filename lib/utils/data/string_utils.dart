@@ -2,9 +2,9 @@ import 'dart:core';
 
 import 'dart:ui';
 
-class Constants{
+class StringUtils{
 
-  Constants._();
+  StringUtils._();
 
   // D, the interval time between access point scans
   static const int parameterD = 1;

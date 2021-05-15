@@ -1,4 +1,4 @@
-import 'package:access_point/permission_service.dart';
+import 'package:access_point/utils/data/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:wifi_plugin/wifi_plugin.dart';
 
@@ -74,7 +74,7 @@ class _IntroductionDialogState extends State<IntroductionDialog> {
                     onPressed: (){
                       Wifi.enableWiFi(true);
                       Navigator.of(context).pop();
-                      PermissionsService().requestLocationPermission();
+                      // PermissionsService().requestLocationPermission();
                     },
                     child: Text(widget.text,style: TextStyle(fontSize: 18),)),
               ),

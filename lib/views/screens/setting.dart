@@ -1,4 +1,4 @@
-import 'package:access_point/utils/constants.dart';
+import 'package:access_point/utils/data/string_utils.dart';
 import 'package:access_point/utils/custom_widgets/custom_server_setting_card.dart';
 import 'package:access_point/utils/custom_widgets/custom_time_setting_card.dart';
 import 'package:flutter/material.dart';
@@ -37,17 +37,17 @@ class _SettingScreenState extends State<SettingScreen> {
             SettingParameterCard(
               title: 'Total Scan Time(S)',
               supplement: 5,
-              parameter: Constants.parameterT,
+              parameter: StringUtils.parameterT,
             ),
             SettingParameterCard(
               title: 'Time Interval(mS)',
               supplement: 100,
-              parameter: Constants.parameterD,
+              parameter: StringUtils.parameterD,
             ),
             SettingParameterCard(
                 title: "X",
                 supplement: 1,
-                parameter: Constants.parameterX
+                parameter: StringUtils.parameterX
             ),
             ServerSetting(title: 'IP Address', subTitle: '192.168.1.5',),
           ],

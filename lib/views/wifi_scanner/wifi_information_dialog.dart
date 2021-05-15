@@ -1,5 +1,5 @@
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:access_point/utils/util.dart';
+import 'package:access_point/utils/data/helper.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class WifiInfoDialog extends StatelessWidget {
   Widget _infoContainer(double width, double height, BuildContext context) {
 
     const List<String> _titles = ['SSID', 'BSSID', 'Band', 'Signal', 'Channel'];
-    List<String> _values = [ssid, bssid, '${Util.getChannel(band)} GHz', '${signal} dBm', 'Ch #${channel}(${band} MHz)'];
+    List<String> _values = [ssid, bssid, '${Helper.getChannel(band)} GHz', '${signal} dBm', 'Ch #${channel}(${band} MHz)'];
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width / 50),

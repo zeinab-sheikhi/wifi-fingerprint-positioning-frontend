@@ -1,4 +1,4 @@
-import 'package:access_point/utils/util.dart';
+import 'package:access_point/utils/data/helper.dart';
 import 'package:access_point/views/wifi_scanner/wifi_information_dialog.dart';
 import 'package:access_point/views/wifi_scanner/wifi_level_indicator.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -54,7 +54,7 @@ class WiFiCard extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return WifiInfoDialog(
-                iconColor: Util.progressColorBasedOnLevel(level),
+                iconColor: Helper.progressColorBasedOnLevel(level),
                 ssid: SSID,
                 bssid: BSSID,
                 band: frequency,
@@ -109,9 +109,9 @@ class WiFiCard extends StatelessWidget {
             width: 10,
             height: height / 10,
             child: WifiLevelIndicator(
-              progress: Util.levelToProgress(level),
-              backgroundColor: Util.backgroundColorBasedOnLevel(level),
-              progressColor: Util.progressColorBasedOnLevel(level),
+              progress: Helper.levelToProgress(level),
+              backgroundColor: Helper.backgroundColorBasedOnLevel(level),
+              progressColor: Helper.progressColorBasedOnLevel(level),
             ),
           )
         ],
@@ -129,7 +129,7 @@ class WiFiCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _wifiFeatureContainer(
-                  Util.getChannel(frequency) + ' GHz',
+                  Helper.getChannel(frequency) + ' GHz',
                   Icons.settings_input_antenna,
                   width,
                   height

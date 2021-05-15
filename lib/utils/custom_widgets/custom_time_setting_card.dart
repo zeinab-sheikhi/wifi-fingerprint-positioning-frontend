@@ -1,7 +1,7 @@
 
-import 'package:access_point/utils/constants.dart';
-import 'package:access_point/utils/preferences_util.dart';
-import 'package:access_point/utils/util.dart';
+import 'package:access_point/utils/data/string_utils.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/data/helper.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 
@@ -96,15 +96,15 @@ class _SettingParameterCardState extends State<SettingParameterCard> {
 
     int _supplement = 0;
     switch (widget.parameter) {
-      case Constants.parameterT: {
+      case StringUtils.parameterT: {
           _supplement = PreferenceUtils.getInt('scanTime', 20);
       }
       break;
-      case Constants.parameterD :{
+      case StringUtils.parameterD :{
           _supplement = PreferenceUtils.getInt('intervalTime', 100);
       break;
       }
-      case Constants.parameterX: {
+      case StringUtils.parameterX: {
           _supplement = PreferenceUtils.getInt('X', 1);
       }
     }
@@ -119,31 +119,31 @@ class _SettingParameterCardState extends State<SettingParameterCard> {
     int _supplement = 0;
     
     switch (widget.parameter) {
-      case Constants.parameterT: {
+      case StringUtils.parameterT: {
         _supplement = PreferenceUtils.getInt('scanTime', 20);
         _supplement -= widget.supplement;
         if(_supplement <= 0) {
-          Util.showToast("Scan Time must be a Positive Integer", context);
+          Helper.showToast("Scan Time must be a Positive Integer", context);
           _supplement = 5;
         }
         PreferenceUtils.setInt('scanTime', _supplement);
       }
       break;
-      case Constants.parameterD: {
+      case StringUtils.parameterD: {
         _supplement = PreferenceUtils.getInt('intervalTime', 100);
         _supplement -= widget.supplement;
         if(_supplement <= 0) {
-          Util.showToast("Interval Time must be a Positive Integer", context);
+          Helper.showToast("Interval Time must be a Positive Integer", context);
           _supplement = 100;
         }
         PreferenceUtils.setInt('intervalTime', _supplement);
       }
       break;
-      case Constants.parameterX: {
+      case StringUtils.parameterX: {
         _supplement = PreferenceUtils.getInt('X', 1);
         _supplement -= widget.supplement;
         if(_supplement <= 0) {
-          Util.showToast('X must be a Positive Integer', context);
+          Helper.showToast('X must be a Positive Integer', context);
           _supplement = 1;
         }
         PreferenceUtils.setInt('X', _supplement);
@@ -162,30 +162,30 @@ class _SettingParameterCardState extends State<SettingParameterCard> {
     int _parameterT = 0;
 
     switch (widget.parameter) {
-      case Constants.parameterT: {
+      case StringUtils.parameterT: {
         _supplement = PreferenceUtils.getInt('scanTime', 20);
         _supplement += widget.supplement;
         if(_supplement > 30) {
-          Util.showToast("Maximum Scan Time is 30s", context);
+          Helper.showToast("Maximum Scan Time is 30s", context);
           _supplement = 30;
         }
         PreferenceUtils.setInt('scanTime', _supplement);
       }
       break;
-      case Constants.parameterD: {
+      case StringUtils.parameterD: {
         _supplement = PreferenceUtils.getInt('intervalTime', 100);
         _supplement += widget.supplement;
         PreferenceUtils.setInt('intervalTime', _supplement);
       }
       break;
-      case Constants.parameterX: {
+      case StringUtils.parameterX: {
         _supplement = PreferenceUtils.getInt('X', 1);
         _supplement += widget.supplement;
         _parameterD = PreferenceUtils.getInt('intervalTime', 100);
         _parameterT = PreferenceUtils.getInt('scanTime', 20);
         int max = (_parameterD ~/ 1000) * _parameterT;
         if(_supplement >= max) {
-          Util.showToast('Check your X parameter', context);
+          Helper.showToast('Check your X parameter', context);
           _supplement = 1;
         }
         PreferenceUtils.setInt('X', _supplement);
