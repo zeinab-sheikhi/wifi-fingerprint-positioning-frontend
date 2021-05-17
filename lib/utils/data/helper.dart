@@ -7,29 +7,29 @@ import 'dart:math' as math;
 
 class Helper {
 
-  /// Sort List in Ascending Order
-  List<int> sortList(List<int> list) {
-
-    list.sort((b, a) => a.compareTo(b));
-    return list;
-  }
-
-  double calculateAverage(List<int> list) {
-    var average = list.reduce((a,b) => a + b) / list.length;
-    return average;
-  }
-
-  double calculateStandardDeviation(List<int> list, double average, int length) {
-
-    num sumOfSquaredDiffFromMean = 0;
-    for (var value in list) {
-      var squareDiffFromMean = math.pow(value - average, 2);
-      sumOfSquaredDiffFromMean += squareDiffFromMean;
-    }
-    var variance = sumOfSquaredDiffFromMean / length;
-    var standardDeviation = math.sqrt(variance);
-    return standardDeviation;
-  }
+  // /// Sort List in Ascending Order
+  // List<int> sortList(List<int> list) {
+  //
+  //   list.sort((b, a) => a.compareTo(b));
+  //   return list;
+  // }
+  //
+  // double calculateAverage(List<int> list) {
+  //   var average = list.reduce((a,b) => a + b) / list.length;
+  //   return average;
+  // }
+  //
+  // double calculateStandardDeviation(List<int> list, double average, int length) {
+  //
+  //   num sumOfSquaredDiffFromMean = 0;
+  //   for (var value in list) {
+  //     var squareDiffFromMean = math.pow(value - average, 2);
+  //     sumOfSquaredDiffFromMean += squareDiffFromMean;
+  //   }
+  //   var variance = sumOfSquaredDiffFromMean / length;
+  //   var standardDeviation = math.sqrt(variance);
+  //   return standardDeviation;
+  // }
 
   String getDateTime() {
     var dt = DateTime.now();

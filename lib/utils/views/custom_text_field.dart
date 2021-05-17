@@ -63,7 +63,6 @@ class MyTextField extends StatelessWidget {
             fillColor: fillColor,
             filled: true,
             hintText: hintText,
-            // hintStyle: TextStyle(fontSize: 18.0, color: Colors.white),
             labelText: labelText
         ),
         keyboardType: keyboardType,

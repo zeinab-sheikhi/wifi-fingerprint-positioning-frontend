@@ -34,8 +34,8 @@ class CircularTimer extends StatelessWidget {
       duration: duration,
       initialDuration: 0,
       controller: controller,
-      width: width * 4 / 5,
-      height: height / 4,
+      width: width,
+      height: height,
       ringColor: Color(0xff33406b),
       ringGradient: LinearGradient(
         colors: [ Color(0xff95859b), Color(0xff60cbda)]

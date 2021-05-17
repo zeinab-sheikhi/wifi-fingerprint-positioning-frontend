@@ -22,8 +22,8 @@ class Point {
     return {
       'x': xCoordinate,
       'y': yCoordinate,
-      'totalScanTime': totalScanTime,
-      'intervalTime': intervalTime,
+      'T': totalScanTime,
+      'Ts': intervalTime,
       'dateTime': dateTime,
       'accessPoints': accessPoints
     };

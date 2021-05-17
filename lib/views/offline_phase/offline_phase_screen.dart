@@ -8,8 +8,6 @@ import 'package:access_point/model/access_point.dart';
 import 'package:access_point/model/point.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:access_point/utils/data/helper.dart';
-import 'package:access_point/views/offline_phase/offline_phase_collect_button.dart';
-import 'package:access_point/utils/views/custom_text_field.dart';
 import 'package:access_point/views/offline_phase/offline_phase_circular_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -21,6 +19,7 @@ import 'package:wifi_plugin/wifi_plugin.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
 import '../../utils/data/string_utils.dart';
+import 'offline_phase_text_field.dart';
 
 
 class OfflinePhase extends StatefulWidget {
@@ -30,18 +29,13 @@ class OfflinePhase extends StatefulWidget {
 
 class _OfflinePhaseState extends State<OfflinePhase> {
 
-  final _xCoordinateController = TextEditingController();
-  final _yCoordinateController = TextEditingController();
   final CountDownController _controller = CountDownController();
 
   String _url = '';
   int _duration = 0;
   int _intervalTime = 0;
-  int _size = 0;
-  int _max = 0;
-  int _min = 0;
-  double _average = 0.0;
-  double _standardDeviation = 0.0;
+  int _xValue = 0;
+  int _yValue = 0;
   var _sampleTime;
   late Timer _timer;
   bool _isStopped = false;
@@ -63,22 +57,16 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   }
 
   Widget _buildBody(height, width) {
-    return Stack(
-        alignment: Alignment.center,
-        children: [
-          _customScrollView(width, height),
-          _buttonContainer(width, height)
-        ]
-    );
+    return SafeArea(child: _customScrollView(width, height));
   }
 
   Widget _customScrollView(double width, double height) {
-    return CustomScrollView(
+    return
+      CustomScrollView(
       slivers: [
         SliverFillRemaining(
           hasScrollBody: false,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _topContainer(width, height),
                 _bottomContainer(width, height)
@@ -93,44 +81,106 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     return Container(
       height: (height * 3) / 5,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          CircularTimer(
-              width: width,
-              height: height,
-              duration: _duration,
-              controller: _controller,
-              startTimer: _startTimer,
-              completeTimer: _completeTimer),
-          SizedBox(
-            width: width * 4 / 5,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: width * 2 / 5,
-                  child: MyTextField(
-                      hintText: "0",
-                      labelText: "X",
-                      prefixIcon: Icon(Icons.location_on, color: Colors.white),
-                      controller: _xCoordinateController,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true)
-                  ),
-                ),
-                Container(
-                  width: width * 2 / 5,
-                  child: MyTextField(
-                      hintText: "0",
-                      labelText: "Y",
-                      prefixIcon: Icon(Icons.location_on, color: Colors.white),
-                      controller: _yCoordinateController,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true)
-                  ),
-                )
-              ],
-            ),
-          )
+          GestureDetector(
+            onTap: _resetTimer,
+            child: CircularTimer(
+                width: width * 4 / 5,
+                height: height / 4,
+                duration: _duration,
+                controller: _controller,
+                startTimer: _startTimer,
+                completeTimer: _completeTimer),
+          ),
+          _xCoordinateContainer(width, height),
+          _yCoordinateContainer(width, height),
         ],
+      ),
+    );
+  }
+
+  Widget _xCoordinateContainer(double width, double height) {
+    return Container(
+      height: height * 1 / 8,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _minusButton(
+              height,
+                  (){
+                setState(() {
+                  _xValue = _subtract(_xValue);
+                });
+              }),
+          CoordinateTextField(text: _xValue.toString(), labelText: 'X'),
+          _addButton(
+              height,
+              (){
+                setState(() {
+                  _xValue = _plus(_xValue);
+                });
+              }
+              )
+        ],
+      ),
+    );
+  }
+
+  Widget _yCoordinateContainer(double width, double height) {
+    return Container(
+      height: height * 1 / 8,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _minusButton(
+              height,
+              (){
+                setState(() {
+                  _yValue = _subtract(_yValue);
+                });
+              }),
+          CoordinateTextField(text: _yValue.toString(), labelText: 'Y'),
+          _addButton(
+              height,
+              () {
+                setState(() {
+                  _yValue = _plus(_yValue);
+                });
+              }
+              )
+        ],
+      ),
+    );
+  }
+
+  Widget _addButton(double height, Function add) {
+    return Container(
+      height: height / 15,
+      child: ElevatedButton(
+          onPressed: () {add();},
+          child: Icon(Icons.add, color: Color(0xff43adb7)),
+          style: ElevatedButton.styleFrom(
+              primary: Color(0xff030712),
+              shape: CircleBorder(),
+              side: BorderSide(width: 2.0, color: Color(0xff43adb7))
+          )
+      ),
+    );
+  }
+
+  Widget _minusButton(double height, Function subtract) {
+    return Container(
+      height: height / 15,
+      child: ElevatedButton(
+          onPressed: (){subtract();},
+          child: Icon(Icons.remove, color: Color(0xff43adb7)),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xff030712),
+            shape: CircleBorder(),
+            side: BorderSide(width: 2.0, color: Color(0xff43adb7))
+          )
       ),
     );
   }
@@ -145,37 +195,21 @@ class _OfflinePhaseState extends State<OfflinePhase> {
               topLeft: Radius.elliptical(100, 30),
               topRight: Radius.elliptical(100, 30)),
         ),
-        // child: Center(
-        //   child: Padding(
-        //     padding: EdgeInsets.symmetric(horizontal: width / 20, vertical: height / 60),
-        //     child: SizedBox(
-        //       width: width,
-        //       height: height * 2 / 5 - (height / 16 + height / 30),
-        //       child: Card(
-        //         margin: EdgeInsets.only(top: height / 20),
-        //         child: Center(),
-        //         elevation: 9,
-        //         color: Color(0xff162648),
-        //         shape: RoundedRectangleBorder(
-        //             borderRadius: BorderRadius.all(Radius.circular(5))),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        // child: ,
       ),
     );
   }
 
-  Widget _buttonContainer(double width, double height) {
-    return Positioned(
-      top: height * 3 / 5 - height / 16,
-      child: CollectButton(
-        fontSize: 20,
-        callBack: () {_resetTimer();},
-        loading: true,
-      ),
-    );
-  }
+  // Widget _buttonContainer(double width, double height) {
+  //   return Positioned(
+  //     top: height * 2.5 / 5 - height / 16,
+  //     child: CollectButton(
+  //       fontSize: 20,
+  //       callBack: () {_resetTimer();},
+  //       loading: true,
+  //     ),
+  //   );
+  // }
 
   _initializeVariables()  {
     setState(() {
@@ -184,6 +218,16 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       _intervalTime = PreferenceUtils.getInt('intervalTime', 1000);
       _sampleTime = Duration(milliseconds: _intervalTime);
     });
+  }
+
+  int _plus(int value) {
+    return value + 40;
+  }
+
+  int _subtract(int value) {
+    if( value >= 40)
+      return value - 40;
+    return value;
   }
 
   void _collectAccessPoints() async {
@@ -198,29 +242,14 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     for(MapEntry mapEntry in _accessPointsMap.entries) {
       String wifiBSSID = mapEntry.key;
       List<int> wifiRSSIList = List.of(mapEntry.value).cast<int>();
-      List<int> sortedRSSIList = Helper().sortList(wifiRSSIList);
-      _size = sortedRSSIList.length;
-      _max = sortedRSSIList.first;
-      _min = sortedRSSIList.last;
-      _average = Helper().calculateAverage(sortedRSSIList);
-      _standardDeviation = Helper().calculateStandardDeviation(sortedRSSIList, _average, _size);
-       _accessPointsList.add(
-           new AccessPoint(
-               wifiBSSID,
-               _average.toInt(),
-               _size,
-               _min,
-               _max,
-               double.parse(_standardDeviation.toStringAsFixed(4))
-           )
-       );
+      _accessPointsList.add(new AccessPoint(wifiBSSID, wifiRSSIList));
     }
   }
 
   Future<void> _sendData(List<AccessPoint> accessPointList) async {
 
-    int xCoordinate = int.parse(_xCoordinateController.text);
-    int yCoordinate = int.parse(_yCoordinateController.text);
+    int xCoordinate = _xValue;
+    int yCoordinate = _yValue;
     int totalScanTime = _duration;
     int intervalTime = _intervalTime ~/ 1000;
     String dateTime = Helper().getDateTime();
