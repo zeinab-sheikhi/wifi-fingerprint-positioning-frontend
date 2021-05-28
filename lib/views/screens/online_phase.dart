@@ -1,7 +1,5 @@
-import 'package:access_point/utils/data/helper.dart';
-import 'package:access_point/views/offline_phase/offline_phase_text_field.dart';
+
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class OnLinePhase extends StatefulWidget {
   @override
@@ -9,6 +7,28 @@ class OnLinePhase extends StatefulWidget {
 }
 
 class _OnLinePhaseState extends State<OnLinePhase> {
+
+  GlobalKey _key = GlobalKey();
+
+  double _x = 0;
+  double _y = 0;
+  Offset _offset = Offset.zero;
+  Map<String, double> coordinate = {};
+  int counter = 0;
+
+
+  void _getOffset(GlobalKey key) {
+    RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
+    Offset position = box.localToGlobal(Offset.zero);
+    setState(() {
+      _x = position.dx;
+      _y = position.dy;
+    });
+    print(_x);
+    print(_y);
+  }
+
+
 
   @override
   void initState() {
@@ -22,30 +42,84 @@ class _OnLinePhaseState extends State<OnLinePhase> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+      ),
       backgroundColor: Color(0xff030712),
-      body: Center(
-        child: Container(
-          height: height / 2,
-          width: width,
-          margin: EdgeInsets.symmetric(horizontal: width / 10),
-          padding: EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Color(0xff242c42),
-          ),
-          child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: width / 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print(coordinate);
+            setState(() {
+              counter = counter + 1;
+            });
+          } ,
+          child: Icon(Icons.calculate)),
+      body: LayoutBuilder(
+        builder: (context, constraints){
+          return Center(
+            child: Stack(
                 children: [
-                  CoordinateTextField(text: '9070', labelText: 'C: ',)
-                ],
-              ),
-            ),
-          ),
-        ),
+                  GridView.count(
+                    scrollDirection: Axis.vertical,
+                    crossAxisCount: 3,
+                    padding: EdgeInsets.zero,
+                    children: [
+                      Container(
+                        color: Colors.teal,
+                      ),
+                      Container(
+                        color: Colors.cyan,
+                      ),
+                      Container(
+                        color: Colors.yellowAccent,
+                      ),
+                      Container(
+                        color: Colors.deepOrange,
+                      ),
+                      Container(
+                        color: Colors.red,
+                      ),
+                      Container(
+                        color: Colors.greenAccent,
+                      ),
+                      Container(
+                        color: Colors.purpleAccent,
+                      ),
+                      Container(
+                        color: Colors.indigo,
+                      ),
+                      Container(
+                        color: Colors.white,
+                      ),
+                      Container(
+                        color: Colors.pinkAccent,
+                      ),
+                    ],
+                  ),
+              Positioned(
+                // left: 248,
+                // top: 91.42857142857233,
+                // child: Icon(Icons.location_on, color: Colors.blueGrey, size: 50),
+                child: Draggable(
+                  childWhenDragging: Container(),
+                  feedback: Icon(Icons.add_location, color: Colors.black,size: 50),
+                  onDragEnd: (details) {
+                    setState(() {
+                      final adjustment = MediaQuery.of(context).size.height -
+                          constraints.maxHeight;
+                      _offset = Offset(
+                          details.offset.dx, details.offset.dy - adjustment);
+                      coordinate["x_point$counter"] = details.offset.dx;
+                      coordinate["y_point$counter"] = details.offset.dy - adjustment;
+
+                    });
+                  },
+                  child: Icon(Icons.add_location, color: Colors.black, size: 50),
+                  ),
+                ),
+            ]),
+          );
+        }
       ),
     );
   }

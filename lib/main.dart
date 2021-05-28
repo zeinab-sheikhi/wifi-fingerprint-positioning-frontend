@@ -1,13 +1,17 @@
 import 'package:access_point/views/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(
-      new MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(
+        new MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
-
 
   @override
   Widget build(BuildContext context) {

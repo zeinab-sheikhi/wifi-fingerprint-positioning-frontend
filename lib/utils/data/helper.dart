@@ -1,40 +1,31 @@
 import 'package:access_point/utils/data/string_utils.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'dart:math' as math;
-
 
 class Helper {
 
-  // /// Sort List in Ascending Order
-  // List<int> sortList(List<int> list) {
-  //
-  //   list.sort((b, a) => a.compareTo(b));
-  //   return list;
-  // }
-  //
-  // double calculateAverage(List<int> list) {
-  //   var average = list.reduce((a,b) => a + b) / list.length;
-  //   return average;
-  // }
-  //
-  // double calculateStandardDeviation(List<int> list, double average, int length) {
-  //
-  //   num sumOfSquaredDiffFromMean = 0;
-  //   for (var value in list) {
-  //     var squareDiffFromMean = math.pow(value - average, 2);
-  //     sumOfSquaredDiffFromMean += squareDiffFromMean;
-  //   }
-  //   var variance = sumOfSquaredDiffFromMean / length;
-  //   var standardDeviation = math.sqrt(variance);
-  //   return standardDeviation;
-  // }
-
   String getDateTime() {
     var dt = DateTime.now();
-    String newDt = DateFormat.yMMMMd().add_jms().format(dt);
+    String newDt = DateFormat('yyyy-MM-dd hh:mm:ss').format(dt);
     return newDt;
+  }
+
+  int getHour() {
+    var dateTime = DateTime.now();
+    int hour = 0;
+    if(dateTime.hour > 12)
+      hour = dateTime.hour - 12;
+    else
+      hour = dateTime.hour;
+    return hour;
+  }
+
+  int getMinute() {
+    var dateTime = DateTime.now();
+    int minute = dateTime.minute;
+    return minute;
   }
 
   static String getChannel(String frequency) {
@@ -62,6 +53,15 @@ class Helper {
             label: 'OK', onPressed: scaffoldMessenger.hideCurrentSnackBar),
       ),
     );
+  }
+
+  static changeScreenToPortrait() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  }
+
+  static changeScreenToLandscape() {
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
   }
 
   static Color backgroundColorBasedOnLevel(int level) {

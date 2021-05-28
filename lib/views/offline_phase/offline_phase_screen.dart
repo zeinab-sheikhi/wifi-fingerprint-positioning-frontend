@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
 
-
 import 'package:access_point/model/access_point.dart';
 import 'package:access_point/model/point.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
@@ -44,8 +43,9 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   @override
   void initState() {
-    super.initState();
+    Helper.changeScreenToPortrait();
     _initializeVariables();
+    super.initState();
   }
 
   @override
@@ -53,50 +53,36 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(body: _buildBody(height, width));
+    return _container(height, width);
   }
 
-  Widget _buildBody(height, width) {
-    return SafeArea(child: _customScrollView(width, height));
-  }
 
-  Widget _customScrollView(double width, double height) {
-    return
-      CustomScrollView(
-      slivers: [
-        SliverFillRemaining(
-          hasScrollBody: false,
-          child: Column(
-              children: [
-                _topContainer(width, height),
-                _bottomContainer(width, height)
-              ]
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _topContainer(double width, double height) {
-    return Container(
-      height: (height * 3) / 5,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          GestureDetector(
-            onTap: _resetTimer,
-            child: CircularTimer(
-                width: width * 4 / 5,
-                height: height / 4,
-                duration: _duration,
-                controller: _controller,
-                startTimer: _startTimer,
-                completeTimer: _completeTimer),
-          ),
-          _xCoordinateContainer(width, height),
-          _yCoordinateContainer(width, height),
-        ],
+  Widget _container(double width, double height) {
+    return Center(
+      child: Container(
+        color: Color(0xff030712),
+        width: width,
+        height: height * 2 / 3  + height / 10,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            GestureDetector(
+              onTap: _resetTimer,
+              child: CircularTimer(
+                  width: width * 2 / 5,
+                  height: height * 1 / 3,
+                  duration: _duration,
+                  controller: _controller,
+                  startTimer: _startTimer,
+                  completeTimer: _completeTimer),
+            ),
+            SizedBox(height: height / 20),
+            _xCoordinateContainer(width, height),
+            SizedBox(height: height / 20),
+            _yCoordinateContainer(width, height),
+          ],
+        ),
       ),
     );
   }
@@ -157,7 +143,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   Widget _addButton(double height, Function add) {
     return Container(
-      height: height / 15,
+      // height: height / 15,
       child: ElevatedButton(
           onPressed: () {add();},
           child: Icon(Icons.add, color: Color(0xff43adb7)),
@@ -172,7 +158,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   Widget _minusButton(double height, Function subtract) {
     return Container(
-      height: height / 15,
+      // height: height / 15,
       child: ElevatedButton(
           onPressed: (){subtract();},
           child: Icon(Icons.remove, color: Color(0xff43adb7)),
@@ -199,17 +185,6 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       ),
     );
   }
-
-  // Widget _buttonContainer(double width, double height) {
-  //   return Positioned(
-  //     top: height * 2.5 / 5 - height / 16,
-  //     child: CollectButton(
-  //       fontSize: 20,
-  //       callBack: () {_resetTimer();},
-  //       loading: true,
-  //     ),
-  //   );
-  // }
 
   _initializeVariables()  {
     setState(() {
@@ -250,6 +225,8 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
     int xCoordinate = _xValue;
     int yCoordinate = _yValue;
+    int xOffset = 0;
+    int yOffset = 0;
     int totalScanTime = _duration;
     int intervalTime = _intervalTime ~/ 1000;
     String dateTime = Helper().getDateTime();

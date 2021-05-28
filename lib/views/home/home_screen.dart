@@ -1,10 +1,12 @@
 
+import 'package:access_point/utils/data/helper.dart';
 import 'package:access_point/utils/data/location_service.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/views/floor_map.dart';
 import 'package:access_point/views/home/home_item_card.dart';
 import 'package:access_point/utils/views/shapes/hexagon_shape.dart';
-import 'package:access_point/views/screens/setting.dart';
-import 'package:access_point/views/screens/online_phase.dart';
+import 'package:access_point/views/offline_phase/offline_phase_map_viewer.dart';
+import 'package:access_point/views/online_phase/online_phase_screen.dart';
 import 'package:access_point/views/settings/settings_screen.dart';
 import 'package:access_point/views/wifi_scanner/wifi_screen.dart';
 import 'package:access_point/views/offline_phase/offline_phase_screen.dart';
@@ -60,7 +62,7 @@ class _HomeState extends State<Home> {
               MaterialPageRoute(builder: (context) => Settings()),
             );
           },
-        )
+        ),
       ],
     );
   }
@@ -109,13 +111,13 @@ class _HomeState extends State<Home> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         HomeCard(
-          goToRoute: OfflinePhase(),
+          goToRoute: MapViewer(),
           titleText: 'Offline Phase',
           borderColor: Color(0xff27e8b9),
           icon: Icons.place_outlined,
         ),
         HomeCard(
-          goToRoute: OnLinePhase(),
+          goToRoute: OnlinePhase(),
           titleText: 'Online Phase',
           borderColor: Color(0xffe17ecb),
           // icon: Icons.person_search,
@@ -137,7 +139,7 @@ class _HomeState extends State<Home> {
           icon: Icons.wifi,
         ),
         HomeCard(
-          goToRoute: SettingScreen(),
+          goToRoute: FloorMap(),
           titleText: 'Read More',
           borderColor: Color(0xff3fd5dc),
           icon: Icons.read_more,

@@ -19,9 +19,9 @@ class CoordinateTextField extends StatelessWidget {
   Widget _coordinateTextField(double width, double height)
   {
     return Container(
-      width: width * 2 / 5,
-      height: height / 12,
-      padding: EdgeInsets.all(width / 30),
+      width: width / 3,
+      height: height / 10,
+      padding: EdgeInsets.all(width / 50),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(width: 2.0, color: Color(0xff43adb7))
@@ -29,12 +29,11 @@ class CoordinateTextField extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Icon(Icons.location_on, color: Colors.white),
           Text(
               labelText,
               style: TextStyle(
                   color: Colors.grey,
-                fontSize: 20
+                fontSize: 16
               )),
           Expanded(
               child: Center(
@@ -42,7 +41,7 @@ class CoordinateTextField extends StatelessWidget {
                     text,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20
+                      fontSize: 16
                     ),
                   )
               )
