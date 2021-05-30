@@ -31,7 +31,7 @@ class _FloorMapState extends State<FloorMap> {
           minScale: 1,
           maxScale: 2,
           child: Image.asset(
-            'assets/images/grid.png',
+            'assets/images/floor1.png',
             fit: BoxFit.fill,
           ),
         ),

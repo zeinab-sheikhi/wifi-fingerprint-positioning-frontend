@@ -1,4 +1,5 @@
 import 'package:access_point/views/home/home_screen.dart';
+import 'package:access_point/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,7 +36,10 @@ class MyApp extends StatelessWidget {
         disabledColor: Color.fromRGBO(176, 176, 176, 0.5),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-
+      routes: {
+        '/home': (context) => new Home(),
+        '/splash': (context) => new SplashScreen(),
+      },
       home: Home()
     );
   }

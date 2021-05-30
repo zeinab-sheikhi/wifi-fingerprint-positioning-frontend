@@ -14,7 +14,6 @@ class WiFiScanner extends StatefulWidget {
 class _WiFiScannerState extends State<WiFiScanner> {
 
   List<dynamic> _wifis = [];
-  List<String> _wifiSSIDList = [];
 
   @override
   void initState() {
@@ -50,15 +49,6 @@ class _WiFiScannerState extends State<WiFiScanner> {
         ),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      actions: [
-        IconButton(
-            icon: Icon(
-              MdiIcons.sortAlphabeticalAscending,
-              color: Colors.white,
-            ),
-            onPressed: () {}
-        ),
-      ],
     );
   }
 

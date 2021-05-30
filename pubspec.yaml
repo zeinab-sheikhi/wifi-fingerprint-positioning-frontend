@@ -33,6 +33,7 @@ dependencies:
   location: ^3.0.0
   intl: ^0.17.0
   image: ^3.0.2
+  flutter_native_splash: ^1.1.8+4
   wifi_plugin:
     git:
       url: https://github.com/zeinab-sheikhi/wifi-plugin.git
@@ -55,8 +56,10 @@ flutter:
   assets:
      - assets/images/wifi.gif
      - assets/images/wifi-signal.png
-     - assets/images/floor1.jpg
-     - assets/images/grid.png
+     - assets/images/floor1.png
+     - assets/images/map_marker.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

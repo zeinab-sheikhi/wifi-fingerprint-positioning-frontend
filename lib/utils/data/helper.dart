@@ -111,5 +111,11 @@ class Helper {
       return 10;
   }
 
+  Offset getPosition(int number) {
+    double dx = PreferenceUtils.getDouble('tile${number}X', 1);
+    double dy = PreferenceUtils.getDouble('tile${number}Y', 1);
+    return Offset(dx, dy);
+  }
+
 
 }

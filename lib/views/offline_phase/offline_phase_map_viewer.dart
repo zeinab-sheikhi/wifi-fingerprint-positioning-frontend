@@ -1,18 +1,22 @@
 import 'package:access_point/utils/data/helper.dart';
 import 'package:access_point/utils/views/floor_map.dart';
+import 'package:access_point/utils/views/map_marker.dart';
 import 'package:access_point/views/offline_phase/Offline_phase_alert_dialog.dart';
+import 'package:access_point/utils/data/preferences_util.dart';
+
 import 'package:flutter/material.dart';
 
-class MapViewer extends StatefulWidget {
+class OfflinePhaseMap extends StatefulWidget {
 
   @override
-  _MapViewerState createState() => _MapViewerState();
+  _OfflinePhaseMapState createState() => _OfflinePhaseMapState();
 }
 
-class _MapViewerState extends State<MapViewer> {
+class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
 
   Map<String, double> coordination = {};
   Offset _offset = Offset(100, 100);
+  int counter = 0;
 
   @override
   void initState() {
@@ -25,7 +29,6 @@ class _MapViewerState extends State<MapViewer> {
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    _offset  = Offset(height / 2, width / 2);
     return _buildBody();
   }
 
@@ -36,7 +39,7 @@ class _MapViewerState extends State<MapViewer> {
             child: Stack(
               children: [
                 FloorMap(),
-                _addLocationMapMarker(constraints)
+                locationMapMarker(constraints)
               ],
             ),
           );
@@ -44,24 +47,16 @@ class _MapViewerState extends State<MapViewer> {
     );
   }
 
-  Widget _addLocationMapMarker(BoxConstraints constraints) {
+  Widget locationMapMarker(BoxConstraints constraints) {
     return Positioned(
       top: _offset.dx,
       left: _offset.dy,
       child: Draggable(
-          child: _markerIcon(),
+          child: MapMarker(),
           childWhenDragging: Container(),
-          feedback: _markerIcon(),
+          feedback: MapMarker(),
           onDragEnd: (details) { _onDragEnd(details, constraints); }
       ),
-    );
-  }
-
-  Widget _markerIcon() {
-    return Icon(
-      Icons.add_location_alt,
-      color: Color(0xffec3b40),
-      size: 50,
     );
   }
 
@@ -71,10 +66,15 @@ class _MapViewerState extends State<MapViewer> {
           constraints.maxWidth;
       _offset = Offset(details.offset.dy - adjustment,
           details.offset.dx);
-      coordination["x_offset"] = _offset.dx;
-      coordination["y_offset"] = _offset.dy;
+      counter = counter + 1;
+      _saveSharedPref("tile${counter}X", _offset.dx);
+      _saveSharedPref("tile${counter}Y", _offset.dy);
     });
-    _showDialog();
+    // _showDialog();
+  }
+
+  _saveSharedPref(String key, double value) async {
+    PreferenceUtils.setDouble(key, value);
   }
 
   Future<void> _showDialog() async {
