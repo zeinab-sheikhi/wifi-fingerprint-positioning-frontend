@@ -64,27 +64,9 @@ class Helper {
         [DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
   }
 
-  static Color backgroundColorBasedOnLevel(int level) {
-
-    if (level > -50)
-      return Color(0xffc5fded);
-    else if(level <= -50 && level > -60)
-      return Color(0xffDDEFFF);
-    else if(level <= -60 && level > -70)
-      return Color(0xffFCF7CD);
-    else
-      return Color(0xffF8BABD);
-  }
-
-  static Color progressColorBasedOnLevel(int level) {
-    if (level > -50)
-      return StringUtils.excellentSignal;
-    else if(level <= -50 && level > -60)
-      return StringUtils.goodSignal;
-    else if(level <= -60 && level > -70)
-      return StringUtils.fairSignal;
-    else
-      return StringUtils.weakSignal;
+  double getPosition(int number) {
+    double dy = PreferenceUtils.getDouble('tile${number}Y', 1);
+    return dy;
   }
 
   ///convert rssi value in dBm to an integer between 0 and 100
@@ -111,10 +93,27 @@ class Helper {
       return 10;
   }
 
-  Offset getPosition(int number) {
-    double dx = PreferenceUtils.getDouble('tile${number}X', 1);
-    double dy = PreferenceUtils.getDouble('tile${number}Y', 1);
-    return Offset(dx, dy);
+  static Color backgroundColorBasedOnLevel(int level) {
+
+    if (level > -50)
+      return Color(0xffc5fded);
+    else if(level <= -50 && level > -60)
+      return Color(0xffDDEFFF);
+    else if(level <= -60 && level > -70)
+      return Color(0xffFCF7CD);
+    else
+      return Color(0xffF8BABD);
+  }
+
+  static Color progressColorBasedOnLevel(int level) {
+    if (level > -50)
+      return StringUtils.excellentSignal;
+    else if(level <= -50 && level > -60)
+      return StringUtils.goodSignal;
+    else if(level <= -60 && level > -70)
+      return StringUtils.fairSignal;
+    else
+      return StringUtils.weakSignal;
   }
 
 

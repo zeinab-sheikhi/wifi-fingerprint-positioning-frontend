@@ -1,19 +1,19 @@
 class OnlinePhaseModel {
 
   Map<String, int> accessPoints;
-  int hour;
-  int minute;
+  String classificationModel;
+  String regressionModel;
 
   OnlinePhaseModel(
   {
     required this.accessPoints,
-    required this.hour,
-    required this.minute,
+    required this.classificationModel,
+    required this.regressionModel,
   });
 
   Map toJson() => {
     'accessPoints': accessPoints,
-    'hour': hour,
-    'minute': minute,
+    'classification': classificationModel,
+    'regression': regressionModel,
   };
 }

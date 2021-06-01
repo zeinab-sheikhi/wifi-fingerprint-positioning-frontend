@@ -11,7 +11,7 @@ class CurveShape extends CustomPainter {
     Path p = getPath(size);
     Paint paint = Paint();
     paint.strokeWidth = 3;
-    paint.style = PaintingStyle.fill;
+    paint.style = PaintingStyle.stroke;
     paint.color = shapeColor;
     paint.strokeJoin = StrokeJoin.round;
     canvas.drawPath(p,paint);
@@ -21,13 +21,13 @@ class CurveShape extends CustomPainter {
     var width = size.width ;
     var height = size.height;
     final path = Path();
-    path.moveTo(0, height * 0.8);
-    path.quadraticBezierTo(width * 0.25, height * 0.7,
-        width * 0.5, height * 0.8);
-    path.quadraticBezierTo(width * 0.75, height * 0.9,
-        width * 1.0, height * 0.85);
-    path.lineTo(width, height);
-    path.lineTo(0, height);
+    path.moveTo(0, height * 0.25);
+    path.quadraticBezierTo(size.width * 0.5, size.height * 0.4,
+        size.width * 0.25, size.height * 0.7);
+    // path.quadraticBezierTo(size.width * 0.75, size.height * 0.8,
+    //     size.width * 0.25, size.height * 0.9);
+    path.lineTo(size.width  , size.height);
+    path.lineTo(0, size.height);
     path.close();
     return path;
   }

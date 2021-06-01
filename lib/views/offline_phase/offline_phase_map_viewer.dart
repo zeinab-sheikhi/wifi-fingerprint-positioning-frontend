@@ -2,7 +2,6 @@ import 'package:access_point/utils/data/helper.dart';
 import 'package:access_point/utils/views/floor_map.dart';
 import 'package:access_point/utils/views/map_marker.dart';
 import 'package:access_point/views/offline_phase/Offline_phase_alert_dialog.dart';
-import 'package:access_point/utils/data/preferences_util.dart';
 
 import 'package:flutter/material.dart';
 
@@ -26,16 +25,16 @@ class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
 
   @override
   Widget build(BuildContext context) {
-
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return _buildBody();
+    return Scaffold(
+      body: _buildBody(),
+    );
   }
 
   Widget _buildBody() {
     return LayoutBuilder(
         builder: (context, constraints){
-          return Center(
+          return Container(
+            color: Colors.white,
             child: Stack(
               children: [
                 FloorMap(),
@@ -55,26 +54,10 @@ class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
           child: MapMarker(),
           childWhenDragging: Container(),
           feedback: MapMarker(),
-          onDragEnd: (details) { _onDragEnd(details, constraints); }
+          onDragEnd: (details) { _showDialog(); }
+          // onDragEnd: (details) { _onDragEnd(details, constraints); }
       ),
     );
-  }
-
-  _onDragEnd(DraggableDetails details, BoxConstraints constraints) {
-    setState(() {
-      final adjustment = MediaQuery.of(context).size.width -
-          constraints.maxWidth;
-      _offset = Offset(details.offset.dy - adjustment,
-          details.offset.dx);
-      counter = counter + 1;
-      _saveSharedPref("tile${counter}X", _offset.dx);
-      _saveSharedPref("tile${counter}Y", _offset.dy);
-    });
-    // _showDialog();
-  }
-
-  _saveSharedPref(String key, double value) async {
-    PreferenceUtils.setDouble(key, value);
   }
 
   Future<void> _showDialog() async {
@@ -86,4 +69,20 @@ class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
       },
     );
   }
+
+  // _onDragEnd(DraggableDetails details, BoxConstraints constraints) {
+  //   setState(() {
+  //     final adjustment = MediaQuery.of(context).size.width -
+  //         constraints.maxWidth;
+  //     _offset = Offset(details.offset.dy - adjustment,
+  //         details.offset.dx);
+  //     counter = counter + 1;
+  //     PreferenceUtils.setDouble("tile${counter}X", _offset.dx);
+  //     PreferenceUtils.setDouble("tile${counter}Y", _offset.dy);
+  //   });
+  //
+  //   // _showDialog();
+  // }
+
+
 }

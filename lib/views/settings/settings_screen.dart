@@ -21,7 +21,8 @@ class _SettingsState extends State<Settings> {
   Color _color = Color(0xFFE4276B);
   int _Tvalue = 0;
   int _Dvalue = 0;
-  // int _Xvalue = 0;
+  String _classificationGroupValue = "KNN";
+  String _regressionGroupValue = "KNN";
 
   @override
   void initState() {
@@ -75,6 +76,9 @@ class _SettingsState extends State<Settings> {
               SizedBox(height: height / 40),
               _serverTile(context, width, height),
               SizedBox(height: height / 40),
+              _classificationModelsTile(context, width),
+              SizedBox(height: height / 40),
+              _regressionModelsTile(context, width),
             ],
           ),
         )
@@ -144,16 +148,6 @@ class _SettingsState extends State<Settings> {
               _Dvalue
           ),
           Divider(color: Colors.grey, indent: width / 20, endIndent: width / 20),
-          // _sliderContainer(
-          //     width,
-          //     height,
-          //     'X',
-          //     1,
-          //     15,
-          //     14,
-          //     'X',
-          //     _Xvalue
-          // ),
         ],
     );
   }
@@ -249,7 +243,66 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-   _isWifiEnable() async{
+  Widget _classificationModelsTile(BuildContext context, double width) {
+    return SettingExpandedTile(
+        title: "Classification Model",
+        subtitle: _classificationGroupValue,
+        leadingIcon: _tileLeadingIcon(Icons.account_tree, width),
+        accentColor: _color,
+        childrenWidgets: [
+          _radioButton("Catboost", "classificationModel", true),
+          _radioButton("KNN", "classificationModel", true),
+          _radioButton("Random Forest", "classificationModel", true)
+        ]
+    );
+  }
+
+  Widget _regressionModelsTile(BuildContext context, double width) {
+
+    return SettingExpandedTile(
+        title: "Regression Model",
+        subtitle: _regressionGroupValue,
+        leadingIcon: _tileLeadingIcon(Icons.account_tree, width),
+        accentColor: _color,
+        childrenWidgets: [
+          _radioButton("Decision Tree", "regressionModel", false),
+          _radioButton("Extra Trees", "regressionModel", false),
+          _radioButton("Extra Trees(Distinct)", "regressionModel", false),
+          _radioButton("KNN", "regressionModel", false),
+        ]
+    );
+  }
+
+  Widget _radioButton(String value, String key, bool isClassification) {
+
+    return RadioListTile(
+        title: Text(
+            value,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 14
+            )
+        ),
+        value: value,
+        groupValue: isClassification? _classificationGroupValue : _regressionGroupValue,
+        activeColor: _color,
+        onChanged: (newValue) {
+          setState(() {
+            if(isClassification)
+              _classificationGroupValue = newValue.toString();
+            else
+              _regressionGroupValue = newValue.toString();
+
+            print(_classificationGroupValue);
+            print(_regressionGroupValue);
+            PreferenceUtils.setString(key, value);
+          });
+        }
+    );
+  }
+
+
+  _isWifiEnable() async{
     bool result = await Wifi.isWiFiEnable;
     setState(() {
       isSwitched = result;
@@ -257,18 +310,15 @@ class _SettingsState extends State<Settings> {
   }
 
   _loadSharedPreferences() async {
-
-    int Tvalue = 0;
-    int Dvalue = 0;
-    // int Xvalue = 0;
-
-    Tvalue = PreferenceUtils.getInt('scanTime', 20);
-    Dvalue = PreferenceUtils.getInt('intervalTime', 1000);
-    // Xvalue = PreferenceUtils.getInt('X', 1);
+    int Tvalue = PreferenceUtils.getInt('scanTime', 20);
+    int Dvalue = PreferenceUtils.getInt('intervalTime', 1000);
+    String _classificationModel = PreferenceUtils.getString("classificationModel", "KNN");
+    String _regressionModel = PreferenceUtils.getString("regressionModel", "KNN");
     setState(() {
       _Tvalue = Tvalue;
       _Dvalue = Dvalue;
-      // _Xvalue = Xvalue;
+      _classificationGroupValue = _classificationModel;
+      _regressionGroupValue = _regressionModel;
     });
   }
 }

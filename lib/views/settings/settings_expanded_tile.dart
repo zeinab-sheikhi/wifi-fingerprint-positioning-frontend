@@ -47,7 +47,7 @@ class _SettingExpandedTileState extends State<SettingExpandedTile> {
           title: _titleText(),
           subtitle: _subtitleText(),
           leading: widget.leadingIcon,
-          initiallyExpanded: true,
+          initiallyExpanded: false,
           children: widget.childrenWidgets,
           childrenPadding: EdgeInsets.symmetric(vertical: height / 100),
           expandedAlignment: Alignment.center,
