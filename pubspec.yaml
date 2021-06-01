@@ -54,6 +54,7 @@ flutter:
   uses-material-design: true
   assets:
      - assets/images/floor1.png
+     - assets/images/logo.png
      - assets/images/map_marker.png
      - assets/images/wifi.gif
      - assets/images/wifi-signal.png

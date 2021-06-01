@@ -18,7 +18,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
 
   bool isSwitched = false;
-  Color _color = Color(0xFFE4276B);
+  Color _color = Color(0xff5dfdcd);
   int _Tvalue = 0;
   int _Dvalue = 0;
   String _classificationGroupValue = "KNN";

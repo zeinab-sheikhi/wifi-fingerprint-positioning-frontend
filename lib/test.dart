@@ -1,50 +1,169 @@
-import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/views/home/home_item_card.dart';
+import 'package:access_point/views/offline_phase/offline_phase_map_viewer.dart';
+import 'package:access_point/views/online_phase/online_phase_map_viewer.dart';
+import 'package:access_point/views/settings/settings_screen.dart';
+import 'package:access_point/views/wifi_scanner/wifi_screen.dart';
 import 'package:flutter/material.dart';
 
-class OnLinePhase extends StatefulWidget {
+class HomeTest extends StatefulWidget {
   @override
-  _OnLinePhaseState createState() => _OnLinePhaseState();
+  _HomeTestState createState() => _HomeTestState();
 }
 
-class _OnLinePhaseState extends State<OnLinePhase> {
-
-  int counter = 0;
-  List<double> _yCoordinates = [0, 543.9999999999995, 528.6666666666663, 511.99999999999943,
-    498.008463541666, 483.34179687499926, 468.0084635416658, 454.00846354166566,
-    436.00846354166583, 422.67513020833246, 407.1209716796864, 393.12097167968614,
-    378.45430501301934, 361.7876383463522, 347.7876383463522, 333.11362711588333,
-    318.4469604492168, 303.78723144531034, 271.7872314453103, 272.4564615885393,
-    257.1205647786435, 242.5273234049456, 227.86065673827895, 212.52732340494566,
-    199.19399007161223, 183.8606567382789, 167.86065673827886, 153.86065673827892,
-    137.0141092936176, 121.68077596028428, 107.01410929361764, 92.34744262695094, 75.45384724934675,
-    61.45384724934678, 47.453847249346786
-  ];
-  @override
-  void initState() {
-    super.initState();
-  }
+class _HomeTestState extends State<HomeTest> {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      backgroundColor: Color(0xff030712),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              counter = counter + 1;
-              PreferenceUtils.setDouble("tile${counter}Y", _yCoordinates[counter]);
-            });
-          } ,
-          child: Icon(Icons.calculate)),
-      body: Center(
-        child: Container(
-          child: Text('$counter', style: TextStyle(color: Colors.white, fontSize: 28))
-        ),
-      )
+      body: _buildBody(width, height),
     );
+  }
+
+
+  Widget _buildBody(double width, double height) {
+    return SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xff0b0f12),
+                Color(0xff181d21),
+                Color(0xff222931),
+                Color(0xff2f3841),
+                Color(0xff363e44)
+              ]
+            )
+          ),
+          child: Image.asset(
+            "assets/images/logo.png",
+            fit: BoxFit.scaleDown,
+            height: height * 1 / 3,
+            width: width,
+
+          )
+        ));
+  }
+
+  Widget _appTitleContainer(double width, double height) {
+    return Container(
+      alignment: Alignment.center,
+      height: height * 1 / 5,
+      child: Text(
+        'WHERE AM I',
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 40)
+      ),
+    );
+  }
+
+  Widget _dashboardContainer(double width, double height) {
+    return Container(
+      height: height * 3 / 5,
+      width: width * 4 / 5,
+      margin: EdgeInsets.symmetric(horizontal: width / 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _firstRow(width, height),
+          _dividerContainer(width, height),
+          _secondRow(width, height)
+        ],
+      ),
+    );
+  }
+
+  Widget _firstRow(double width, double height) {
+    return Container(
+      height: width * 2 / 5 - height / 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          HomeCard(
+              goToRoute: OfflinePhaseMap(),
+              titleText: 'OFFLINE PHASE',
+              icon: Icons.place_outlined,
+              width: width,
+              height: height
+          ),
+          SizedBox(
+              width: height / 20,
+              height:width * 2 / 5 - height / 40,
+              child: _verticalDivider()
+          ),
+          HomeCard(
+              goToRoute: OnlinePhaseMap(),
+              titleText: 'ONLINE PHASE',
+              icon: Icons.person_search,
+              width: width,
+              height: height
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _dividerContainer(double width, double height) {
+    return Container(
+      width: width * 4 / 5,
+      height: height / 20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+              width: width * 2 / 5 - height / 40,
+              child:_horizontalDivider()
+          ),
+          SizedBox(
+              width: height / 40,
+              height: height / 40
+          ),
+          SizedBox(
+            width: width * 2 / 5 - height / 40,
+            child: _horizontalDivider(),
+          ),
+        ],),
+    );
+  }
+
+  Widget _secondRow(double width, double height) {
+    return Container(
+      height: width * 2 / 5 - height / 40,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          HomeCard(
+              goToRoute: WiFiScanner(),
+              titleText: 'Wi-Fi SCANNER',
+              icon: Icons.wifi,
+              width: width,
+              height: height
+          ),
+          SizedBox(
+              width: height / 20,
+              height:width * 2 / 5 - height / 40,
+              child: _verticalDivider()
+          ),
+          HomeCard(
+              goToRoute: OnlinePhaseMap(),
+              titleText: 'READ MORE',
+              icon: Icons.read_more,
+              width: width,
+              height: height
+          )
+        ],
+      ),
+    );
+  }
+  Widget _horizontalDivider() {
+    return Divider(color: Color(0xff8a8d94), thickness: 1);
+  }
+
+  Widget _verticalDivider() {
+    return VerticalDivider(color: Color(0xff8a8d94), thickness: 1);
   }
 }

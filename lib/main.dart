@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         primaryColorDark: Colors.black,
         highlightColor: Color.fromRGBO(185, 185, 185, 1),
         primarySwatch: Colors.grey,
-        accentColor: Color.fromRGBO(228, 39, 107, 1.0),
+        accentColor: Color(0xff5dfdcd),
         toggleableActiveColor: Color.fromRGBO(72, 189, 255, 1.0),
         backgroundColor: Color.fromRGBO(30, 31, 40, 1),
         cardColor: Color.fromRGBO(51, 52, 62, 1),

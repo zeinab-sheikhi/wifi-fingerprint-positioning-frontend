@@ -35,12 +35,16 @@ class _SettingsSliderState extends State<SettingsSlider> {
 
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        activeTickMarkColor: Color(0xFFEC6395),
-        inactiveTickMarkColor: Color(0xFFE4276B),
+        // activeTickMarkColor: Color(0xFFEC6395),
+        activeTickMarkColor: Color(0xff5dfdcd),
+        // inactiveTickMarkColor: Color(0xFFE4276B),
+        inactiveTickMarkColor: Color(0xFF0db8ba),
         valueIndicatorColor: Colors.white,
-        activeTrackColor: Color(0xFFEC6395),
+        // activeTrackColor: Color(0xFFEC6395),
+        activeTrackColor: Color(0xFF5dfdcd),
         inactiveTrackColor: Colors.white,
-        thumbColor: Color(0xFFE4276B),
+        // thumbColor: Color(0xFFE4276B),
+        thumbColor: Color(0xFF29bb89),
       ),
       child: Slider(
         min: widget.min,
