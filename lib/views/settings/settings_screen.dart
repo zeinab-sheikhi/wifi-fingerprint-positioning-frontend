@@ -266,6 +266,7 @@ class _SettingsState extends State<Settings> {
         accentColor: _color,
         childrenWidgets: [
           _radioButton("Decision Tree", "regressionModel", false),
+          _radioButton("Decision Tree(Distinct)", "regressionModel", false),
           _radioButton("Extra Trees", "regressionModel", false),
           _radioButton("Extra Trees(Distinct)", "regressionModel", false),
           _radioButton("KNN", "regressionModel", false),
@@ -292,9 +293,6 @@ class _SettingsState extends State<Settings> {
               _classificationGroupValue = newValue.toString();
             else
               _regressionGroupValue = newValue.toString();
-
-            print(_classificationGroupValue);
-            print(_regressionGroupValue);
             PreferenceUtils.setString(key, value);
           });
         }

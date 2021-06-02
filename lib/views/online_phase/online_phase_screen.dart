@@ -21,6 +21,7 @@ class OnlinePhase extends StatefulWidget {
 class _OnlinePhaseState extends State<OnlinePhase> {
 
   Map<String, int> _accessPointsMap = {};
+  Map<dynamic, dynamic> _map = {};
   double _xOffset = 180.66666666666663;
   double _yOffset = 100;
   int _xCoordinate = 0;
@@ -28,9 +29,14 @@ class _OnlinePhaseState extends State<OnlinePhase> {
   int _tileNumber = 1;
   bool _visible = false;
 
+  String _classificationModel = "KNN";
+  String _regressionModel = "KNN";
+  String _url = "url";
+
   @override
   void initState() {
     Helper.changeScreenToLandscape();
+    _loadSharedPrefs();
     _collectAccessPoints();
     super.initState();
   }
@@ -72,8 +78,11 @@ class _OnlinePhaseState extends State<OnlinePhase> {
       child: Container(
         child: IconButton(
           onPressed: (){
-            _collectAccessPoints();
-            _postData();
+            setState(() {
+              _collectAccessPoints();
+              _filterData();
+              _postData();
+            });
           },
           iconSize: 35,
           icon: Icon(
@@ -93,32 +102,37 @@ class _OnlinePhaseState extends State<OnlinePhase> {
     );
   }
 
-
-  void _collectAccessPoints() async {
+  Future _collectAccessPoints() async {
+    Wifi.requestNewScan(true);
     var result = await Wifi.accessPoints;
     setState(() {
-      for(MapEntry mapEntry in result.entries) {
+      _map = result;
+    });
+  }
+
+  void _filterData() {
+
+    setState(() {
+      for(MapEntry mapEntry in _map.entries) {
         String wifiBSSID = mapEntry.key;
         int wifiRSSI = List
             .of(mapEntry.value)
             .cast<int>()
             .first;
         _accessPointsMap[wifiBSSID] = wifiRSSI;
+
       }
     });
   }
-
-  Future<void> _postData() async {
-    String _url = Helper.getUrl('/fingerprint/api/v1/position');
-    String _classificationModel = PreferenceUtils.getString("classificationModel", "KNN");
-    String _regressionModel = PreferenceUtils.getString("regressionModel", "KNN");
-
+  
+  Future _postData() async {
     OnlinePhaseModel _onlinePhaseModel = new OnlinePhaseModel(
         accessPoints: _accessPointsMap,
         classificationModel: _classificationModel,
         regressionModel: _regressionModel);
 
     String json = jsonEncode(_onlinePhaseModel);
+    print(json);
     Response response = await post(_url, headers:StringUtils.headers, body: json);
     var responseBody = jsonDecode(response.body);
     int statusCode = response.statusCode;
@@ -131,5 +145,11 @@ class _OnlinePhaseState extends State<OnlinePhase> {
         _visible = true;
       });
     }
+  }
+
+  _loadSharedPrefs() {
+    _classificationModel = PreferenceUtils.getString("classificationModel", "KNN");
+    _regressionModel = PreferenceUtils.getString("regressionModel", "KNN");
+    _url = Helper.getUrl('/fingerprint/api/v1/position');
   }
 }

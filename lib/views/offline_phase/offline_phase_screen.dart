@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
 
@@ -170,22 +169,6 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       ),
     );
   }
-
-  Widget _bottomContainer(double width, double height) {
-    return Expanded(
-      child: Container(
-        alignment: Alignment.topCenter,
-        decoration: BoxDecoration(
-          color: Color(0xff0c132d),
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.elliptical(100, 30),
-              topRight: Radius.elliptical(100, 30)),
-        ),
-        // child: ,
-      ),
-    );
-  }
-
   _initializeVariables()  {
     setState(() {
       _url = Helper.getUrl('/fingerprint/api/v1/points');
@@ -225,8 +208,6 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
     int xCoordinate = _xValue;
     int yCoordinate = _yValue;
-    int xOffset = 0;
-    int yOffset = 0;
     int totalScanTime = _duration;
     int intervalTime = _intervalTime ~/ 1000;
     String dateTime = Helper().getDateTime();

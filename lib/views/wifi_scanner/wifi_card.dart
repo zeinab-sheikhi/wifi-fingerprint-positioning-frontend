@@ -71,9 +71,10 @@ class WiFiCard extends StatelessWidget {
     return AutoSizeText(
       SSID,
       maxLines: 1,
+      maxFontSize: 20,
+      minFontSize: 16,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 20,
         fontWeight: FontWeight.bold
       ),
     );
