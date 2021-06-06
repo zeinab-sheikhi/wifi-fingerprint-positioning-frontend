@@ -54,6 +54,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+
      - assets/images/add_location.jpg
      - assets/images/current_location.png
      - assets/images/floor1.png
@@ -62,6 +63,7 @@ flutter:
      - assets/images/scan_wifi.png
      - assets/images/wifi.gif
      - assets/images/wifi_signal.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

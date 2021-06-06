@@ -1,5 +1,6 @@
 import 'package:access_point/utils/data/string_utils.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:intro_slider/intro_slider.dart';
 
 class HelpScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _HelpScreenState extends State<HelpScreen> {
         slides: slides,
       isShowSkipBtn: false,
       colorDot: Color(0xffdfdfdf),
-      colorActiveDot: Color(0xff0071bc),
+      colorActiveDot: Color(0xff1bb581),
     );
   }
 
