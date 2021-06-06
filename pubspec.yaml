@@ -33,6 +33,7 @@ dependencies:
   location: ^3.0.0
   intl: ^0.17.0
   image: ^3.0.2
+  intro_slider: ^1.0.8
   wifi_plugin:
     git:
       url: https://github.com/zeinab-sheikhi/wifi-plugin.git
@@ -53,11 +54,14 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+     - assets/images/add_location.jpg
+     - assets/images/current_location.png
      - assets/images/floor1.png
      - assets/images/logo.png
      - assets/images/map_marker.png
+     - assets/images/scan_wifi.png
      - assets/images/wifi.gif
-     - assets/images/wifi-signal.png
+     - assets/images/wifi_signal.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

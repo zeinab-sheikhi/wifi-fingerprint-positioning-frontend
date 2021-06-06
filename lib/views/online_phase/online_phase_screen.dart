@@ -124,7 +124,7 @@ class _OnlinePhaseState extends State<OnlinePhase> {
       }
     });
   }
-  
+
   Future _postData() async {
     OnlinePhaseModel _onlinePhaseModel = new OnlinePhaseModel(
         accessPoints: _accessPointsMap,

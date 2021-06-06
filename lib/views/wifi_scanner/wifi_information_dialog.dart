@@ -80,7 +80,7 @@ class WifiInfoDialog extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: height / 100),
       child: ColorFiltered(
         child: Image.asset(
-          'assets/images/wifi-signal.png',
+          'assets/images/wifi_signal.png',
           width: width / 5,
           height: width / 5,
           fit: BoxFit.cover,

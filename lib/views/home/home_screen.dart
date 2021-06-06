@@ -1,6 +1,7 @@
 import 'package:access_point/test.dart';
 import 'package:access_point/utils/data/location_service.dart';
 import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/views/help/help_screen.dart';
 import 'package:access_point/views/home/home_item_card.dart';
 import 'package:access_point/views/offline_phase/offline_phase_map_viewer.dart';
 import 'package:access_point/views/online_phase/online_phase_map_viewer.dart';
@@ -194,9 +195,9 @@ class _HomeState extends State<Home> {
               child: _verticalDivider()
           ),
           HomeCard(
-              goToRoute: HomeTest(),
-              titleText: 'READ MORE',
-              icon: Icons.read_more,
+              goToRoute: HelpScreen(),
+              titleText: 'HELP',
+              icon: Icons.help,
               width: width,
               height: height
           )
