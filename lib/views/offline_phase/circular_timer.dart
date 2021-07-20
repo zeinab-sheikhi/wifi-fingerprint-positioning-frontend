@@ -1,3 +1,4 @@
+import 'package:access_point/utils/color_utils.dart' as colors;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
@@ -36,17 +37,17 @@ class CircularTimer extends StatelessWidget {
       controller: controller,
       width: width,
       height: height,
-      ringColor: Color(0xff33406b),
+      ringColor: colors.timerRingColor,
       ringGradient: LinearGradient(
-        colors: [ Color(0xff95859b), Color(0xff60cbda)]
+        colors: [ colors.timerRingGradient1, colors.timerRingGradient2]
       ),
-      fillColor: Color(0xffad6075),
+      fillColor: colors.timerFill,
       fillGradient: null,
-      backgroundColor: Color(0xff030712),
+      backgroundColor: colors.backgroundColor,
       strokeWidth: 20.0,
       strokeCap: StrokeCap.round,
       textStyle: TextStyle(
-          fontSize: 40.0, color: Colors.white, fontWeight: FontWeight.bold),
+          fontSize: 40.0, color: colors.primaryColor, fontWeight: FontWeight.bold),
       textFormat: CountdownTextFormat.S,
       isReverse: false,
       isReverseAnimation: false,

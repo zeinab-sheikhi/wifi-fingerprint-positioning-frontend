@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
 
 // ignore: must_be_immutable
 class MyTextField extends StatelessWidget {
@@ -15,8 +16,8 @@ class MyTextField extends StatelessWidget {
 
   MyTextField({
     this.fontSize = 18,
-    this.textColor = Colors.white,
-    this.fillColor = const Color(0xff0242c42),
+    this.textColor = colors.primaryColor,
+    this.fillColor = colors.textFieldFill,
     required this.hintText,
     required this.labelText,
     required this.prefixIcon,
@@ -30,7 +31,7 @@ class MyTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: TextField(
         style: TextStyle(
-            color: Colors.white,
+            color: colors.primaryColor,
             fontSize: fontSize,
             fontWeight: FontWeight.bold
         ),
@@ -40,7 +41,7 @@ class MyTextField extends StatelessWidget {
               borderSide: BorderSide(
                   width: 1,
                   style: BorderStyle.solid,
-                  color: Colors.white
+                  color: colors.primaryColor
               ),
             ),
             disabledBorder: OutlineInputBorder(
@@ -48,14 +49,14 @@ class MyTextField extends StatelessWidget {
               borderSide: BorderSide(
                   width: 1,
                   style: BorderStyle.solid,
-                  color: Colors.orange),
+                  color: colors.orange),
             ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
                 width: 1,
                 style: BorderStyle.solid,
-                color: Color(0xff43adb7)
+                color: colors.accentDarkColor
             ),
           ),
             prefixIcon: prefixIcon,

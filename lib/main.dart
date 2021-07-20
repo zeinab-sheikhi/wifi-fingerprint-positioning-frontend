@@ -2,6 +2,7 @@ import 'package:access_point/views/home/home_screen.dart';
 import 'package:access_point/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,22 +19,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Wifi',
+      title: 'WiFi',
       theme: new ThemeData(
-        scaffoldBackgroundColor: Color(0xff030712),
-        appBarTheme: AppBarTheme(backgroundColor: Color(0xff111628)),
-        primaryColor: Colors.white,
-        primaryColorLight: Color.fromRGBO(246, 246, 246, 1),
-        primaryColorDark: Colors.black,
-        highlightColor: Color.fromRGBO(185, 185, 185, 1),
-        primarySwatch: Colors.grey,
-        accentColor: Color(0xff5dfdcd),
-        toggleableActiveColor: Color.fromRGBO(72, 189, 255, 1.0),
-        backgroundColor: Color.fromRGBO(30, 31, 40, 1),
-        cardColor: Color.fromRGBO(51, 52, 62, 1),
-        unselectedWidgetColor: Color.fromRGBO(176, 176, 176, 0.5),
-        hintColor: Color.fromRGBO(176, 176, 176, 0.5019607843137255),
-        disabledColor: Color.fromRGBO(176, 176, 176, 0.5),
+        scaffoldBackgroundColor: colors.backgroundColor,
+        appBarTheme: AppBarTheme(backgroundColor: colors.appBar),
+        primaryColor: colors.primaryColor,
+        primaryColorLight: colors.primaryColorLight,
+        primaryColorDark: colors.primaryColorDark,
+        accentColor: colors.accentColor,
+        backgroundColor: colors.backgroundColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       routes: {
@@ -42,32 +36,5 @@ class MyApp extends StatelessWidget {
       },
       home: Home()
     );
-  }
-
-  static double HEIGHT(BuildContext context) {
-    return MediaQuery.of(context).size.height;
-  }
-
-  static double WIDTH(BuildContext context) {
-    return MediaQuery.of(context).size.width;
-  }
-
-  static double TITLE_FONT() {
-    return 15;
-  }
-  static double LARGE_TITLE_FONT() {
-    return 18;
-  }
-  static double EXTRA_LARGE_TITLE_FONT() {
-    return 25;
-  }
-  static double MAIN_FONT() {
-    return 13;
-  }
-  static double SMALL_FONT() {
-    return 11;
-  }
-  static double VERY_SMALL_FONT() {
-    return 9;
   }
 }

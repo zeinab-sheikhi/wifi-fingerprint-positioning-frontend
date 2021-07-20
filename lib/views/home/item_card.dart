@@ -1,3 +1,5 @@
+import 'package:access_point/utils/color_utils.dart' as colors;
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +22,6 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -38,14 +38,14 @@ class HomeCard extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Color(0xff5dfdcd),
+              color: colors.accentColor,
               size: width / 5
             ),
             AutoSizeText(
               titleText,
               maxLines: 1,
               style: TextStyle(
-                  color: Color(0xfff4fbfe),
+                  color: colors.homeItemText,
                   fontSize: 14
               ),
             )

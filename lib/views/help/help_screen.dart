@@ -1,4 +1,6 @@
-import 'package:access_point/utils/data/string_utils.dart';
+import 'package:access_point/utils/assets_urls.dart' as assets;
+import 'package:access_point/utils/string_utils.dart' as strings;
+import 'package:access_point/utils/color_utils.dart' as colors;
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:intro_slider/intro_slider.dart';
@@ -23,40 +25,40 @@ class _HelpScreenState extends State<HelpScreen> {
     return IntroSlider(
         slides: slides,
       isShowSkipBtn: false,
-      colorDot: Color(0xffdfdfdf),
-      colorActiveDot: Color(0xff1bb581),
+      colorDot: colors.dotColor,
+      colorActiveDot: colors.activeDotColor,
     );
   }
 
   _initSlides() {
     slides.add(
         _createSlides(
-            StringUtils.offlinePhaseTitle,
-            StringUtils.offlinePhaseDescription,
-            "assets/images/add_location.jpg"
+            strings.offlinePhase,
+            strings.offlinePhaseDescription,
+            assets.addLocation
         ));
     slides.add(
         _createSlides(
-            StringUtils.onlinePhaseTitle,
-            StringUtils.onlinePhaseDescription,
-            "assets/images/current_location.png"
+            strings.onlinePhase,
+            strings.onlinePhaseDescription,
+            assets.currentLocation
         ));
     slides.add(
         _createSlides(
-            StringUtils.wifiScannerTitle,
-            StringUtils.wifiScannerDescription,
-            "assets/images/scan_wifi.png"
+            strings.wifiScanner,
+            strings.wifiScannerDescription,
+            assets.scanWiFi
         ));
   }
 
   Slide _createSlides(String title, String description, String imagePath) {
     return Slide(
       title: title,
-      styleTitle: TextStyle(color: Color(0xff5c6870), fontSize: 30, fontWeight: FontWeight.bold),
+      styleTitle: TextStyle(color: colors.textColor, fontSize: 30, fontWeight: FontWeight.bold),
       pathImage: imagePath,
       description: description,
-      styleDescription: TextStyle(color: Color(0xff5c6870), fontSize: 18),
-      backgroundColor: Colors.white
+      styleDescription: TextStyle(color: colors.descriptionText, fontSize: 18),
+      backgroundColor: colors.primaryColor
     );
 
   }

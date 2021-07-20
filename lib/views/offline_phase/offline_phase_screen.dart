@@ -1,12 +1,13 @@
-import 'dart:convert';
-import 'dart:ui';
 import 'dart:async';
 
-import 'package:access_point/model/access_point.dart';
-import 'package:access_point/model/point.dart';
-import 'package:access_point/utils/data/preferences_util.dart';
-import 'package:access_point/utils/data/helper.dart';
-import 'package:access_point/views/offline_phase/offline_phase_circular_timer.dart';
+import 'package:access_point/api/api.dart';
+import 'package:access_point/api/api_result.dart';
+import 'package:access_point/models/point.dart';
+import 'package:access_point/utils/preferences_util.dart';
+import 'package:access_point/utils/helper.dart' as helper;
+import 'package:access_point/utils/string_utils.dart' as strings;
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/views/offline_phase/circular_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -15,9 +16,7 @@ import 'package:http/http.dart';
 import 'package:wifi_plugin/wifi_plugin.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-
-import '../../utils/data/string_utils.dart';
-import 'offline_phase_text_field.dart';
+import 'text_field.dart';
 
 
 class OfflinePhase extends StatefulWidget {
@@ -29,7 +28,6 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   final CountDownController _controller = CountDownController();
 
-  String _url = '';
   int _duration = 0;
   int _intervalTime = 0;
   int _xValue = 0;
@@ -42,24 +40,22 @@ class _OfflinePhaseState extends State<OfflinePhase> {
 
   @override
   void initState() {
-    Helper.changeScreenToPortrait();
+    helper.changeScreenToPortrait();
     _initializeVariables();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return _container(height, width);
+    return _body(height, width);
   }
 
-
-  Widget _container(double width, double height) {
+  Widget _body(double width, double height) {
     return Center(
       child: Container(
-        color: Color(0xff030712),
+        color: colors.backgroundColor,
         width: width,
         height: height * 2 / 3  + height / 10,
         child: Column(
@@ -99,7 +95,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
                   _xValue = _subtract(_xValue);
                 });
               }),
-          CoordinateTextField(text: _xValue.toString(), labelText: 'X'),
+          CoordinateTextField(text: _xValue.toString(), labelText: strings.x),
           _addButton(
               height,
               (){
@@ -126,7 +122,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
                   _yValue = _subtract(_yValue);
                 });
               }),
-          CoordinateTextField(text: _yValue.toString(), labelText: 'Y'),
+          CoordinateTextField(text: _yValue.toString(), labelText: strings.y),
           _addButton(
               height,
               () {
@@ -144,12 +140,12 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     return Container(
       // height: height / 15,
       child: ElevatedButton(
-          onPressed: () {add();},
-          child: Icon(Icons.add, color: Color(0xff43adb7)),
+          onPressed: ()=> add(),
+          child: Icon(Icons.add, color: colors.accentDarkColor),
           style: ElevatedButton.styleFrom(
-              primary: Color(0xff030712),
+              primary: colors.backgroundColor,
               shape: CircleBorder(),
-              side: BorderSide(width: 2.0, color: Color(0xff43adb7))
+              side: BorderSide(width: 2.0, color: colors.accentDarkColor)
           )
       ),
     );
@@ -160,20 +156,19 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       // height: height / 15,
       child: ElevatedButton(
           onPressed: (){subtract();},
-          child: Icon(Icons.remove, color: Color(0xff43adb7)),
+          child: Icon(Icons.remove, color: colors.accentDarkColor),
           style: ElevatedButton.styleFrom(
-            primary: Color(0xff030712),
+            primary: colors.backgroundColor,
             shape: CircleBorder(),
-            side: BorderSide(width: 2.0, color: Color(0xff43adb7))
+            side: BorderSide(width: 2.0, color: colors.accentDarkColor)
           )
       ),
     );
   }
   _initializeVariables()  {
     setState(() {
-      _url = Helper.getUrl('/fingerprint/api/v1/points');
-      _duration = PreferenceUtils.getInt('scanTime', 20);
-      _intervalTime = PreferenceUtils.getInt('intervalTime', 1000);
+      _duration = PreferenceUtils.getInt(strings.scanTime, 20);
+      _intervalTime = PreferenceUtils.getInt(strings.intervalTime, 1000);
       _sampleTime = Duration(milliseconds: _intervalTime);
     });
   }
@@ -196,7 +191,6 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   }
 
   void _filterData() {
-
     for(MapEntry mapEntry in _accessPointsMap.entries) {
       String wifiBSSID = mapEntry.key;
       List<int> wifiRSSIList = List.of(mapEntry.value).cast<int>();
@@ -204,25 +198,14 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     }
   }
 
-  Future<void> _sendData(List<AccessPoint> accessPointList) async {
-
-    int xCoordinate = _xValue;
-    int yCoordinate = _yValue;
-    int totalScanTime = _duration;
-    int intervalTime = _intervalTime ~/ 1000;
-    String dateTime = Helper().getDateTime();
-    Point _point = new Point(
-        xCoordinate,
-        yCoordinate,
-        totalScanTime,
-        intervalTime,
-        dateTime,
-        accessPointList);
-    String json = jsonEncode(_point);
-    Response response = await post(_url, headers:StringUtils.headers, body: json);
-    int statusCode = response.statusCode;
-    if(statusCode == 200)
-      Helper.showToast("AccessPoint added Successfully", context);
+  _postPoints(int xCoordinate, int yCoordinate, int totalScanTime, int intervalTime, String dateTime,
+      List<AccessPoint> accessPoints) async{
+    Point newPoint = Point(xCoordinate, yCoordinate, totalScanTime, intervalTime, dateTime, accessPoints);
+    APIResult response = await API.offlinePhaseAPI.postPoints(newPoint);
+    if(response.isSuccessful())
+      helper.showToast(strings.postedSuccessfully, context);
+    else
+      print(response.error);
   }
 
   _startTimer() {
@@ -239,7 +222,13 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   }
   _completeTimer() {
     _filterData();
-    _sendData(_accessPointsList);
+    _postPoints(
+        _xValue,
+        _yValue,
+        _duration,
+        _intervalTime ~/ 1000,
+        helper.getDateTime(),
+        _accessPointsList);
     setState(() {
       _resetVariables();
     });

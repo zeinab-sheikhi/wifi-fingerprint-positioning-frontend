@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
 
 // ignore: must_be_immutable
 class SettingExpandedTile extends StatefulWidget {
@@ -34,13 +35,13 @@ class _SettingExpandedTileState extends State<SettingExpandedTile> {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          color: Color(0xff242c42),
+          color: colors.primaryColorLight,
           borderRadius: BorderRadius.all(Radius.circular(20))
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
             accentColor: widget.accentColor,
-            unselectedWidgetColor: Colors.white,
+            unselectedWidgetColor: colors.primaryColor,
             dividerColor: Colors.transparent
         ),
         child: ExpansionTile(
@@ -61,7 +62,7 @@ class _SettingExpandedTileState extends State<SettingExpandedTile> {
     return Text(
         widget.title,
         style: TextStyle(
-            color: Colors.white,
+            color: colors.primaryColor,
             fontWeight: FontWeight.bold,
             fontSize: 20
         )
@@ -72,7 +73,7 @@ class _SettingExpandedTileState extends State<SettingExpandedTile> {
     return Text(
         widget.subtitle,
         style: TextStyle(
-            color: Colors.grey,
+            color: colors.grey,
             fontSize: 14
         )
     );

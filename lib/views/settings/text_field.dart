@@ -1,6 +1,7 @@
-import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/preferences_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:regexed_validator/regexed_validator.dart';
 
@@ -79,7 +80,7 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
         errorStyle: _textStyle(widget.errorColor),
         focusedBorder: _coloredBorder(widget.focusedColor),
         focusedErrorBorder: _coloredBorder(widget.errorColor),
-        hintStyle: _textStyle(Colors.grey),
+        hintStyle: _textStyle(colors.grey),
         hintText: widget.defaultValue,
         labelStyle: _textStyle(widget.enableColor),
         labelText: widget.labelText,

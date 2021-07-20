@@ -1,10 +1,8 @@
-import 'package:access_point/utils/data/string_utils.dart';
-import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/preferences_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
-class Helper {
 
   String getDateTime() {
     var dt = DateTime.now();
@@ -28,7 +26,7 @@ class Helper {
     return minute;
   }
 
-  static String getChannel(String frequency) {
+  String getChannel(String frequency) {
 
     int freq = int.parse(frequency);
     if( freq > 2000 && freq < 3000)
@@ -37,14 +35,14 @@ class Helper {
       return 5.toString();
   }
 
-  static String getUrl(String path) {
+  String getUrl(String path) {
     String ipAddress = PreferenceUtils.getString('ipAddress', '192.168.1.5');
     String port = PreferenceUtils.getString('port', '5000');
     String url = 'http://' + ipAddress + ':' + port + path;
     return url;
   }
 
-  static showToast(String toastMessage, BuildContext context) {
+  showToast(String toastMessage, BuildContext context) {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     scaffoldMessenger.showSnackBar(
       SnackBar(
@@ -55,11 +53,11 @@ class Helper {
     );
   }
 
-  static changeScreenToPortrait() {
+  changeScreenToPortrait() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
-  static changeScreenToLandscape() {
+  changeScreenToLandscape() {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
   }
@@ -69,8 +67,8 @@ class Helper {
     return dy;
   }
 
-  ///convert rssi value in dBm to an integer between 0 and 100
-  static int levelToProgress(int level) {
+  /// Convert rssi value in dBm to an integer between 0 and 100
+  int levelToProgress(int level) {
     if(level > -30 && level <= -20)
       return 100;
     else if(level > -40 && level <= -30)
@@ -93,28 +91,24 @@ class Helper {
       return 10;
   }
 
-  static Color backgroundColorBasedOnLevel(int level) {
-
+  Color backgroundColorBasedOnLevel(int level) {
     if (level > -50)
-      return Color(0xffc5fded);
+      return colors.excellentSignalLight;
     else if(level <= -50 && level > -60)
-      return Color(0xffDDEFFF);
+      return colors.goodSignalLight;
     else if(level <= -60 && level > -70)
-      return Color(0xffFCF7CD);
+      return colors.fairSignalLight;
     else
-      return Color(0xffF8BABD);
+      return colors.weakSignalLight;
   }
 
-  static Color progressColorBasedOnLevel(int level) {
+  Color progressColorBasedOnLevel(int level) {
     if (level > -50)
-      return StringUtils.excellentSignal;
+      return colors.excellentSignal;
     else if(level <= -50 && level > -60)
-      return StringUtils.goodSignal;
+      return colors.goodSignal;
     else if(level <= -60 && level > -70)
-      return StringUtils.fairSignal;
+      return colors.fairSignal;
     else
-      return StringUtils.weakSignal;
+      return colors.weakSignal;
   }
-
-
-}

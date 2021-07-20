@@ -2,9 +2,10 @@ import 'package:access_point/views/wifi_scanner/wifi_card.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wifi_plugin/wifi_plugin.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/views/widgets/my_icons.dart' as icons;
+import 'package:access_point/utils/string_utils.dart' as strings;
 
 class WiFiScanner extends StatefulWidget {
   @override
@@ -37,15 +38,15 @@ class _WiFiScannerState extends State<WiFiScanner> {
   AppBar _buildAppbar() {
     return AppBar(
       title: AutoSizeText(
-        'Wi-Fi Scanner',
+        strings.wifiScanner,
         style: TextStyle(
-            color: Colors.white
+            color: colors.primaryColor
         ),
       ),
       leading: IconButton(
         icon: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
+          icons.backArrow,
+          color: colors.primaryColor,
         ),
         onPressed: () => Navigator.of(context).pop(),
       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/string_utils.dart' as strings;
 
 // ignore: must_be_immutable
 class UserPositionCard extends StatelessWidget {
@@ -37,9 +39,9 @@ class UserPositionCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _text("X: $xCoordinate"),
-        _text("Y: $yCoordinate"),
-        _text("Tile: $tileNumber"),
+        _text(strings.x + ": $xCoordinate"),
+        _text(strings.y + ": $yCoordinate"),
+        _text(strings.tile + ": $tileNumber"),
       ],
     );
   }
@@ -48,7 +50,7 @@ class UserPositionCard extends StatelessWidget {
     return Text(
       value,
       style: TextStyle(
-        color: Color(0xff073980),
+        color: colors.mapMarker,
         fontSize: 14,
         fontWeight: FontWeight.bold
       ),

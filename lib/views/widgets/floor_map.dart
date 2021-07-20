@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:access_point/utils/assets_urls.dart' as assets;
 
 class FloorMap extends StatefulWidget {
 
@@ -31,7 +32,7 @@ class _FloorMapState extends State<FloorMap> {
           minScale: 1,
           maxScale: 2,
           child: Image.asset(
-            'assets/images/floor1.png',
+            assets.firstFloor,
             fit: BoxFit.fill,
           ),
         ),

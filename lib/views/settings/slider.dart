@@ -1,5 +1,5 @@
-import 'package:access_point/utils/data/string_utils.dart';
-import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/preferences_util.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -26,25 +26,20 @@ class SettingsSlider extends StatefulWidget {
 class _SettingsSliderState extends State<SettingsSlider> {
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         // activeTickMarkColor: Color(0xFFEC6395),
-        activeTickMarkColor: Color(0xff5dfdcd),
+        activeTickMarkColor: colors.accentColor,
         // inactiveTickMarkColor: Color(0xFFE4276B),
-        inactiveTickMarkColor: Color(0xFF0db8ba),
-        valueIndicatorColor: Colors.white,
+        inactiveTickMarkColor: colors.sliderInactiveTickMark,
+        valueIndicatorColor: colors.primaryColor,
         // activeTrackColor: Color(0xFFEC6395),
-        activeTrackColor: Color(0xFF5dfdcd),
-        inactiveTrackColor: Colors.white,
+        activeTrackColor: colors.sliderActiveTrack,
+        inactiveTrackColor: colors.primaryColor,
         // thumbColor: Color(0xFFE4276B),
-        thumbColor: Color(0xFF29bb89),
+        thumbColor: colors.sliderThumbColor,
       ),
       child: Slider(
         min: widget.min,

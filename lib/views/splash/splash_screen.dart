@@ -1,6 +1,6 @@
 import 'dart:async';
-
-import 'package:access_point/views/home/home_screen.dart';
+import 'package:access_point/utils/assets_urls.dart' as assets;
+import 'package:access_point/utils/color_utils.dart' as colors;
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,10 +20,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff252525),
+      backgroundColor: colors.splashBackground,
       body: Center(
         child: Image(
-          image: new AssetImage('assets/images/wifi.gif'),
+          image: new AssetImage(assets.wifiGif),
         ),
       ),
     );

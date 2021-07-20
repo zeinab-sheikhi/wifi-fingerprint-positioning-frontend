@@ -1,5 +1,3 @@
-import 'access_point.dart';
-
 class Point {
 
   final int xCoordinate;
@@ -18,7 +16,6 @@ class Point {
       this.accessPoints);
 
   Map toJson() {
-
     return {
       'x': xCoordinate,
       'y': yCoordinate,
@@ -28,5 +25,18 @@ class Point {
       'accessPoints': accessPoints
     };
   }
+}
+class AccessPoint {
+
+  final String BSSID;
+  final List<int> RSSIs;
+
+  AccessPoint(this.BSSID, this.RSSIs);
+
+  Map toJson() => {
+    'BSSID': BSSID,
+    'RSSIs': RSSIs,
+  };
+
 }
 

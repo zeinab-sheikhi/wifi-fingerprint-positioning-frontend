@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:access_point/utils/color_utils.dart' as colors;
 
 class BlueDotIcon extends StatefulWidget {
-
-
   @override
   _BlueDotIconState createState() => _BlueDotIconState();
 }
@@ -23,10 +21,10 @@ class _BlueDotIconState extends State<BlueDotIcon> {
       height: 8,
       decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Color(0xff073980),
+          color: colors.mapMarker,
           boxShadow: [
             BoxShadow(
-              color: Color(0xff1e81b0),
+              color: colors.mapMarkerShadow,
               blurRadius: 3,
               spreadRadius: 4
           )]

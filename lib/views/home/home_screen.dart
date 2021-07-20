@@ -1,10 +1,13 @@
-import 'package:access_point/test.dart';
-import 'package:access_point/utils/data/location_service.dart';
-import 'package:access_point/utils/data/preferences_util.dart';
+import 'package:access_point/utils/assets_urls.dart' as assets;
+import 'package:access_point/utils/string_utils.dart' as strings;
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/views/widgets/my_icons.dart' as icons;
+import 'package:access_point/utils/location_service.dart';
+import 'package:access_point/utils/preferences_util.dart';
 import 'package:access_point/views/help/help_screen.dart';
-import 'package:access_point/views/home/home_item_card.dart';
-import 'package:access_point/views/offline_phase/offline_phase_map_viewer.dart';
-import 'package:access_point/views/online_phase/online_phase_map_viewer.dart';
+import 'package:access_point/views/home/item_card.dart';
+import 'package:access_point/views/offline_phase/map_viewer.dart';
+import 'package:access_point/views/online_phase/map_viewer.dart';
 import 'package:access_point/views/settings/settings_screen.dart';
 import 'package:access_point/views/wifi_scanner/wifi_screen.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +49,12 @@ class _HomeState extends State<Home> {
 
   AppBar _buildAppbar() {
     return AppBar(
-      backgroundColor: Color(0xff0b0f12),
+      backgroundColor: colors.gradient1,
       actions: [
         IconButton(
           icon: Icon(
-            Icons.settings,
-            color: Color(0xfff5f5f5),
+            icons.settings,
+            color: colors.settingsIcon,
             size: 30,
           ),
           onPressed: () {
@@ -67,7 +70,6 @@ class _HomeState extends State<Home> {
 
 
   Widget _buildBody(double width, double height) {
-
     return SafeArea(
         child: Container(
           decoration: BoxDecoration(
@@ -75,13 +77,13 @@ class _HomeState extends State<Home> {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xff0b0f12),
-                    Color(0xff111317),
-                    Color(0xff0f1316),
-                    Color(0xff181d21),
-                    Color(0xff222931),
-                    Color(0xff2f3841),
-                    Color(0xff363e44)
+                    colors.gradient1,
+                    colors.gradient2,
+                    colors.gradient3,
+                    colors.gradient4,
+                    colors.gradient5,
+                    colors.gradient6,
+                    colors.gradient7,
                   ]
               )
           ),
@@ -99,7 +101,7 @@ class _HomeState extends State<Home> {
       alignment: Alignment.center,
       height: height * 1 / 5,
       child: Image.asset(
-        "assets/images/logo.png",
+        assets.logo,
         width: width,
         fit: BoxFit.scaleDown,
 
@@ -131,8 +133,8 @@ class _HomeState extends State<Home> {
         children: [
           HomeCard(
               goToRoute: OfflinePhaseMap(),
-              titleText: 'OFFLINE PHASE',
-              icon: Icons.place_outlined,
+              titleText: strings.offlinePhase.toUpperCase(),
+              icon: icons.place,
               width: width,
               height: height
           ),
@@ -143,8 +145,8 @@ class _HomeState extends State<Home> {
           ),
           HomeCard(
               goToRoute: OnlinePhaseMap(),
-              titleText: 'ONLINE PHASE',
-              icon: Icons.person_search,
+              titleText: strings.onlinePhase.toUpperCase(),
+              icon: icons.personSearch,
               width: width,
               height: height
           )
@@ -184,8 +186,8 @@ class _HomeState extends State<Home> {
         children: [
           HomeCard(
               goToRoute: WiFiScanner(),
-              titleText: 'Wi-Fi SCANNER',
-              icon: Icons.wifi,
+              titleText: strings.wifiScanner.toUpperCase(),
+              icon: icons.wifi,
               width: width,
               height: height
           ),
@@ -196,8 +198,8 @@ class _HomeState extends State<Home> {
           ),
           HomeCard(
               goToRoute: HelpScreen(),
-              titleText: 'HELP',
-              icon: Icons.help,
+              titleText: strings.help.toUpperCase(),
+              icon: icons.help,
               width: width,
               height: height
           )
@@ -206,10 +208,10 @@ class _HomeState extends State<Home> {
     );
   }
   Widget _horizontalDivider() {
-    return Divider(color: Color(0xff8a8d94), thickness: 1);
+    return Divider(color: colors.divider, thickness: 1);
   }
 
   Widget _verticalDivider() {
-    return VerticalDivider(color: Color(0xff8a8d94), thickness: 1);
+    return VerticalDivider(color: colors.divider, thickness: 1);
   }
 }

@@ -1,9 +1,8 @@
-import 'package:access_point/utils/views/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/string_utils.dart' as strings;
 
 class ServerSettingDialog extends StatefulWidget {
-
   BuildContext buildContext;
   ServerSettingDialog({required this.buildContext});
 
@@ -12,12 +11,6 @@ class ServerSettingDialog extends StatefulWidget {
 }
 
 class _ServerSettingDialogState extends State<ServerSettingDialog> {
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +23,7 @@ class _ServerSettingDialogState extends State<ServerSettingDialog> {
 
   Widget _serverDialog(BuildContext context, double width, double height) {
     return AlertDialog(
-      backgroundColor: Color(0xff111628),
+      backgroundColor: colors.appBar,
       contentPadding: EdgeInsets.symmetric(horizontal: width / 20),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))
@@ -38,13 +31,13 @@ class _ServerSettingDialogState extends State<ServerSettingDialog> {
       content: _dialogContent(width, height),
       actions: [
         _dialogButton(
-            'Cancel',
+            strings.cancel,
              () {
               Navigator.pop(context);
             }
             ),
         _dialogButton(
-            'OK',
+            strings.ok,
                 () {Navigator.pop(context);}
         )
       ],
@@ -59,10 +52,8 @@ class _ServerSettingDialogState extends State<ServerSettingDialog> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: height / 40,),
-
-          SizedBox(height: height / 50,),
-
+          SizedBox(height: height / 40),
+          SizedBox(height: height / 50),
         ],
       ),
     );
@@ -74,7 +65,7 @@ class _ServerSettingDialogState extends State<ServerSettingDialog> {
             primary: Colors.transparent,
             shadowColor: Colors.transparent
         ),
-        child: Text(text, style: TextStyle(color: Color(0xff43adb7))),
+        child: Text(text, style: TextStyle(color: colors.accentDarkColor)),
         onPressed: () => action
     );
   }

@@ -1,4 +1,6 @@
-import 'package:access_point/utils/data/helper.dart';
+import 'package:access_point/utils/helper.dart' as helper;
+import 'package:access_point/utils/string_utils.dart' as strings;
+import 'package:access_point/utils/color_utils.dart' as colors;
 import 'package:flutter/material.dart';
 
 import 'offline_phase_screen.dart';
@@ -12,7 +14,7 @@ class MyAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Color(0xff030712),
+      backgroundColor: colors.alertDialogBackground,
       insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       shape: RoundedRectangleBorder(
@@ -34,7 +36,7 @@ class MyAlertDialog extends StatelessWidget {
 
   Widget _titleText() {
     return Text(
-      'Add Location Coordinates',
+      strings.addLocation,
       style: TextStyle(
           color: color,
           fontSize: 20
@@ -45,14 +47,14 @@ class MyAlertDialog extends StatelessWidget {
   Widget _okActionButton(BuildContext context) {
     return TextButton(
       child: Text(
-        'OK',
+        strings.ok,
         style: TextStyle(
             color: color
         ),
       ),
       onPressed: () {
         Navigator.of(context).pop();
-        Helper.changeScreenToLandscape();
+        helper.changeScreenToLandscape();
       },
     );
   }

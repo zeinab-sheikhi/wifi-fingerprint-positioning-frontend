@@ -1,10 +1,11 @@
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:access_point/utils/data/helper.dart';
+import 'package:access_point/utils/helper.dart' as helper;
+import 'package:access_point/utils/assets_urls.dart' as assets;
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/string_utils.dart' as strings;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class WifiInfoDialog extends StatelessWidget {
 
   Color iconColor;
@@ -41,7 +42,7 @@ class WifiInfoDialog extends StatelessWidget {
         height: height * 2 / 4,
         padding: EdgeInsets.symmetric(horizontal: width / 100),
         decoration: BoxDecoration(
-          color: Color(0xff242c42),
+          color: colors.primaryColorLight,
           shape: BoxShape.rectangle,
           borderRadius: BorderRadius.circular(20),
         ),
@@ -52,8 +53,8 @@ class WifiInfoDialog extends StatelessWidget {
 
   Widget _infoContainer(double width, double height, BuildContext context) {
 
-    const List<String> _titles = ['SSID', 'BSSID', 'Band', 'Signal', 'Channel'];
-    List<String> _values = [ssid, bssid, '${Helper.getChannel(band)} GHz', '${signal} dBm', 'Ch #${channel}(${band} MHz)'];
+    const List<String> _titles = [strings.ssid, strings.bssid, strings.band, strings.signal, strings.channel];
+    List<String> _values = [ssid, bssid, '${helper.getChannel(band)} GHz', '${signal} dBm', 'Ch #${channel}(${band} MHz)'];
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width / 50),
@@ -65,7 +66,7 @@ class WifiInfoDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _customColumn(_titles, iconColor, true, height),
-              _customColumn(_values, Colors.grey, false, height),
+              _customColumn(_values, colors.grey, false, height),
             ],
           ),
           _closeButtonContainer(context)
@@ -80,7 +81,7 @@ class WifiInfoDialog extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: height / 100),
       child: ColorFiltered(
         child: Image.asset(
-          'assets/images/wifi_signal.png',
+          assets.wifiSignal,
           width: width / 5,
           height: width / 5,
           fit: BoxFit.cover,
@@ -130,7 +131,7 @@ class WifiInfoDialog extends StatelessWidget {
           onPressed: (){
             Navigator.of(context).pop();
           },
-          child: Text('close',style: TextStyle(fontSize: 18, color: iconColor),)),
+          child: Text(strings.close,style: TextStyle(fontSize: 18, color: iconColor),)),
     );
   }
 

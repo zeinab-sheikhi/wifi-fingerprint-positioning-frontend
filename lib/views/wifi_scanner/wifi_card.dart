@@ -1,6 +1,9 @@
-import 'package:access_point/utils/data/helper.dart';
-import 'package:access_point/views/wifi_scanner/wifi_information_dialog.dart';
-import 'package:access_point/views/wifi_scanner/wifi_level_indicator.dart';
+import 'package:access_point/utils/helper.dart' as helper;
+import 'package:access_point/utils/string_utils.dart' as strings;
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/views/widgets/my_icons.dart' as icons;
+import 'package:access_point/views/wifi_scanner/information_dialog.dart';
+import 'package:access_point/views/wifi_scanner/level_indicator.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +27,12 @@ class WiFiCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    String SSID = wifi['SSID'];
-    String BSSID = wifi['BSSID'];
-    String RSSI = wifi['RSSI'];
+    String SSID = wifi[strings.ssid];
+    String BSSID = wifi[strings.bssid];
+    String RSSI = wifi[strings.rssi];
     int level = int.parse(RSSI);
-    String freq = wifi['frequency'];
-    String channel = wifi['channel'];
+    String freq = wifi[strings.frequency];
+    String channel = wifi[strings.channel];
     return _wifiItemCard(SSID, BSSID, RSSI, freq, channel, level, width, height, context);
   }
 
@@ -45,7 +48,7 @@ class WiFiCard extends StatelessWidget {
       BuildContext context) {
 
     return ListTile(
-      tileColor: Color(0xff242c42),
+      tileColor: colors.primaryColorLight,
       title: _wifiInfoTopSection(SSID, BSSID, level, width, height),
       subtitle: _wifiInfoBottomSection(frequency, channel, RSSI, height),
       contentPadding: EdgeInsets.symmetric(horizontal: width / 20),
@@ -54,7 +57,7 @@ class WiFiCard extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return WifiInfoDialog(
-                iconColor: Helper.progressColorBasedOnLevel(level),
+                iconColor: helper.progressColorBasedOnLevel(level),
                 ssid: SSID,
                 bssid: BSSID,
                 band: frequency,
@@ -74,7 +77,7 @@ class WiFiCard extends StatelessWidget {
       maxFontSize: 20,
       minFontSize: 16,
       style: TextStyle(
-        color: Colors.white,
+        color: colors.primaryColor,
         fontWeight: FontWeight.bold
       ),
     );
@@ -85,7 +88,7 @@ class WiFiCard extends StatelessWidget {
       BSSID,
       maxLines: 1,
       style: TextStyle(
-          color: Colors.white,
+          color: colors.primaryColor,
           fontSize: 15
       ),
     );
@@ -110,9 +113,9 @@ class WiFiCard extends StatelessWidget {
             width: 10,
             height: height / 10,
             child: WifiLevelIndicator(
-              progress: Helper.levelToProgress(level),
-              backgroundColor: Helper.backgroundColorBasedOnLevel(level),
-              progressColor: Helper.progressColorBasedOnLevel(level),
+              progress: helper.levelToProgress(level),
+              backgroundColor: helper.backgroundColorBasedOnLevel(level),
+              progressColor: helper.progressColorBasedOnLevel(level),
             ),
           )
         ],
@@ -130,20 +133,20 @@ class WiFiCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _wifiFeatureContainer(
-                  Helper.getChannel(frequency) + ' GHz',
-                  Icons.settings_input_antenna,
+                  helper.getChannel(frequency) + strings.gigaHertz,
+                  icons.antenna,
                   width,
                   height
               ),
               _wifiFeatureContainer(
-                  'CH ' + channel,
-                  Icons.settings_remote,
+                  strings.ch + channel,
+                  icons.remote,
                   width,
                   height
               ),
               _wifiFeatureContainer(
-                  RSSI + ' dBm',
-                  Icons.equalizer,
+                  RSSI + strings.dbm,
+                  icons.equalizer,
                   width,
                   height
               ),
@@ -151,7 +154,7 @@ class WiFiCard extends StatelessWidget {
             ],
           ),
         ),
-        Divider(color: Colors.white)
+        Divider(color: colors.primaryColor)
       ],
     );
   }
@@ -161,7 +164,7 @@ class WiFiCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           vertical: height / 100, horizontal: width / 40),
       decoration: BoxDecoration(
-          color: Colors.grey,
+          color: colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(20))
       ),
       child: Row(
@@ -171,14 +174,14 @@ class WiFiCard extends StatelessWidget {
             title,
             style: TextStyle(
                 fontSize: 15,
-                color: Colors.white
+                color: colors.primaryColor
             ),
           ),
           SizedBox(width: width / 40),
           Icon(
             icon,
             size: 20,
-            color: Colors.white,
+            color: colors.primaryColor,
           )
           // Icon(MdiIcons)
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:access_point/utils/color_utils.dart' as colors;
+
 class CoordinateTextField extends StatelessWidget {
 
   String text;
@@ -24,7 +26,7 @@ class CoordinateTextField extends StatelessWidget {
       padding: EdgeInsets.all(width / 50),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 2.0, color: Color(0xff43adb7))
+          border: Border.all(width: 2.0, color: colors.accentDarkColor)
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,7 +34,7 @@ class CoordinateTextField extends StatelessWidget {
           Text(
               labelText,
               style: TextStyle(
-                  color: Colors.grey,
+                  color: colors.grey,
                 fontSize: 16
               )),
           Expanded(
@@ -40,7 +42,7 @@ class CoordinateTextField extends StatelessWidget {
                   child: Text(
                     text,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: colors.primaryColor,
                       fontSize: 16
                     ),
                   )

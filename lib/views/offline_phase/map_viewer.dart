@@ -1,7 +1,8 @@
-import 'package:access_point/utils/data/helper.dart';
-import 'package:access_point/utils/views/floor_map.dart';
-import 'package:access_point/utils/views/map_marker.dart';
-import 'package:access_point/views/offline_phase/Offline_phase_alert_dialog.dart';
+import 'package:access_point/utils/helper.dart' as helper;
+import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/views/widgets/floor_map.dart';
+import 'package:access_point/views/widgets/map_marker.dart';
+import 'package:access_point/views/offline_phase/alert_dialog.dart';
 
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,7 @@ class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
 
   @override
   void initState() {
-    Helper.changeScreenToLandscape();
+    helper.changeScreenToLandscape();
     super.initState();
   }
 
@@ -34,7 +35,7 @@ class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
     return LayoutBuilder(
         builder: (context, constraints){
           return Container(
-            color: Colors.white,
+            color: colors.primaryColor,
             child: Stack(
               children: [
                 FloorMap(),
@@ -65,7 +66,7 @@ class _OfflinePhaseMapState extends State<OfflinePhaseMap> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return MyAlertDialog(color: Color(0xff43adb7));
+        return MyAlertDialog(color: colors.accentDarkColor);
       },
     );
   }
