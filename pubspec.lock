@@ -390,7 +390,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "81b1caf755d765718c793bfa32bc482afe986874"
+      resolved-ref: "75aa25285655992eaa2080384cf3ab82fed04935"
       url: "https://github.com/zeinab-sheikhi/wifi-plugin.git"
     source: git
     version: "0.0.1"

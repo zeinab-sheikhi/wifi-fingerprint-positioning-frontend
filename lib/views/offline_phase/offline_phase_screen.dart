@@ -32,6 +32,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   int _intervalTime = 0;
   int _xValue = 0;
   int _yValue = 0;
+  int index = 0;
   var _sampleTime;
   late Timer _timer;
   bool _isStopped = false;
@@ -171,6 +172,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       _intervalTime = PreferenceUtils.getInt(strings.intervalTime, 1000);
       _sampleTime = Duration(milliseconds: _intervalTime);
     });
+    Wifi.setRssiListSize(_duration);
   }
 
   int _plus(int value) {
@@ -178,13 +180,13 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   }
 
   int _subtract(int value) {
-    if( value >= 40)
+    if(value >= 40)
       return value - 40;
     return value;
   }
 
   void _collectAccessPoints() async {
-    var result = await Wifi.accessPoints;
+    var result = await Wifi.getAccessPoints(index);
     setState(() {
       _accessPointsMap = result;
     });
@@ -214,6 +216,9 @@ class _OfflinePhaseState extends State<OfflinePhase> {
       if (_isStopped == false) {
         _collectAccessPoints();
         Wifi.requestNewScan(false);
+        setState(() {
+          index = index + 1;
+        });
       }
       else
         timer.cancel();
@@ -222,6 +227,7 @@ class _OfflinePhaseState extends State<OfflinePhase> {
   }
   _completeTimer() {
     _filterData();
+    // print(_accessPointsMap);
     _postPoints(
         _xValue,
         _yValue,
@@ -248,5 +254,6 @@ class _OfflinePhaseState extends State<OfflinePhase> {
     _timer.cancel();
     _accessPointsList = [];
     _accessPointsMap = {};
+    index = 0;
   }
 }

@@ -105,7 +105,7 @@ class _OnlinePhaseState extends State<OnlinePhase> {
 
   Future _collectAccessPoints() async {
     Wifi.requestNewScan(true);
-    var result = await Wifi.accessPoints;
+    var result = await Wifi.getAccessPoints(0);
     setState(() {
       _map = result;
     });
