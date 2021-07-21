@@ -90,12 +90,9 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
         FilteringTextInputFormatter.digitsOnly
       ],
       onEditingComplete: () {
-          setState(() {
-            _saveSharedPref(_controller.text);
-          });
+        setState(() => _saveSharedPref(_controller.text));
         FocusScope.of(context).unfocus();
-      },
-
+      }
     );
   }
 
@@ -110,12 +107,7 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
     );
   }
 
-  TextStyle _textStyle(Color color) {
-    return TextStyle(
-      color: color,
-      fontSize: 16,
-    );
-  }
+  TextStyle _textStyle(Color color) => TextStyle(color: color, fontSize: 16);
 
   _loadSharedPref() async {
     String result = PreferenceUtils.getString(widget.sharedPrefKey, widget.defaultValue);
@@ -147,8 +139,6 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
   }
 
   void setValidator(valid){
-    setState(() {
-      isValid = valid;
-    });
+    setState(() => isValid = valid);
   }
 }

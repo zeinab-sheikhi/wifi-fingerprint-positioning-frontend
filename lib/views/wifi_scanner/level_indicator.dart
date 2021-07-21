@@ -3,7 +3,6 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 
 // ignore: must_be_immutable
 class WifiLevelIndicator extends StatelessWidget {
-
   int progress;
   Color backgroundColor;
   Color progressColor;
@@ -16,7 +15,6 @@ class WifiLevelIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FAProgressBar(
       currentValue: progress,
       maxValue: 100,

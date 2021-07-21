@@ -1,27 +1,22 @@
+import 'package:flutter/material.dart';
 import 'package:access_point/utils/color_utils.dart' as colors;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class HomeCard extends StatelessWidget {
-
   Widget goToRoute;
   String titleText;
   IconData icon;
-  double width;
-  double height;
 
   HomeCard({
     required this.goToRoute,
     required this.titleText,
-    required this.icon,
-    required this.width,
-    required this.height,
-  });
+    required this.icon});
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         Navigator.push(

@@ -21,7 +21,6 @@ dependencies:
   intl: ^0.17.0
   image: ^3.0.2
   intro_slider: ^1.0.8
-  provider: ^5.0.0
   wifi_plugin:
     git:
       url: https://github.com/zeinab-sheikhi/wifi-plugin.git
@@ -44,25 +43,17 @@ flutter:
      - assets/images/wifi_signal.png
 
   fonts:
-    - family: IRANSans
+    - family: Roboto
       fonts:
-        - asset: assets/fonts/IRANSans.ttf
-        - asset: assets/fonts/IRANSans_Bold.ttf
-        - asset: assets/fonts/IRANSans_Medium.ttf
-    - family: Homa
-      fonts:
-        - asset: assets/fonts/BHoma.ttf
-    - family: Koodak
-      fonts:
-        - asset: assets/fonts/BKoodkBd.ttf
-    - family: Nazanin
-      fonts:
-        - asset: assets/fonts/BNazanin.ttf
-        - asset: assets/fonts/Nazaninb.ttf
-    - family: Roya
-      fonts:
-        - asset: assets/fonts/BRoyaBd.ttf
-    - family: Titr
-      fonts:
-        - asset: assets/fonts/BTitrBd.ttf
-
+        - asset: assets/fonts/Roboto-Black.ttf
+        - asset: assets/fonts/Roboto-BlackItalic.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto-BoldItalic.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
+        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto-LightItalic.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto-MediumItalic.ttf
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Thin.ttf
+        - asset: assets/fonts/Roboto-ThinItalic.ttf

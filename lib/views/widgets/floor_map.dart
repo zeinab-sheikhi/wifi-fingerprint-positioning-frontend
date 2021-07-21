@@ -1,27 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:access_point/utils/assets_urls.dart' as assets;
+import 'package:access_point/utils/helper.dart' as helper;
 
-class FloorMap extends StatefulWidget {
-
-  @override
-  _FloorMapState createState() => _FloorMapState();
-}
-
-class _FloorMapState extends State<FloorMap> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class FloorMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
+        helper.changeScreenToPortrait();
         Navigator.pop(context, false);
         return Future.value(false);
       },

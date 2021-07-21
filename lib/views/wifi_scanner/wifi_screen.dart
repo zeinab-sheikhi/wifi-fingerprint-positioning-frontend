@@ -13,76 +13,57 @@ class WiFiScanner extends StatefulWidget {
 }
 
 class _WiFiScannerState extends State<WiFiScanner> {
-
-  List<dynamic> _wifis = [];
+  List<dynamic> _wifiList = [];
 
   @override
   void initState() {
-    super.initState();
     fetchAccessPoints();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-        appBar: _buildAppbar(),
+        appBar: _appbar(),
         body: Container(
             child: _buildList(height, width)
         )
     );
   }
 
-  AppBar _buildAppbar() {
+  AppBar _appbar() {
     return AppBar(
       title: AutoSizeText(
         strings.wifiScanner,
-        style: TextStyle(
-            color: colors.primaryColor
-        ),
+        style: TextStyle(color: colors.primaryColor)
       ),
       leading: IconButton(
-        icon: Icon(
-          icons.backArrow,
-          color: colors.primaryColor,
-        ),
+        icon: Icon(icons.backArrow, color: colors.primaryColor),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
   }
 
   Widget _buildList(height, width) {
-    return _wifis.length != 0 ?
+    return _wifiList.length != 0 ?
     RefreshIndicator(
         child: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: _wifis.length,
+          itemCount: _wifiList.length,
           shrinkWrap: true,
           itemBuilder: (BuildContext context, int index) {
-            return WiFiCard(
-                width: width,
-                height: height,
-                wifi: _wifis.elementAt(index)
-            );
-          },
+            return WiFiCard(wifi: _wifiList.elementAt(index));
+          }
         ),
         onRefresh: _getAccessPoints) : Center(child: CircularProgressIndicator());
   }
 
   fetchAccessPoints() async {
     var result = await Wifi.wifiScanner;
-    setState(() {
-      _wifis = result;
-    });
-    return _wifis;
+    setState(() => _wifiList = result);
   }
 
-  Future<void> _getAccessPoints() async {
-    setState(() {
-      fetchAccessPoints();
-    });
-  }
-
+  Future<void> _getAccessPoints() async => setState(() => fetchAccessPoints());
 }

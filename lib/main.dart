@@ -3,6 +3,7 @@ import 'package:access_point/views/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/string_utils.dart' as strings;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'WiFi',
+      title: strings.appTitle,
       theme: new ThemeData(
         scaffoldBackgroundColor: colors.backgroundColor,
         appBarTheme: AppBarTheme(backgroundColor: colors.appBar),
@@ -32,9 +33,9 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/home': (context) => new Home(),
-        '/splash': (context) => new SplashScreen(),
+        '/splash': (context) => new Splash(),
       },
-      home: Home()
+      home: Splash()
     );
   }
 }

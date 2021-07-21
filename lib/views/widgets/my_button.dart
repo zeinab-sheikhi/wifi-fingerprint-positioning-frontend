@@ -1,4 +1,4 @@
-import 'package:access_point/utils/views/shapes/pentagon_shape.dart';
+import 'package:access_point/views/widgets/shapes/pentagon_shape.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

@@ -26,7 +26,6 @@ class WifiInfoDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return _infoDialog(width, height, context);
@@ -39,7 +38,7 @@ class WifiInfoDialog extends StatelessWidget {
       insetPadding: EdgeInsets.all(10),
       child: Container(
         width: double.infinity,
-        height: height * 2 / 4,
+        height: height * 1 / 2,
         padding: EdgeInsets.symmetric(horizontal: width / 100),
         decoration: BoxDecoration(
           color: colors.primaryColorLight,
@@ -113,10 +112,7 @@ class WifiInfoDialog extends StatelessWidget {
     return AutoSizeText(
         title,
       maxLines: 1,
-      style: TextStyle(
-        color: textColor,
-        fontSize: 18
-      ),
+      style: TextStyle(color: textColor, fontSize: 18)
     );
   }
   
@@ -128,11 +124,8 @@ class WifiInfoDialog extends StatelessWidget {
               primary: Colors.transparent,
               shadowColor: Colors.transparent
           ),
-          onPressed: (){
-            Navigator.of(context).pop();
-          },
-          child: Text(strings.close,style: TextStyle(fontSize: 18, color: iconColor),)),
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(strings.close,style: TextStyle(fontSize: 18, color: iconColor)))
     );
   }
-
 }

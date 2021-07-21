@@ -55,8 +55,6 @@ class _SettingsSliderState extends State<SettingsSlider> {
     );
   }
 
-  _saveToPrefs(int value) async {
-    PreferenceUtils.setInt(widget.sharedPreferencesKey, value);
-    }
+  _saveToPrefs(int value) async => PreferenceUtils.setInt(widget.sharedPreferencesKey, value);
 }
 

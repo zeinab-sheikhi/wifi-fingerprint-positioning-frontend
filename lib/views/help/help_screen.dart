@@ -19,9 +19,9 @@ class _HelpScreenState extends State<HelpScreen> {
     _initSlides();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     return IntroSlider(
         slides: slides,
       isShowSkipBtn: false,
@@ -32,26 +32,26 @@ class _HelpScreenState extends State<HelpScreen> {
 
   _initSlides() {
     slides.add(
-        _createSlides(
+        _createSlide(
             strings.offlinePhase,
             strings.offlinePhaseDescription,
             assets.addLocation
         ));
     slides.add(
-        _createSlides(
+        _createSlide(
             strings.onlinePhase,
             strings.onlinePhaseDescription,
             assets.currentLocation
         ));
     slides.add(
-        _createSlides(
+        _createSlide(
             strings.wifiScanner,
             strings.wifiScannerDescription,
             assets.scanWiFi
         ));
   }
 
-  Slide _createSlides(String title, String description, String imagePath) {
+  Slide _createSlide(String title, String description, String imagePath) {
     return Slide(
       title: title,
       styleTitle: TextStyle(color: colors.textColor, fontSize: 30, fontWeight: FontWeight.bold),

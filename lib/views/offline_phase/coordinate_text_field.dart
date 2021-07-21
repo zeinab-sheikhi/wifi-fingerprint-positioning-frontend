@@ -5,14 +5,10 @@ class CoordinateTextField extends StatelessWidget {
 
   String text;
   String labelText;
-  CoordinateTextField(
-      { required this.text,
-        required this.labelText
-      });
+  CoordinateTextField({ required this.text, required this.labelText});
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return _coordinateTextField(width, height);
@@ -21,9 +17,9 @@ class CoordinateTextField extends StatelessWidget {
   Widget _coordinateTextField(double width, double height)
   {
     return Container(
-      width: width / 3,
+      width: width * 1.4 / 3,
       height: height / 10,
-      padding: EdgeInsets.all(width / 50),
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(width: 2.0, color: colors.accentDarkColor)

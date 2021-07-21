@@ -2,14 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:access_point/api/api_offline_phase.dart';
+import 'package:access_point/api/api_online_phase.dart';
 import 'package:access_point/utils/api_utils.dart' as api;
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:access_point/api/api_result.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/http.dart' as http;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:http/io_client.dart';
-import 'api_online_phase.dart';
 
 class API {
   static final String baseUrl = api.apiBaseUlr;
@@ -32,7 +31,6 @@ class API {
     print(baseUrl + partUrl);
     Uri url = Uri.parse(baseUrl + partUrl);
     final encodedBody = jsonEncode(postBody);
-    print(encodedBody);
     late http.Response response;
     try {
       if (method == 'GET') {
@@ -51,7 +49,6 @@ class API {
       if (result.code != 200 || result.error != '') {
         _log('error in getting response from server');
         _log(result.error);
-        _log(result.code.toString());
         result.succeed = false;
         result.data = null;
       } else {

@@ -1,19 +1,18 @@
 class Point {
+  int xCoordinate;
+  int yCoordinate;
+  int totalScanTime;
+  int intervalTime;
+  String dateTime;
+  List<AccessPoint> accessPoints;
 
-  final int xCoordinate;
-  final int yCoordinate;
-  final int totalScanTime;
-  final int intervalTime;
-  final String dateTime;
-  final List<AccessPoint> accessPoints;
-
-  Point(
-      this.xCoordinate,
-      this.yCoordinate,
-      this.totalScanTime,
-      this.intervalTime,
-      this.dateTime,
-      this.accessPoints);
+  Point({
+    required this.xCoordinate,
+    required this.yCoordinate,
+    required this.totalScanTime,
+    required this.intervalTime,
+    required this.dateTime,
+    required this.accessPoints});
 
   Map toJson() {
     return {
@@ -26,17 +25,16 @@ class Point {
     };
   }
 }
+
 class AccessPoint {
+  String bssid;
+  List<int> rssiList;
 
-  final String BSSID;
-  final List<int> RSSIs;
-
-  AccessPoint(this.BSSID, this.RSSIs);
+  AccessPoint({required this.bssid, required this.rssiList});
 
   Map toJson() => {
-    'BSSID': BSSID,
-    'RSSIs': RSSIs,
+    'BSSID': bssid,
+    'RSSIs': rssiList,
   };
-
 }
 

@@ -2,37 +2,29 @@ import 'package:access_point/utils/helper.dart' as helper;
 import 'package:access_point/utils/string_utils.dart' as strings;
 import 'package:access_point/utils/color_utils.dart' as colors;
 import 'package:access_point/views/widgets/my_icons.dart' as icons;
-import 'package:access_point/views/wifi_scanner/information_dialog.dart';
+import 'package:access_point/views/wifi_scanner/wifi_info_dialog.dart';
 import 'package:access_point/views/wifi_scanner/level_indicator.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-// ignore: must_be_immutable
 class WiFiCard extends StatelessWidget {
-
   double elevation;
-  double width;
-  double height;
   dynamic wifi;
 
-  WiFiCard({
-    this.elevation = 8,
-    required this.width,
-    required this.height,
-    required this.wifi,
-  });
+  WiFiCard({this.elevation = 8, required this.wifi});
 
   @override
   Widget build(BuildContext context) {
-
     String SSID = wifi[strings.ssid];
     String BSSID = wifi[strings.bssid];
     String RSSI = wifi[strings.rssi];
     int level = int.parse(RSSI);
     String freq = wifi[strings.frequency];
     String channel = wifi[strings.channel];
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return _wifiItemCard(SSID, BSSID, RSSI, freq, channel, level, width, height, context);
   }
 
@@ -46,11 +38,10 @@ class WiFiCard extends StatelessWidget {
       double width,
       double height,
       BuildContext context) {
-
     return ListTile(
       tileColor: colors.primaryColorLight,
       title: _wifiInfoTopSection(SSID, BSSID, level, width, height),
-      subtitle: _wifiInfoBottomSection(frequency, channel, RSSI, height),
+      subtitle: _wifiInfoBottomSection(frequency, channel, RSSI, height, width),
       contentPadding: EdgeInsets.symmetric(horizontal: width / 20),
       onTap: () {
         showDialog(
@@ -123,7 +114,7 @@ class WiFiCard extends StatelessWidget {
     );
   }
 
-  Widget _wifiInfoBottomSection(String frequency, String channel, String RSSI, double height) {
+  Widget _wifiInfoBottomSection(String frequency, String channel, String RSSI, double height, double width) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -159,10 +150,9 @@ class WiFiCard extends StatelessWidget {
     );
   }
 
-  Widget _wifiFeatureContainer(String title, IconData icon, width, height) {
+  Widget _wifiFeatureContainer(String title, IconData icon, double width, double height) {
     return Container(
-      padding: EdgeInsets.symmetric(
-          vertical: height / 100, horizontal: width / 40),
+      padding: EdgeInsets.symmetric(vertical: height / 100, horizontal: width / 40),
       decoration: BoxDecoration(
           color: colors.grey,
           borderRadius: BorderRadius.all(Radius.circular(20))
@@ -170,22 +160,11 @@ class WiFiCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 15,
-                color: colors.primaryColor
-            ),
-          ),
+          Text(title, style: TextStyle(fontSize: 15, color: colors.primaryColor)),
           SizedBox(width: width / 40),
-          Icon(
-            icon,
-            size: 20,
-            color: colors.primaryColor,
-          )
-          // Icon(MdiIcons)
+          Icon(icon, size: 20, color: colors.primaryColor) // Icon(MdiIcons)
         ],
       ),
     );
   }
-  }
+}

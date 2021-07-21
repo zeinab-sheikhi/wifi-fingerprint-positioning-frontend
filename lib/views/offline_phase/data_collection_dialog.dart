@@ -3,33 +3,29 @@ import 'package:access_point/utils/string_utils.dart' as strings;
 import 'package:access_point/utils/color_utils.dart' as colors;
 import 'package:flutter/material.dart';
 
-import 'offline_phase_screen.dart';
+import 'data_collection_content.dart';
 
-// ignore: must_be_immutable
-class MyAlertDialog extends StatelessWidget {
-
-  Color color;
-  MyAlertDialog({required this.color});
+class DataCollectionDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: colors.alertDialogBackground,
-      insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      insetPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       shape: RoundedRectangleBorder(
-          side: BorderSide(color: color, width: 2),
+          side: BorderSide(color: colors.accentDarkColor, width: 2),
           borderRadius: BorderRadius.circular(10)
       ),
       title: _titleText(),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          OfflinePhase(),
+          DataCollectionContent(),
         ],
       ),
       actions: <Widget>[
-        _okActionButton(context)
+        _okButton(context)
       ],
     );
   }
@@ -38,18 +34,18 @@ class MyAlertDialog extends StatelessWidget {
     return Text(
       strings.addLocation,
       style: TextStyle(
-          color: color,
-          fontSize: 20
+          color: colors.accentDarkColor,
+          fontSize: 18
       ),
     );
   }
 
-  Widget _okActionButton(BuildContext context) {
+  Widget _okButton(BuildContext context) {
     return TextButton(
       child: Text(
         strings.ok,
         style: TextStyle(
-            color: color
+            color: colors.accentDarkColor
         ),
       ),
       onPressed: () {

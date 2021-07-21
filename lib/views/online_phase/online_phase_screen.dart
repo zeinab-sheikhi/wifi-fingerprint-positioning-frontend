@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:async';
 
 import 'package:access_point/api/api.dart';
 import 'package:access_point/api/api_result.dart';
@@ -11,7 +10,7 @@ import 'package:access_point/views/widgets/my_icons.dart' as icons;
 import 'package:access_point/utils/string_utils.dart' as strings;
 import 'package:access_point/views/widgets/floor_map.dart';
 import 'package:access_point/views/online_phase/blue_dot_map_marker.dart';
-import 'package:access_point/views/online_phase/position_card.dart';
+import 'package:access_point/views/online_phase/position_container.dart';
 import 'package:flutter/material.dart';
 import 'package:wifi_plugin/wifi_plugin.dart';
 
@@ -30,16 +29,20 @@ class _OnlinePhaseState extends State<OnlinePhase> {
   int _yCoordinate = 0;
   int _tileNumber = 1;
   bool _visible = false;
-
   String _classificationModel = strings.knn;
   String _regressionModel = strings.knn;
 
   @override
   void initState() {
     helper.changeScreenToLandscape();
-    _loadSharedPrefs();
-    _collectAccessPoints();
+    _initVariables();
     super.initState();
+  }
+
+  _initVariables() {
+    _classificationModel = PreferenceUtils.getString(strings.classification, strings.knn);
+    _regressionModel = PreferenceUtils.getString(strings.regression, strings.knn);
+    Wifi.setRssiListSize(1);
   }
 
   @override
@@ -59,12 +62,12 @@ class _OnlinePhaseState extends State<OnlinePhase> {
             child: Stack(
               children: [
                 FloorMap(),
-                UserPositionCard(
+                PositionContainer(
                   xCoordinate: _xCoordinate,
                   yCoordinate: _yCoordinate,
                   tileNumber: _tileNumber
                 ),
-                _navigationButton(width, height),
+                _navigationButton(),
                 _visible? _currentPositionMarker() : Container()
               ],
             ),
@@ -73,23 +76,18 @@ class _OnlinePhaseState extends State<OnlinePhase> {
     );
   }
 
-  Widget _navigationButton(double width, double height) {
+  Widget _navigationButton() {
     return Align(
       alignment: Alignment.bottomRight,
       child: Container(
         child: IconButton(
-          onPressed: (){
-            setState(() {
-              _collectAccessPoints();
-              _filterData();
-              _getPosition();
-            });
-          },
           iconSize: 35,
-          icon: Icon(
-              icons.myLocation,
-            color: colors.mapMarker
-          ),
+          icon: Icon(icons.myLocation, color: colors.mapMarker),
+          onPressed: (){
+            _collectAccessPoints();
+            _filterData();
+            _getPosition();
+          }
         ),
       ),
     );
@@ -103,38 +101,30 @@ class _OnlinePhaseState extends State<OnlinePhase> {
     );
   }
 
-  Future _collectAccessPoints() async {
+  _collectAccessPoints() async {
     Wifi.requestNewScan(true);
     var result = await Wifi.getAccessPoints(0);
-    setState(() {
-      _map = result;
-    });
+    setState(() => _map = result);
   }
 
-  void _filterData() {
-
+  _filterData() {
     setState(() {
       for(MapEntry mapEntry in _map.entries) {
-        String wifiBSSID = mapEntry.key;
-        int wifiRSSI = List
-            .of(mapEntry.value)
-            .cast<int>()
-            .first;
-        _accessPointsMap[wifiBSSID] = wifiRSSI;
+        String bssid = mapEntry.key;
+        int rssi = List.of(mapEntry.value).cast<int>().first;
+        _accessPointsMap[bssid] = rssi;
       }
     });
   }
 
   _getPosition() async {
-    OnlinePhaseModel newOnlinePhaseModel = new OnlinePhaseModel(
+    OnlinePhaseModel newOnlinePhaseModel = OnlinePhaseModel(
         accessPoints: _accessPointsMap,
         classificationModel: _classificationModel,
         regressionModel: _regressionModel);
-
-    String body = jsonEncode(newOnlinePhaseModel);
-    APIResult response = await API.onlinePhaseAPI.getLocation(body);
-    var data = jsonDecode(response.data);
+    APIResult response = await API.onlinePhaseAPI.getLocation(newOnlinePhaseModel);
     if(response.isSuccessful()) {
+      var data = jsonDecode(response.data);
       setState(() {
         _tileNumber = data[strings.tileNumber].toInt();
         _xCoordinate = data[strings.x].toInt();
@@ -142,34 +132,8 @@ class _OnlinePhaseState extends State<OnlinePhase> {
         _yOffset = helper.getPosition(_tileNumber);
         _visible = true;
       });
+      /// handle server error
     }else
       print(response.error);
-  }
-
-  // Future _postData() async {
-  //   OnlinePhaseModel _onlinePhaseModel = new OnlinePhaseModel(
-  //       accessPoints: _accessPointsMap,
-  //       classificationModel: _classificationModel,
-  //       regressionModel: _regressionModel);
-  //
-  //   String json = jsonEncode(_onlinePhaseModel);
-  //   print(json);
-  //   Response response = await post(_url, headers:StringUtils.headers, body: json);
-  //   var responseBody = jsonDecode(response.body);
-  //   int statusCode = response.statusCode;
-  //   if(statusCode == 200) {
-  //     setState(() {
-  //       _tileNumber = responseBody[strings.tileNumber].toInt();
-  //       _xCoordinate = responseBody[strings.x].toInt();
-  //       _yCoordinate = responseBody[strings.y].toInt();
-  //       _yOffset = helper.getPosition(_tileNumber);
-  //       _visible = true;
-  //     });
-  //   }
-  // }
-
-  _loadSharedPrefs() {
-    _classificationModel = PreferenceUtils.getString(strings.classification, strings.knn);
-    _regressionModel = PreferenceUtils.getString(strings.regression, strings.knn);
   }
 }

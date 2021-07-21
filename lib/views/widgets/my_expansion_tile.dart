@@ -28,10 +28,10 @@ class _SettingExpandedTileState extends State<SettingExpandedTile> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return _buildBody(context, width, height);
+    return _body(context, width, height);
   }
 
-  Widget _buildBody(BuildContext context, double width, double height) {
+  Widget _body(BuildContext context, double width, double height) {
     return Container(
       alignment: Alignment.center,
       decoration: BoxDecoration(

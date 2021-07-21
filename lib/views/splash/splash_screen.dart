@@ -3,13 +3,13 @@ import 'package:access_point/utils/assets_urls.dart' as assets;
 import 'package:access_point/utils/color_utils.dart' as colors;
 import 'package:flutter/material.dart';
 
-class SplashScreen extends StatefulWidget {
+class Splash extends StatefulWidget {
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashState createState() => _SplashState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashState extends State<Splash> {
 
   @override
   void initState() {
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: colors.splashBackground,
       body: Center(
         child: Image(
-          image: new AssetImage(assets.wifiGif),
+          image: AssetImage(assets.wifiGif),
         ),
       ),
     );

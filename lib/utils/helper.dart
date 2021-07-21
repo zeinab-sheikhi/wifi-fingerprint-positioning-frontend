@@ -1,4 +1,5 @@
 import 'package:access_point/utils/color_utils.dart' as colors;
+import 'package:access_point/utils/string_utils.dart' as strings;
 import 'package:access_point/utils/preferences_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,51 +11,23 @@ import 'package:intl/intl.dart';
     return newDt;
   }
 
-  int getHour() {
-    var dateTime = DateTime.now();
-    int hour = 0;
-    if(dateTime.hour > 12)
-      hour = dateTime.hour - 12;
-    else
-      hour = dateTime.hour;
-    return hour;
-  }
-
-  int getMinute() {
-    var dateTime = DateTime.now();
-    int minute = dateTime.minute;
-    return minute;
-  }
-
   String getChannel(String frequency) {
-
     int freq = int.parse(frequency);
-    if( freq > 2000 && freq < 3000)
+    if(freq > 2000 && freq < 3000)
       return 2.4.toString();
     else
       return 5.toString();
   }
 
   String getUrl(String path) {
-    String ipAddress = PreferenceUtils.getString('ipAddress', '192.168.1.5');
-    String port = PreferenceUtils.getString('port', '5000');
+    String ipAddress = PreferenceUtils.getString(strings.ipAddress, strings.defaultIpAddress);
+    String port = PreferenceUtils.getString(strings.port, strings.defaultPort);
     String url = 'http://' + ipAddress + ':' + port + path;
     return url;
   }
 
-  showToast(String toastMessage, BuildContext context) {
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content:  Text(toastMessage),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffoldMessenger.hideCurrentSnackBar),
-      ),
-    );
-  }
-
   changeScreenToPortrait() {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   }
 
   changeScreenToLandscape() {

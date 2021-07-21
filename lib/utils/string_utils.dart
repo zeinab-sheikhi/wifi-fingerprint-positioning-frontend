@@ -27,6 +27,7 @@ const String defaultPort = "3000";
 const String signal = "Signal";
 const String band = "Band";
 const String tile = "Tile";
+const String appTitle = "Find Me";
 
 /// Information, Warnings, Errors
 const String addLocation = "Add Location Coordinates";
@@ -42,6 +43,8 @@ const String close = "Close";
 const String gigaHertz = " GHz";
 const String ch = "CH ";
 const String dbm = " dBm";
+const String offlinePhaseTile = "Total Scan Time, Interval Time";
+const String serverTile = "IP Address, Port";
 
 ///SharedPreferences, Map, Json keys
 const String ssid = "SSID";
@@ -60,11 +63,4 @@ const String t = "T";
 const String d = "D";
 const String ipAddress = "ipAddress";
 const String port = "port";
-
-
-/// D, the interval time between access point scans
-const int parameterD = 1;
-
-/// T, the total scanning time
-const int parameterT = 2;
 

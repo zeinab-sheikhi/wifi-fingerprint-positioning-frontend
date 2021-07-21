@@ -18,16 +18,20 @@ class PreferenceUtils {
     var prefs = await _instance;
     prefs.setString(key, value);
   }
+
   static int getInt(String key, int defaultValue) {
     return _prefsInstance.getInt(key) ?? defaultValue;
   }
+
   static setInt(String key, int value) async{
     var prefs = await _instance;
     prefs.setInt(key, value);
   }
+
   static double getDouble(String key, double defaultValue) {
     return _prefsInstance.getDouble(key) ?? defaultValue;
   }
+
   static setDouble(String key, double value) async{
     var prefs = await _instance;
     prefs.setDouble(key, value);
