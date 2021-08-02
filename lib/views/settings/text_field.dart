@@ -117,7 +117,7 @@ class _SettingsTextFieldState extends State<SettingsTextField> {
     });
   }
 
-  _saveSharedPref(String value) async {
+  _saveSharedPref(String value)  {
     PreferenceUtils.setString(widget.sharedPrefKey, value);
   }
 

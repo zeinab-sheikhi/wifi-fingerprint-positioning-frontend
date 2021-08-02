@@ -7,7 +7,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class WifiInfoDialog extends StatelessWidget {
-
   Color iconColor;
   String ssid;
   String bssid;

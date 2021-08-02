@@ -13,7 +13,7 @@ class AddButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ElevatedButton(
-          onPressed: () => callBack(40),
+          onPressed: () => callBack(60),
           child: Icon(icon, color: colors.accentDarkColor),
           style: ElevatedButton.styleFrom(
               primary: colors.backgroundColor,
