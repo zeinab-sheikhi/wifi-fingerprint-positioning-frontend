@@ -9,9 +9,11 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="access_point"
+        android:label="Find Me"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        >
 
         <activity
             android:name=".MainActivity"

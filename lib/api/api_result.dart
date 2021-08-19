@@ -7,15 +7,9 @@ class APIResult {
   APIResult(
       {this.code = 200, this.data, this.succeed = false, this.error = ''});
 
-  bool noInternet() {
-    return code == -1;
-  }
+  bool noInternet() => code == -1;
 
-  bool isSuccessful() {
-    return succeed;
-  }
+  bool isSuccessful() => succeed;
 
-  bool isFailed() {
-    return !succeed;
-  }
+  bool isFailed() => !succeed;
 }

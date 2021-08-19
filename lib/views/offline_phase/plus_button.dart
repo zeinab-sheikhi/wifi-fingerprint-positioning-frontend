@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../utils/color_utils.dart' as colors;
 
-typedef void MinusCallBack(int val);
+typedef void AddCallBack(int val);
 
-class MinusButton extends StatelessWidget {
-  final MinusCallBack callBack;
+class PlusButton extends StatelessWidget {
+  final AddCallBack callBack;
   final IconData icon;
 
-  MinusButton({required this.icon, required this.callBack});
+  PlusButton({required this.icon, required this.callBack});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: ElevatedButton(
-            onPressed: () => callBack(-60),
+            onPressed: () => callBack(60),
             child: Icon(icon, color: colors.accentDarkColor),
             style: ElevatedButton.styleFrom(
                 primary: colors.backgroundColor,

@@ -36,6 +36,7 @@ const Color sliderThumbColor = Color(0xff29bb89);
 const Color textFieldFill = Color(0xff242c42);
 const Color grey = Color(0xff9e9e9e);
 const Color orange = Color(0xffff9800);
+const Color black = Color(0xff000000);
 const Color error = Color(0xfff44336);
 
 const Color excellentSignal = Color(0xff00cd76);

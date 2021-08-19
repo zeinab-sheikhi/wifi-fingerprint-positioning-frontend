@@ -1,11 +1,11 @@
-import 'package:access_point/api/api.dart';
-import 'package:access_point/api/api_result.dart';
+import 'api.dart';
+import 'api_result.dart';
 
 class OfflinePhaseAPI {
-  Future<APIResult> postPoints(dynamic body) async {
+  Future<APIResult> postPoints(String baseUrl, dynamic body) async {
     var response;
     try{
-      response = API.post('/points', body);
+      response = API.post(baseUrl + '/points', body);
     } catch(err, msg) {
       response = APIResult(code: 500, error: msg.toString());
     }

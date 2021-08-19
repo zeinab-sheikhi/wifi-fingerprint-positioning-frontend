@@ -6,13 +6,13 @@ class Point {
   String dateTime;
   List<AccessPoint> accessPoints;
 
-  Point({
-    required this.xCoordinate,
-    required this.yCoordinate,
-    required this.totalScanTime,
-    required this.intervalTime,
-    required this.dateTime,
-    required this.accessPoints});
+  Point(
+      {required this.xCoordinate,
+      required this.yCoordinate,
+      required this.totalScanTime,
+      required this.intervalTime,
+      required this.dateTime,
+      required this.accessPoints});
 
   Map toJson() {
     return {
@@ -32,9 +32,5 @@ class AccessPoint {
 
   AccessPoint({required this.bssid, required this.rssiList});
 
-  Map toJson() => {
-    'BSSID': bssid,
-    'RSSIs': rssiList,
-  };
+  Map toJson() => {'BSSID': bssid, 'RSSIs': rssiList};
 }
-

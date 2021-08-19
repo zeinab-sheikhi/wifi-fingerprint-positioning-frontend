@@ -1,17 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:access_point/api/api_offline_phase.dart';
-import 'package:access_point/api/api_online_phase.dart';
-import 'package:access_point/utils/api_utils.dart' as api;
-import 'package:access_point/api/api_result.dart';
-// ignore: import_of_legacy_library_into_null_safe
+
 import 'package:http/http.dart' as http;
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:http/io_client.dart';
 
+import 'api_offline_phase.dart';
+import 'api_online_phase.dart';
+import 'api_result.dart';
+import '../utils/api_utils.dart' as api;
+
 class API {
-  static final String baseUrl = api.apiBaseUlr;
   static final int timeOutDuration = api.timeOutDuration;
   static final OfflinePhaseAPI offlinePhaseAPI = OfflinePhaseAPI();
   static final OnlinePhaseAPI onlinePhaseAPI = OnlinePhaseAPI();
@@ -28,17 +27,18 @@ class API {
 
   static Future<APIResult> apiRequest(String partUrl, String method,
       {dynamic postBody, dynamic headers}) async {
-    print(baseUrl + partUrl);
-    Uri url = Uri.parse(baseUrl + partUrl);
+    Uri url = Uri.parse(partUrl);
+    print(url);
     final encodedBody = jsonEncode(postBody);
     late http.Response response;
     try {
       if (method == 'GET') {
         response =
         await http.get(url).timeout(Duration(seconds: timeOutDuration));
-      } else if (method == 'POST') {
+      }
+      else if (method == 'POST') {
         response = await http
-            .post(url, headers: api.headers, body: encodedBody)
+            .post(url, body: encodedBody, headers: api.headers)
             .timeout(Duration(seconds: timeOutDuration));
       }
       Map<String, dynamic> body = jsonDecode(response.body);
@@ -46,8 +46,7 @@ class API {
       result.code = body['code'];
       result.error = body['error'];
 
-      if (result.code != 200 || result.error != '') {
-        _log('error in getting response from server');
+      if (result.code != 200) {
         _log(result.error);
         result.succeed = false;
         result.data = null;
@@ -56,8 +55,8 @@ class API {
         result.data = body['data'];
       }
       return result;
-    } catch (err, msg) {
-      var e = "Unable to get response " + msg.toString();
+    } catch (err) {
+      var e = "Unable to get response: " + err.toString();
       var code = 500;
       if (err is TimeoutException) {
         e = 'TimeOut Error';
@@ -72,7 +71,5 @@ class API {
     }
   }
 
-  static void _log(dynamic msg) {
-    print("API Class => " + msg);
-  }
+  static void _log(dynamic msg) => print("API Class => " + msg);
 }

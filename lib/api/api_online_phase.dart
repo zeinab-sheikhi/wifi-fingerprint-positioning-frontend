@@ -1,11 +1,11 @@
-import 'package:access_point/api/api.dart';
-import 'package:access_point/api/api_result.dart';
+import 'api.dart';
+import 'api_result.dart';
 
 class OnlinePhaseAPI {
-  Future<APIResult> getLocation(dynamic body) async {
+  Future<APIResult> getLocation(String baseUrl, dynamic body) async {
     var response;
     try {
-      response = await API.post('/position', body);
+      response = await API.post(baseUrl + '/position', body);
     }catch(err, msg) {
       response = APIResult(code: 500, error: msg.toString());
     }
